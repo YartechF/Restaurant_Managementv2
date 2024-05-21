@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<DialogPane expanded="true" prefHeight="230.0" prefWidth="304.0" style="-fx-background-color: ffffff; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.create_invoice_dialog_controller">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="436.0" style="-fx-background-color: ffffff; -fx-background-radius: 15;">
+         <children>
+            <TextField fx:id="costomername_tf" layoutX="48.0" layoutY="92.0" prefHeight="31.0" prefWidth="340.0" promptText="Customer Name" style="-fx-background-color: E8E8E8; -fx-background-radius: 10; -fx-background-color: E8E8E8;" stylesheets="@style.css" visible="false" />
+            <ChoiceBox fx:id="order_type" layoutX="48.0" layoutY="55.0" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: E8E8E8;" />
+            <ChoiceBox fx:id="select_table" layoutX="218.0" layoutY="55.0" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: E8E8E8;" />
+            <Label layoutX="48.0" layoutY="37.0" text="Order Type" />
+            <Label layoutX="216.0" layoutY="37.0" text="Select Table" />
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

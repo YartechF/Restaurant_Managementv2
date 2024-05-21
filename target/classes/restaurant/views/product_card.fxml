@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="225.0" styleClass="product_card" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.product_card_controller">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <children>
+      <HBox prefHeight="43.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="product_name" text="burger">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="126.0" layoutY="52.0" prefHeight="85.0" prefWidth="85.0">
+         <children>
+            <ImageView fx:id="product_img" fitHeight="85.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 6), 10, 0, 0, 0);" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" layoutX="2.0" layoutY="109.0" prefHeight="33.0" prefWidth="69.0">
+         <children>
+            <Label fx:id="product_price" text="₱99" textFill="#d36135">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="product_stock" layoutX="14.0" layoutY="43.0" text="Stock: 10">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

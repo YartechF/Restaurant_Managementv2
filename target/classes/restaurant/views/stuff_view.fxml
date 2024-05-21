@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.stuff_controller">
+   <children>
+      <AnchorPane prefHeight="900.0" prefWidth="184.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: E8E8E8; -fx-background-color: ffffff;" stylesheets="@style.css">
+         <children>
+            <Polyline fill="#d36135" layoutX="93.0" layoutY="40.0" points="-93.0, -40.0, 95.5, -40.5, 0.0, 32.0, -93.0, -40.0" strokeType="INSIDE" strokeWidth="0.0" />
+            <AnchorPane layoutY="75.0" onMouseClicked="#dashboard_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+               <children>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="31.0" layoutY="13.0">
+                     <image>
+                        <Image url="@icons/dashboard.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="73.0" layoutY="16.0" text="Dashboard">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label layoutX="75.0" layoutY="15.0" text="Staff" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Label>
+            <AnchorPane fx:id="new_order_btn" layoutX="2.0" layoutY="175.0" onMouseClicked="#pos_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+               <children>
+                  <Label layoutX="72.0" layoutY="16.0" text="New Order">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="27.0" layoutY="13.0">
+                     <image>
+                        <Image url="@icons/new.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="2.0" layoutY="125.0" onMouseClicked="#table_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+               <children>
+                  <Label layoutX="72.0" layoutY="16.0" text="Table">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="28.0" layoutY="13.0">
+                     <image>
+                        <Image url="@icons/table2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="225.0" onMouseClicked="#Order_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+               <children>
+                  <Label layoutX="73.0" layoutY="14.0" text="Orders">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ImageView layoutX="30.0" layoutY="11.0">
+                     <image>
+                        <Image url="@icons/Orders.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="stuff_page" layoutX="189.0" prefHeight="900.0" prefWidth="1251.0" style="-fx-background-color: ffffff;" />
+   </children>
+</AnchorPane>
