@@ -14,11 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import restaurant.models.user;
 import restaurant.models.user_model;
-import restaurant.Main;
-import restaurant.controllers.stuff_controller;
 
 public class auth_controller {
     private user User;
@@ -54,7 +51,7 @@ public class auth_controller {
     @FXML
     private TextField username_tf;
 
-    void staff(user current_user, MouseEvent event) {
+    void staff(user current_user, MouseEvent event) throws SQLException {
         try {
             // Load the next scene (e.g., stuff screen)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_view.fxml"));
@@ -78,7 +75,7 @@ public class auth_controller {
     }
 
     @FXML
-    void login_btn_e(MouseEvent event) {
+    void login_btn_e(MouseEvent event) throws SQLException {
         user current_user = login();
         if (current_user != null) {
             // show the stuff view

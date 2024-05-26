@@ -1,13 +1,20 @@
 package restaurant.models;
 
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import restaurant.db.database;
 
-public class product_model extends database {
+public class product_model extends database implements Initializable {
     private PreparedStatement ps;
+    private ArrayList<product> ProductsList = new ArrayList<>();
 
     public void create_product(String name, double price, int categoryID, String picture, String type) {
         try {
@@ -46,16 +53,30 @@ public class product_model extends database {
         }
     }
 
+    public ArrayList<product> get_all_products() {
+        return ProductsList;
+    }
+
     // create retrieve all
-    public ResultSet retrieve_all_product() {
+    public void retrieve_all_product() {
         try {
             String sql = "select * from tbl_product";
             ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            return rs;
+            while (rs.next()) {
+                product Product = new product();
+                Product.setID(rs.getInt("ID"));
+                Product.setName(rs.getString("name"));
+                Product.setCategory_ID(rs.getInt("categoryID"));
+                Product.setPicture(rs.getString("picture"));
+                Product.setType("type");
+                Product.setPrice(rs.getDouble("price"));
+                ProductsList.add(Product);
+                System.out.println(Product.getName());
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+
         }
 
     }
@@ -101,5 +122,9 @@ public class product_model extends database {
             return null;
         }
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

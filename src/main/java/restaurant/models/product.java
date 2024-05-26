@@ -3,7 +3,7 @@ package restaurant.models;
 public class product {
     private int ID;
     private String name;
-    private int price;
+    private double price;
     private int category_ID;
     private String picture;
     private String type;
@@ -18,11 +18,11 @@ public class product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

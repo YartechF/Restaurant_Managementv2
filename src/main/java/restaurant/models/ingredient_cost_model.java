@@ -1,13 +1,19 @@
 package restaurant.models;
 
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import javafx.fxml.Initializable;
 import restaurant.db.database;
 
-public class ingredient_cost_model extends database {
+public class ingredient_cost_model extends database implements Initializable {
     private PreparedStatement ps;
+
+    private ArrayList<ingredient_cost> Ingredient_cost = new ArrayList<>();
 
     public void create_ingredient_cost(int ingredientID, int productID, double quantity) throws SQLException {
         String sql = """
@@ -49,14 +55,25 @@ public class ingredient_cost_model extends database {
         getConnection().close();
     }
 
+    public ArrayList<ingredient_cost> get_all_Ingredient_costs() {
+        return Ingredient_cost;
+    }
+
     // retrive all
-    public ResultSet retrive_all_ingredient_cost() throws SQLException {
+    public void retrive_all_ingredient_cost() throws SQLException {
         String sql = """
                 SELECT * FROM `tbl_ingredient_cost`;
                 """;
         ps = getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        return rs;
+        while (rs.next()) {
+            ingredient_cost Ingredientcost = new ingredient_cost();
+            Ingredientcost.setIngredientID(rs.getInt("ingredientID"));
+            Ingredientcost.setProductID(rs.getInt("productID"));
+            Ingredientcost.setQuantity(rs.getInt("quantity"));
+            Ingredient_cost.add(Ingredientcost);
+        }
+        getConnection().close();
     }
 
     // retrieve ingredients cost base on product
@@ -68,6 +85,10 @@ public class ingredient_cost_model extends database {
         ps.setInt(1, productID);
         ResultSet rs = ps.executeQuery();
         return rs;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 
 }

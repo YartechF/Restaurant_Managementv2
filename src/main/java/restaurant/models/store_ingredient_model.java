@@ -2,12 +2,15 @@ package restaurant.models;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.sql.ResultSet;
 
 import restaurant.db.database;
 
 public class store_ingredient_model extends database {
     private PreparedStatement ps;
+
+    ArrayList<store_ingredient> StoreIngredients = new ArrayList<>();
 
     public void create_store_ingredient(int ingredientID, int storeID, double stock) throws SQLException {
         String sql = "INSERT INTO `tbl_store_ingredient`(`ingredientID`, `storeID`, `stock`) VALUES (?,?,?)";
@@ -42,12 +45,6 @@ public class store_ingredient_model extends database {
     }
 
     // retrieve all
-    public ResultSet retrieve_all_store_ingredient() throws SQLException {
-        String sql = "SELECT * FROM `tbl_store_ingredient`";
-        this.ps = getConnection().prepareStatement(sql);
-        ResultSet rs = this.ps.executeQuery();
-        return rs;
-    }
 
     // retrieve specific use storeID to find
     public ResultSet retrieve_ingredient_stock(int storeID) throws SQLException {
@@ -74,4 +71,22 @@ public class store_ingredient_model extends database {
         return rs;
     }
 
+    public void retrieve_all_storeIngredient() throws SQLException {
+        String sql = "select * from tbl_store_ingredient";
+        this.ps = getConnection().prepareStatement(sql);
+        ResultSet rs = this.ps.executeQuery();
+        while (rs.next()) {
+            store_ingredient StoreIngredient = new store_ingredient();
+            StoreIngredient.setID(rs.getInt("ID"));
+            StoreIngredient.setStoreID(rs.getInt("storeID"));
+            StoreIngredient.set_ingredientID(rs.getInt("ingredientID"));
+            StoreIngredient.set_stock(rs.getDouble("stock"));
+            StoreIngredients.add(StoreIngredient);
+        }
+
+    }
+
+    public ArrayList<store_ingredient> get_store_Ingredients() {
+        return StoreIngredients;
+    }
 }

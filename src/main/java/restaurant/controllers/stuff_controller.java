@@ -31,14 +31,13 @@ public class stuff_controller {
     private Invoice invoice;
     private create_invoice_dialog_controller createinvoicedialogcontroller;
 
-    void product_loading() {
+    void product_loading() throws SQLException {
         // load the pos
         try {
             this.stuff_pos_view = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_pos.fxml"));
             this.stuff_pos_root = this.stuff_pos_view.load();
             this.stuff_pos_controller = this.stuff_pos_view.getController();
             this.stuff_pos_controller.set_pos_currentuser(this.currentuser);
-
             this.stuff_pos_controller.product_load();
 
         } catch (IOException e) {
@@ -89,8 +88,9 @@ public class stuff_controller {
             this.new_order_btn.setDisable(true);
             invoice = createinvoicedialogcontroller.getInvoice();
             int generatedInvoiceID = this.invoicemodel.create_invoice(invoice);
-            invoice.setID(1);
-            stuff_pos_controller.pos_set_invoice(invoice);
+            invoice.setID(generatedInvoiceID);
+            this.stuff_pos_controller.pos_set_invoice(invoice);
+            this.stuff_pos_controller.set_storeID(this.storeID);
             this.stuff_page.getChildren().setAll(stuff_pos_root);
             stuff_pos_root.setVisible(true);
             createinvoicedialogcontroller.get_select_table().getItems().clear();
@@ -111,7 +111,7 @@ public class stuff_controller {
 
     }
 
-    public void initializeStuff(user current_user) throws IOException {
+    public void initializeStuff(user current_user) throws IOException, SQLException {
         this.currentuser = current_user;
         this.invoicemodel = new invoice_model();
         product_loading();
