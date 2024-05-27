@@ -23,6 +23,10 @@ public class product_card_controller {
 
     @FXML
     private Label product_stock;
+    
+    public void setStock(double newstock){
+        this.product_stock.setText(String.valueOf(newstock));
+    }
 
     public void setdata(product Product) {
         this.productID = Product.getID();

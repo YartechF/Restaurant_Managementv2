@@ -50,6 +50,8 @@ public class stuff_pos_controller implements Initializable {
     private Invoice invoice;
     private orders_model ordersmodel;
     private int storeID;
+    private order Order;
+    private ArrayList<order> Orders;
 
     public stuff_pos_controller() throws SQLException, IOException {
 
@@ -89,86 +91,99 @@ public class stuff_pos_controller implements Initializable {
     }
 
     public void product_load() throws SQLException {
-        ArrayList<product> products = this.productmodel.get_all_products();
+        ObservableList<product> products = productmodel.get_all_products();
         int row = 1;
         int column = 0;
+    
+        // Clear the product grid before reloading products
+        product_grid.getChildren().clear();
+    
         try {
             for (int i = 0; i < products.size(); i++) {
-                /// ---------------------------------------
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/restaurant/views/product_card.fxml"));
                 AnchorPane product_card = fxmlLoader.load();
                 product_card_controller productcardcontroller = fxmlLoader.getController();
-
-                // the stock base on the store
-                // Assuming product class has a getId() method
-                // Assuming ingredient_cost_model class has a method getIngredientCost(int
-                // productID)
-                ArrayList<ingredient_cost> all_ingredients_cost = this.ingredient_cost.get_all_Ingredient_costs();// retrieve
-
+    
+                ArrayList<ingredient_cost> all_ingredients_cost = this.ingredient_cost.get_all_Ingredient_costs();
                 ArrayList<ingredient_cost> filtered_Ingredient_costs = new ArrayList<>();
-                ArrayList<store_ingredient> st = this.storeingredientmodel.get_store_Ingredients();//stock of all store
-                ArrayList<store_ingredient> filtered_storeingredientmodel = new ArrayList<>();//ingredients filtered base current store
-                ArrayList<Double> calculate_stock = new ArrayList<>(); 
-                
+                ArrayList<store_ingredient> st = this.storeingredientmodel.get_store_Ingredients();
+                ArrayList<store_ingredient> filtered_storeingredientmodel = new ArrayList<>();
+                ArrayList<Double> calculate_stock = new ArrayList<>();
+    
+                // Filter ingredient costs and store ingredients
                 for (int ii = 0; ii < all_ingredients_cost.size(); ii++) {
                     int productID = all_ingredients_cost.get(ii).getProductID();
                     if (productID == products.get(i).getID()) {
                         filtered_Ingredient_costs.add(all_ingredients_cost.get(ii));
                     }
                 }
-                
+    
                 for (store_ingredient ST : st) {
-                    if(ST.getStoreID() == this.storeID){
+                    if (ST.getStoreID() == this.storeID) {
                         filtered_storeingredientmodel.add(ST);
                     }
                 }
-                
-                for(store_ingredient fsi :filtered_storeingredientmodel){
-                    System.out.println("ingredient ID:"+fsi.get_ingredientID()+"from "+fsi.getStoreID());
+    
+                // Calculate product stock
+                for (int iii = 0; iii < filtered_Ingredient_costs.size(); iii++) {
+                    int ProductingredientID = filtered_Ingredient_costs.get(iii).getIngredientID();
+                    double ingredient_cost_per_current_product = filtered_Ingredient_costs.get(iii).getQuantity();
+    
+                    for (store_ingredient fst : filtered_storeingredientmodel) {
+                        if (fst.get_ingredientID() == ProductingredientID) {
+                            double productfromingredient = fst.get_stock() / ingredient_cost_per_current_product;
+                            calculate_stock.add(productfromingredient);
+                        }
+                    }
                 }
-
-                for (int iii = 0; iii < filtered_Ingredient_costs.size(); iii++) {// filter the ingredients cost in current product
-                    // System.out.println("product: "+products.get(i).getName() + " ingredientID:"
-                    //         + filtered_Ingredient_costs.get(iii).getIngredientID()+"cost: "+filtered_Ingredient_costs.get(iii).getQuantity());//output product: Burger ingredient:4
-
-                            int ProductingredientID = filtered_Ingredient_costs.get(iii).getIngredientID();// ingredient for current product
-                            int ingredient_cost_per_current_product = filtered_Ingredient_costs.get(iii).getQuantity();
-
-                            for(store_ingredient fst : filtered_storeingredientmodel){
-                                if (fst.get_ingredientID() == ProductingredientID) {
-                                    double productfromingredient = fst.get_stock() / ingredient_cost_per_current_product;
-                                    // System.out.println(products.get(i).getName()+" "+productfromingredient);
-                                    calculate_stock.add(productfromingredient);
+    
+                double product_stock = Collections.min(calculate_stock);
+                products.get(i).setStock((int) product_stock);
+                productcardcontroller.setdata(products.get(i));
+    
+                // Add event handler for product card click
+                int index = i;
+                product_card.setOnMouseClicked(event -> {
+                    try {
+                        FXMLLoader orderfxmlLoader = new FXMLLoader();
+                        orderfxmlLoader.setLocation(getClass().getResource("/restaurant/views/order_view.fxml"));
+                        AnchorPane orderPane = orderfxmlLoader.load();
+                        order_controller order_controller = orderfxmlLoader.getController();
+                        System.out.println("You clicked the product card name: " + products.get(index).getName());
+                        for (ingredient_cost fic : filtered_Ingredient_costs) {
+                            System.out.println(fic.getID());
+                            System.out.println(fic.getQuantity());
+                            System.out.println();
+                            System.out.println();
+                            for (store_ingredient fsi : filtered_storeingredientmodel) {
+                                if (fsi.get_ingredientID() == fic.getIngredientID()) {
+                                    double newstock = fsi.get_stock() - fic.getQuantity();
+                                    System.out.println("IngredientID: " + fsi.get_ingredientID() + " from " + fsi.getStoreID());
+                                    System.out.println("Old Stock: " + fsi.get_stock());
+                                    fsi.set_stock(newstock);
+                                    System.out.println("New Stock: " + newstock);
+                                    // Update the product card in the UI
+                                    double new_product_stock = products.get(index).getStock() - 1;
+                                    products.get(index).setStock((int) new_product_stock);
+                                    productcardcontroller.setdata(products.get(index));
                                 }
                             }
-
-                            
-                }
-                System.out.println("the stock of "+products.get(i).getName()+" "+Collections.min(calculate_stock));
-                double product_stock = Collections.min(calculate_stock);
-                products.get(i).setStock(product_stock);
-                productcardcontroller.setdata(products.get(i));
-                
-                //getting the current stock base on current product
-                //productfromingredient = stock of ingredient / ingredient per current product
-                //product stock base on current store = get the min {productfromingredient,productfromingredient,productfromingredient}
-
-
-                productcardcontroller.setdata(products.get(i));
-
-                // add product card event
-                // when product card clicked
-                product_card.setOnMouseClicked(event -> {
-                    System.out.println("you click product card");
+                        }
+                        Order.setinvoiceID(this.invoice);
+                        Order.setproductID(products.get(index));
+                        order_grid_pane.add(orderPane, 0, this.order_row++);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
-
+    
                 if (column == 4) {
                     column = 0;
                     row++;
                 }
-
-                // add the product card in grid
+    
+                // Add the product card to the grid
                 this.product_grid.add(product_card, column++, row);
                 GridPane.setMargin(product_card, new Insets(10));
             }
@@ -176,6 +191,8 @@ public class stuff_pos_controller implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -193,5 +210,6 @@ public class stuff_pos_controller implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.Order = new order();
     }
 }

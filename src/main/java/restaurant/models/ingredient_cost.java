@@ -1,16 +1,24 @@
 package restaurant.models;
 
 public class ingredient_cost {
-    private int quantity;
+    private int ID;
+    private double quantity;
     private int productID;
     private int ingredientID;
 
     // create gettings and setters
-    public int getQuantity() {
+    public void setID(int ID){
+        this.ID = ID;
+    }
+    public int getID(){
+        return this.ID;
+    }
+
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

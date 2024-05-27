@@ -15,6 +15,7 @@ public class ingredient_cost_model extends database implements Initializable {
 
     private ArrayList<ingredient_cost> Ingredient_cost = new ArrayList<>();
 
+
     public void create_ingredient_cost(int ingredientID, int productID, double quantity) throws SQLException {
         String sql = """
                 INSERT INTO `tbl_ingredient_cost` (`ingredientID`, `productID`, `quantity`) VALUES (?, ?, ?);
@@ -68,23 +69,24 @@ public class ingredient_cost_model extends database implements Initializable {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             ingredient_cost Ingredientcost = new ingredient_cost();
+            Ingredientcost.setID(rs.getInt("ID"));
             Ingredientcost.setIngredientID(rs.getInt("ingredientID"));
             Ingredientcost.setProductID(rs.getInt("productID"));
-            Ingredientcost.setQuantity(rs.getInt("quantity"));
+            Ingredientcost.setQuantity(rs.getDouble("quantity"));
             Ingredient_cost.add(Ingredientcost);
         }
+        
         getConnection().close();
     }
 
     // retrieve ingredients cost base on product
-    public ResultSet get_ingredient_cost(int productID) throws SQLException {
-        String sql = """
-                SELECT * FROM `tbl_ingredient_cost` WHERE `productID` =?;
-                """;
-        ps = getConnection().prepareStatement(sql);
-        ps.setInt(1, productID);
-        ResultSet rs = ps.executeQuery();
-        return rs;
+
+    public void cost_ingredient(int ID, double qty){
+        for(ingredient_cost ic:Ingredient_cost){
+            if(ic.getID() == ID){
+               
+            }
+        }
     }
 
     @Override

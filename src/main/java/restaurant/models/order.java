@@ -1,28 +1,29 @@
 package restaurant.models;
 
+
 public class order {
-    private int invoiceID;
-    private int productID;
+    private Invoice invoice;
+    private product Product;
     private int quantity;
 
     public order() {
         this.quantity = 1;
     }
 
-    public void setinvoiceID(int invoiceID) {
-        this.invoiceID = invoiceID;
+    public void setinvoiceID(Invoice invoice) {
+        this.invoice = invoice;
     }
 
-    public int getinvoiceID() {
-        return this.invoiceID;
+    public Invoice getinvoiceID() {
+        return this.invoice;
     }
 
-    public void setproductID(int productID) {
-        this.productID = productID;
+    public void setproductID(product Product) {
+        this.Product = Product;
     }
 
-    public int getproductID() {
-        return this.productID;
+    public product getproductID() {
+        return this.Product;
     }
 
     public void setquantity(int quantity) {

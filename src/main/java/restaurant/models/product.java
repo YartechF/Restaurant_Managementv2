@@ -7,7 +7,7 @@ public class product {
     private int category_ID;
     private String picture;
     private String type;
-    private double stock;
+    private int stock;
 
     // create getter and setters
     public String getName() {
@@ -58,11 +58,11 @@ public class product {
         this.ID = ID;
     }
 
-    public double getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(double stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
