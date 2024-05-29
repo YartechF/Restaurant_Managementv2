@@ -39,9 +39,9 @@ public class stuff_controller {
             this.stuff_pos_controller = this.stuff_pos_view.getController();
             this.stuff_pos_controller.set_pos_currentuser(this.currentuser);
             this.stuff_pos_controller.product_load();
+            this.stuff_pos_controller.load_category();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

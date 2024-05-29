@@ -5,16 +5,20 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -30,12 +34,17 @@ import restaurant.models.order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Collections;
+import java.util.HashMap;
+
 import restaurant.controllers.order_controller;
 import restaurant.models.Invoice;
+import restaurant.models.category_model;
 import restaurant.models.orders_model;
 import restaurant.models.ingredient_cost;
+import restaurant.models.category;
 
 public class stuff_pos_controller implements Initializable {
     private String storename;
@@ -50,8 +59,10 @@ public class stuff_pos_controller implements Initializable {
     private Invoice invoice;
     private orders_model ordersmodel;
     private int storeID;
-    private order Order;
-    private ArrayList<order> Orders;
+    private double src_sub_total;
+    private category_model CategoryModel;
+    private ArrayList<category> categories;
+    Map<String, Integer> categoryMap;
 
     public stuff_pos_controller() throws SQLException, IOException {
 
@@ -61,12 +72,24 @@ public class stuff_pos_controller implements Initializable {
         ordersmodel = new orders_model();
     }
 
-    public void pos_set_invoice(Invoice invoice) {
+    protected void pos_set_invoice(Invoice invoice) {
         this.invoice = invoice;
     }
-    public void set_storeID(int storeID){
+    protected void set_storeID(int storeID){
         this.storeID = storeID;
     }
+
+    protected store_ingredient_model get_storeingredientmodel(){
+        return this.storeingredientmodel;
+    }
+
+    protected int get_current_storeID(){
+        return this.storeID;
+    }
+
+    @FXML
+    private ChoiceBox<String> category_choicebox;
+
     @FXML
     private GridPane order_grid_pane;
 
@@ -85,32 +108,130 @@ public class stuff_pos_controller implements Initializable {
     @FXML
     private Label store_name;
 
+    @FXML
+    private Label subtotal;
+
+    @FXML
+    private Label total;
+
+    @FXML
+    private TextField discount;
+
+
+    public GridPane get_order_grid_pane() {
+        return this.order_grid_pane;
+    }
+    @FXML
+    void cancel_order_e(MouseEvent event) {
+        System.out.println("cancel order");
+    }
+
+    @FXML
+    void create_new_order_e(MouseEvent event) {
+        System.out.println("create new order");
+    }
+    protected void load_category() throws SQLException{
+        
+        ResultSet rs = this.CategoryModel.retrieve_all_category();
+        while(rs.next()){
+            category Category = new category();
+            int categoryID = rs.getInt("ID");
+            String category_name = rs.getString("name");
+            Category.setId(categoryID);
+            Category.setName(category_name);
+            this.categories.add(Category);
+            this.categoryMap.put(category_name, categoryID);
+        }
+        for(category c : this.categories){
+            this.category_choicebox.getItems().add(c.getName());
+        }
+    }
+    void setTotal(){
+        /**
+         * Calculates the total amount due after applying a discount to the subtotal.
+         * 
+         * This code is responsible for parsing the subtotal and discount values from
+         * text fields,
+         * calculating the total amount due by subtracting the discount from the
+         * subtotal, and
+         * updating the total text field with the formatted total amount.
+         */
+        this.ordersmodel.updateSubtotal();
+        double st = this.src_sub_total;
+        double dis = Double.parseDouble(this.discount.getText());
+        double total = st - dis;
+        this.total.setText("P" + String.valueOf(total));
+    }
+
     public void set_pos_currentuser(user current_user) {
         this.current_user = current_user;
         this.storeID = this.current_user.getStoreID();
     }
 
+    void set_onchange_discount(TextField discount) {
+        /**
+         * Listens for changes to the discount text property and updates the total
+         * accordingly.
+         * If the new discount value is greater than or equal to the current discount
+         * value, no action is taken.
+         * If the discount text is empty, no action is taken.
+         * Otherwise, the `setTotal()` method is called to update the total.
+         */
+        this.discount.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // discount > new value
+                if (Double.parseDouble(discount.getText()) > Double.parseDouble(discount.getText())) {
+                    //no action
+                } else if (newValue.isEmpty()) {
+                    //no action
+                } else if (discount.getText().isEmpty()) {
+                    //no action
+                } else {
+                    setTotal();
+                }
+
+            }
+
+        });
+    }
+    
     public void product_load() throws SQLException {
-        ObservableList<product> products = productmodel.get_all_products();
+        this.ordersmodel.updateSubtotal();
+        src_sub_total = ordersmodel.get_sub_total();
+        this.subtotal.setText("P"+src_sub_total);
+        this.setTotal();
+        
+        ObservableList<product> products = this.productmodel.get_all_products();
         int row = 1;
         int column = 0;
     
         // Clear the product grid before reloading products
         product_grid.getChildren().clear();
     
+        /**
+         * Loads and displays product cards in a grid layout, handling click events to
+         * create new orders.
+         * This code is responsible for the following tasks:
+         * - Loads product card UI elements and sets their data
+         * - Filters ingredient costs and store ingredients based on the current product
+         * - Calculates the stock available for each product
+         * - Adds event handlers to the product cards to handle click events
+         * - Creates new order UI elements and updates the order grid, order model, and
+         * total subtotal when a product is clicked
+         */
         try {
             for (int i = 0; i < products.size(); i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/restaurant/views/product_card.fxml"));
                 AnchorPane product_card = fxmlLoader.load();
                 product_card_controller productcardcontroller = fxmlLoader.getController();
-    
+
                 ArrayList<ingredient_cost> all_ingredients_cost = this.ingredient_cost.get_all_Ingredient_costs();
                 ArrayList<ingredient_cost> filtered_Ingredient_costs = new ArrayList<>();
                 ArrayList<store_ingredient> st = this.storeingredientmodel.get_store_Ingredients();
                 ArrayList<store_ingredient> filtered_storeingredientmodel = new ArrayList<>();
                 ArrayList<Double> calculate_stock = new ArrayList<>();
-    
                 // Filter ingredient costs and store ingredients
                 for (int ii = 0; ii < all_ingredients_cost.size(); ii++) {
                     int productID = all_ingredients_cost.get(ii).getProductID();
@@ -118,18 +239,18 @@ public class stuff_pos_controller implements Initializable {
                         filtered_Ingredient_costs.add(all_ingredients_cost.get(ii));
                     }
                 }
-    
+
                 for (store_ingredient ST : st) {
                     if (ST.getStoreID() == this.storeID) {
                         filtered_storeingredientmodel.add(ST);
                     }
                 }
-    
+
                 // Calculate product stock
                 for (int iii = 0; iii < filtered_Ingredient_costs.size(); iii++) {
                     int ProductingredientID = filtered_Ingredient_costs.get(iii).getIngredientID();
                     double ingredient_cost_per_current_product = filtered_Ingredient_costs.get(iii).getQuantity();
-    
+
                     for (store_ingredient fst : filtered_storeingredientmodel) {
                         if (fst.get_ingredientID() == ProductingredientID) {
                             double productfromingredient = fst.get_stock() / ingredient_cost_per_current_product;
@@ -137,52 +258,59 @@ public class stuff_pos_controller implements Initializable {
                         }
                     }
                 }
-    
+
                 double product_stock = Collections.min(calculate_stock);
                 products.get(i).setStock((int) product_stock);
                 productcardcontroller.setdata(products.get(i));
-    
+
                 // Add event handler for product card click
                 int index = i;
                 product_card.setOnMouseClicked(event -> {
-                    try {
-                        FXMLLoader orderfxmlLoader = new FXMLLoader();
-                        orderfxmlLoader.setLocation(getClass().getResource("/restaurant/views/order_view.fxml"));
-                        AnchorPane orderPane = orderfxmlLoader.load();
-                        order_controller order_controller = orderfxmlLoader.getController();
-                        System.out.println("You clicked the product card name: " + products.get(index).getName());
-                        for (ingredient_cost fic : filtered_Ingredient_costs) {
-                            System.out.println(fic.getID());
-                            System.out.println(fic.getQuantity());
-                            System.out.println();
-                            System.out.println();
-                            for (store_ingredient fsi : filtered_storeingredientmodel) {
-                                if (fsi.get_ingredientID() == fic.getIngredientID()) {
-                                    double newstock = fsi.get_stock() - fic.getQuantity();
-                                    System.out.println("IngredientID: " + fsi.get_ingredientID() + " from " + fsi.getStoreID());
-                                    System.out.println("Old Stock: " + fsi.get_stock());
-                                    fsi.set_stock(newstock);
-                                    System.out.println("New Stock: " + newstock);
-                                    // Update the product card in the UI
-                                    double new_product_stock = products.get(index).getStock() - 1;
-                                    products.get(index).setStock((int) new_product_stock);
-                                    productcardcontroller.setdata(products.get(index));
+                    if (this.ordersmodel.order_exist(products.get(index))) {
+                        System.out.println("order exist");
+                    } else {
+                        try {
+                            FXMLLoader orderfxmlLoader = new FXMLLoader();
+                            orderfxmlLoader.setLocation(getClass().getResource("/restaurant/views/order_view.fxml"));
+                            AnchorPane orderPane = orderfxmlLoader.load();
+                            order_controller order_controller = orderfxmlLoader.getController();
+                            for (ingredient_cost fic : filtered_Ingredient_costs) {
+                                for (store_ingredient fsi : filtered_storeingredientmodel) {
+                                    if (fsi.get_ingredientID() == fic.getIngredientID()) {
+                                        double newstock = fsi.get_stock() - fic.getQuantity();
+                                        System.out.println("Old Stock: " + fsi.get_stock());
+                                        fsi.set_stock(newstock);
+                                    }
                                 }
                             }
+                            order Order = new order();
+                            
+                            Order.setinvoiceID(this.invoice);
+                            Order.setproductID(products.get(index));
+                            order_controller.setdata(Order);
+                            order_controller.setRoot(orderPane);
+                            order_controller.set_order_order_row(this.order_row);
+                            order_grid_pane.add(orderPane, 0, this.order_row++);
+                            this.ordersmodel.add_order(Order);
+                            this.ordersmodel.updateSubtotal();
+                            order_controller.set_pos(this);
+                            this.subtotal.setText("P" + src_sub_total);
+                            this.setTotal();
+                            product_load();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        Order.setinvoiceID(this.invoice);
-                        Order.setproductID(products.get(index));
-                        order_grid_pane.add(orderPane, 0, this.order_row++);
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 });
-    
+
                 if (column == 4) {
                     column = 0;
                     row++;
                 }
-    
+
                 // Add the product card to the grid
                 this.product_grid.add(product_card, column++, row);
                 GridPane.setMargin(product_card, new Insets(10));
@@ -192,8 +320,35 @@ public class stuff_pos_controller implements Initializable {
         }
     }
     
-    
+    public orders_model get_ordersmodel() {
+        return this.ordersmodel;
+    }
 
+    /**
+     * Sets a listener on the category choice box that updates the product list when
+     * a new category is selected.
+     * When a new category is selected, the product list is cleared and the products
+     * for the selected category are retrieved and loaded.
+     */
+    public void set_category_listener() {
+        this.category_choicebox.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    try {
+                        this.productmodel.clear_product_list();
+                        int categoryID = this.categoryMap.get(newValue);
+                        this.productmodel.retrieve_product_by_category(categoryID);
+                        product_load();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+        /**
+     * Initializes the controller by retrieving and setting up the necessary models
+     * and data.
+     * This method is called when the controller is first loaded.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.productmodel = new product_model();
@@ -210,6 +365,12 @@ public class stuff_pos_controller implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.Order = new order();
+        this.ordersmodel = new orders_model();
+        set_onchange_discount(this.discount);
+        this.categories = new ArrayList<>();
+        this.CategoryModel = new category_model();
+        this.categoryMap = new HashMap<>();
+        this.set_category_listener();
+        
     }
 }

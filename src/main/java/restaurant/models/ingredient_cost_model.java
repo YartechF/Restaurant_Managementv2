@@ -15,10 +15,9 @@ public class ingredient_cost_model extends database implements Initializable {
 
     private ArrayList<ingredient_cost> Ingredient_cost = new ArrayList<>();
 
-
     public void create_ingredient_cost(int ingredientID, int productID, double quantity) throws SQLException {
         String sql = """
-                INSERT INTO `tbl_ingredient_cost` (`ingredientID`, `productID`, `quantity`) VALUES (?, ?, ?);
+                INSERT INTO `tbl_ingredient_cost` (`ingredientID`, `productID`, `quantity`) VALUES (?,?,?);
                 """;
         ps = getConnection().prepareStatement(sql);
         ps.setInt(1, ingredientID);
@@ -26,7 +25,6 @@ public class ingredient_cost_model extends database implements Initializable {
         ps.setDouble(3, quantity);
         ps.executeUpdate();
         ps.close();
-        getConnection().close();
     }
 
     public void update_ingredient_cost(int ingredientID, int productID, double quantity) throws SQLException {
@@ -41,7 +39,6 @@ public class ingredient_cost_model extends database implements Initializable {
         ps.setInt(5, productID);
         ps.executeUpdate();
         ps.close();
-        getConnection().close();
     }
 
     public void delete_ingredient_cost(int ingredientID, int productID) throws SQLException {
@@ -53,7 +50,6 @@ public class ingredient_cost_model extends database implements Initializable {
         ps.setInt(2, productID);
         ps.executeUpdate();
         ps.close();
-        getConnection().close();
     }
 
     public ArrayList<ingredient_cost> get_all_Ingredient_costs() {
@@ -75,22 +71,30 @@ public class ingredient_cost_model extends database implements Initializable {
             Ingredientcost.setQuantity(rs.getDouble("quantity"));
             Ingredient_cost.add(Ingredientcost);
         }
-        
-        getConnection().close();
+        ps.close();
     }
 
     // retrieve ingredients cost base on product
-
-    public void cost_ingredient(int ID, double qty){
-        for(ingredient_cost ic:Ingredient_cost){
-            if(ic.getID() == ID){
-               
-            }
+    public void retrive_ingredient_cost(int productID) throws SQLException {
+        String sql = """
+                SELECT * FROM `tbl_ingredient_cost` where productID =? ;
+                """;
+        ps = getConnection().prepareStatement(sql);
+        ps.setInt(1, productID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            ingredient_cost Ingredientcost = new ingredient_cost();
+            Ingredientcost.setID(rs.getInt("ID"));
+            Ingredientcost.setIngredientID(rs.getInt("ingredientID"));
+            Ingredientcost.setProductID(rs.getInt("productID"));
+            Ingredientcost.setQuantity(rs.getDouble("quantity"));
+            Ingredient_cost.add(Ingredientcost);
         }
+        ps.close();
     }
 
+    //create cost_ingredient
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-
 }

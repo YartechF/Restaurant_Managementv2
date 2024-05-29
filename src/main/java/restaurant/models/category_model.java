@@ -77,4 +77,5 @@ public class category_model extends database {
             return null;
         }
     }
+    //create fuction retrieve specific category return type resultset
 }

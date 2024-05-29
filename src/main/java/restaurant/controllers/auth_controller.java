@@ -29,6 +29,12 @@ public class auth_controller {
         this.User = new user();
     }
 
+    /**
+     * Retrieves the controller for the "stuff_view" FXML view.
+     *
+     * @return the Stuffcontroller instance, or null if an IOException occurs while
+     *         loading the FXML file.
+     */
     stuff_controller get_stuff_view_controller() {
         try {
             this.stuff_view = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_view.fxml"));
@@ -51,6 +57,15 @@ public class auth_controller {
     @FXML
     private TextField username_tf;
 
+    /**
+     * Handles the staff functionality for the current user.
+     * This method loads the "stuff_view.fxml" scene, initializes the stuff
+     * controller, and sets the new scene on the current stage.
+     *
+     * @param current_user the current user
+     * @param event        the mouse event that triggered this method
+     * @throws SQLException if there is an issue accessing the database
+     */
     void staff(user current_user, MouseEvent event) throws SQLException {
         try {
             // Load the next scene (e.g., stuff screen)
@@ -74,6 +89,15 @@ public class auth_controller {
         }
     }
 
+    /**
+     * Handles the login button click event.
+     * Attempts to log in the user and redirects to the appropriate view based on
+     * the user's role.
+     *
+     * @param event The mouse event that triggered the login button click.
+     * @throws SQLException If there is an error accessing the database during the
+     *                      login process.
+     */
     @FXML
     void login_btn_e(MouseEvent event) throws SQLException {
         user current_user = login();

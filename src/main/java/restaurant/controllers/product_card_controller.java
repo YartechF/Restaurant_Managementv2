@@ -32,7 +32,6 @@ public class product_card_controller {
         this.productID = Product.getID();
         this.product_name.setText(Product.getName());
         this.product_price.setText("₱" + String.valueOf(Product.getPrice()));
-        System.out.println(Product.getStock());
         this.product_stock.setText("Stock: " + String.valueOf((int) Product.getStock()));
         File file = new File(Product.getPicture());
         Image image = new Image(file.toURI().toString());

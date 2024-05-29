@@ -12,9 +12,9 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="258.0" style="-fx-background-radius: 15;">
          <children>
-            <HBox prefHeight="51.0" prefWidth="52.0">
+            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="51.0">
                <children>
-                  <ImageView fx:id="product_img" fitHeight="51.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="product_img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
                      <image>
                         <Image url="@../../../../../../../Downloads/burger3-removebg-preview.png" />
                      </image>
@@ -28,11 +28,15 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="51.0" prefWidth="88.0">
                <children>
-                  <ImageView fx:id="minus" onMouseClicked="#minus_btn">
-                     <image>
-                        <Image url="@icons/minus.png" />
-                     </image>
-                  </ImageView>
+                  <HBox alignment="CENTER" onMouseClicked="#minus_e" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="minus" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@icons/minus.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label fx:id="qty" text="12" textFill="#d36135">
@@ -42,11 +46,15 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ImageView fx:id="plus" onMouseClicked="#plus_btn">
-                     <image>
-                        <Image url="@icons/add.png" />
-                     </image>
-                  </ImageView>
+                  <HBox alignment="CENTER" onMouseClicked="#plus_e" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="plus" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@icons/add.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="51.0" prefWidth="58.0">

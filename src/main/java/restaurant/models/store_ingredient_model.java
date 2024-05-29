@@ -83,8 +83,8 @@ public class store_ingredient_model extends database {
             StoreIngredient.set_stock(rs.getDouble("stock"));
             StoreIngredients.add(StoreIngredient);
         }
-
     }
+
 
     public ArrayList<store_ingredient> get_store_Ingredients() {
         return StoreIngredients;

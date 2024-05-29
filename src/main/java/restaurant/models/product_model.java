@@ -15,6 +15,9 @@ public class product_model extends database implements Initializable {
     private PreparedStatement ps;
     private ObservableList<product> ProductsList = FXCollections.observableArrayList();
 
+    public void clear_product_list(){
+        ProductsList.clear();
+    }
     public void create_product(String name, double price, int categoryID, String picture, String type) {
         try {
             String sql = "insert into tbl_product(name,price,categoryID,picture,type)values(?,?,?,?,?)";
@@ -76,9 +79,28 @@ public class product_model extends database implements Initializable {
                 Product.setPrice(rs.getDouble("price"));
                 ProductsList.add(Product);
             }
-            ps.close();
-            rs.close();
-            getConnection().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // retreive product in specific category
+    public void retrieve_product_by_category(int categoryID) {
+        try {
+            String sql = "select * from tbl_product where categoryID=?";
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, categoryID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                product Product = new product();
+                Product.setID(rs.getInt("ID"));
+                Product.setName(rs.getString("name"));
+                Product.setCategory_ID(rs.getInt("categoryID"));
+                Product.setPicture(rs.getString("picture"));
+                Product.setType(rs.getString("type"));
+                Product.setPrice(rs.getDouble("price"));
+                ProductsList.add(Product);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

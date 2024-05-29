@@ -6,6 +6,8 @@ public class order {
     private product Product;
     private int quantity;
 
+    
+
     public order() {
         this.quantity = 1;
     }
@@ -22,7 +24,7 @@ public class order {
         this.Product = Product;
     }
 
-    public product getproductID() {
+    public product getproduct() {
         return this.Product;
     }
 

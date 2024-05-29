@@ -75,7 +75,6 @@ public class create_invoice_dialog_controller implements Initializable {
             e.printStackTrace();
         }
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         invoice = new Invoice();
