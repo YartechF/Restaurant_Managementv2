@@ -59,20 +59,6 @@ public class invoice_model extends database {
         }
     }
 
-    public void invoice_set_discount(int invoiceID, double discount) {
-        String sql = "UPDATE `tbl_invoice` SET `discount`=? WHERE `invoiceID`=?";
-        try {
-            ps = getConnection().prepareStatement(sql);
-            ps.setDouble(1, discount);
-            ps.setInt(2, invoiceID);
-            ps.executeUpdate();
-            ps.close();
-            getConnection().close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     // delete
     public void delete_invoice(int invoiceID) {
         String sql = "DELETE FROM `tbl_invoice` WHERE `invoiceID`=?";

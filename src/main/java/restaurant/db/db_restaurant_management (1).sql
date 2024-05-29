@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 05:04 PM
+-- Generation Time: May 29, 2024 at 09:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -62,18 +62,21 @@ CREATE TABLE `tbl_ingredient` (
   `ID` int(11) NOT NULL,
   `name` varchar(75) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `ingredient_type_ID` int(11) NOT NULL
+  `ingredient_type_ID` int(11) NOT NULL,
+  `IsProductIngredient` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_ingredient`
 --
 
-INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_type_ID`) VALUES
-(3, 'patty', 'for burger', 2),
-(4, 'bun', 'for burger', 2),
-(5, 'susaige', NULL, 2),
-(6, 'topping', NULL, 1);
+INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_type_ID`, `IsProductIngredient`) VALUES
+(3, 'patty', 'for burger', 2, 1),
+(4, 'bun', 'for burger', 2, 1),
+(5, 'susaige', NULL, 2, 1),
+(6, 'topping', NULL, 1, 1),
+(7, 'Coke', 'non ingredient', 2, 0),
+(8, 'Pepsi 20oz', NULL, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -82,6 +85,7 @@ INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_type_ID`)
 --
 
 CREATE TABLE `tbl_ingredient_cost` (
+  `ID` int(11) NOT NULL,
   `ingredientID` int(11) NOT NULL,
   `productID` int(11) NOT NULL,
   `quantity` double DEFAULT NULL
@@ -91,11 +95,13 @@ CREATE TABLE `tbl_ingredient_cost` (
 -- Dumping data for table `tbl_ingredient_cost`
 --
 
-INSERT INTO `tbl_ingredient_cost` (`ingredientID`, `productID`, `quantity`) VALUES
-(4, 23, 1),
-(3, 23, 2),
-(5, 24, 5),
-(6, 24, 0.25);
+INSERT INTO `tbl_ingredient_cost` (`ID`, `ingredientID`, `productID`, `quantity`) VALUES
+(1, 4, 23, 1),
+(2, 3, 23, 2),
+(3, 5, 24, 5),
+(4, 6, 24, 0.25),
+(5, 7, 27, 1),
+(6, 8, 28, 1);
 
 -- --------------------------------------------------------
 
@@ -131,26 +137,6 @@ CREATE TABLE `tbl_invoice` (
   `ispaid` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_invoice`
---
-
-INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`) VALUES
-(1, 'blah', 0, 1, 0, 0),
-(2, '', 0, 1, 0, 0),
-(3, '', 0, 1, 0, 0),
-(4, '', 0, 1, 0, 0),
-(5, '', 0, 1, 0, 0),
-(6, '', 0, 1, 0, 0),
-(7, '', 0, 1, 0, 0),
-(8, '', 0, 1, 0, 0),
-(9, '', 0, 1, 0, 0),
-(10, '', 0, 1, 0, 0),
-(11, '', 0, 1, 0, 0),
-(12, '', 0, 1, 0, 0),
-(13, '', 0, 1, 0, 0),
-(14, '', 0, 1, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -158,24 +144,11 @@ INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `disco
 --
 
 CREATE TABLE `tbl_orders` (
+  `ID` int(11) NOT NULL,
   `invoiceID` int(11) NOT NULL,
   `productID` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_orders`
---
-
-INSERT INTO `tbl_orders` (`invoiceID`, `productID`, `quantity`) VALUES
-(1, 23, 3),
-(1, 24, 3),
-(3, 23, 3),
-(12, 23, 1),
-(13, 24, 1),
-(13, 23, 1),
-(14, 24, 1),
-(14, 23, 1);
 
 -- --------------------------------------------------------
 
@@ -229,7 +202,9 @@ CREATE TABLE `tbl_product` (
 
 INSERT INTO `tbl_product` (`ID`, `name`, `price`, `categoryID`, `picture`, `type`) VALUES
 (23, 'Burger', 99, 3, 'C:\\Users\\Administrator\\Desktop\\burger3.png', NULL),
-(24, 'pizza', 100, 3, 'C:\\Users\\Administrator\\Downloads\\pizza-2.png', NULL);
+(24, 'pizza', 100, 3, 'C:\\Users\\Administrator\\Downloads\\pizza-2.png', NULL),
+(27, 'Cola-cola', 45, 7, 'C:\\Users\\Administrator\\Downloads\\cola-cola.png', NULL),
+(28, 'pepsi 20oz', 45, 7, 'C:\\Users\\Administrator\\Downloads\\pepsi.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -280,6 +255,7 @@ INSERT INTO `tbl_store` (`ID`, `name`, `decription`) VALUES
 --
 
 CREATE TABLE `tbl_store_ingredient` (
+  `ID` int(11) NOT NULL,
   `ingredientID` int(11) DEFAULT NULL,
   `storeID` int(11) DEFAULT NULL,
   `stock` double DEFAULT NULL
@@ -289,13 +265,15 @@ CREATE TABLE `tbl_store_ingredient` (
 -- Dumping data for table `tbl_store_ingredient`
 --
 
-INSERT INTO `tbl_store_ingredient` (`ingredientID`, `storeID`, `stock`) VALUES
-(3, 1, 300),
-(4, 1, 300),
-(3, 2, 50),
-(4, 2, 50),
-(5, 1, 100),
-(6, 1, 100);
+INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
+(1, 3, 1, 999),
+(2, 4, 1, 999),
+(3, 3, 2, 50),
+(4, 4, 2, 50),
+(5, 5, 1, 800),
+(6, 6, 1, 900),
+(7, 7, 1, 100),
+(8, 8, 1, 50);
 
 -- --------------------------------------------------------
 
@@ -392,6 +370,7 @@ ALTER TABLE `tbl_ingredient`
 -- Indexes for table `tbl_ingredient_cost`
 --
 ALTER TABLE `tbl_ingredient_cost`
+  ADD PRIMARY KEY (`ID`),
   ADD KEY `ingredientID` (`ingredientID`),
   ADD KEY `productID` (`productID`);
 
@@ -412,6 +391,7 @@ ALTER TABLE `tbl_invoice`
 -- Indexes for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
+  ADD PRIMARY KEY (`ID`),
   ADD KEY `invoiceID` (`invoiceID`),
   ADD KEY `fk_orders_products` (`productID`);
 
@@ -445,6 +425,7 @@ ALTER TABLE `tbl_store`
 -- Indexes for table `tbl_store_ingredient`
 --
 ALTER TABLE `tbl_store_ingredient`
+  ADD PRIMARY KEY (`ID`),
   ADD KEY `ingredientID` (`ingredientID`),
   ADD KEY `storeID` (`storeID`);
 
@@ -490,6 +471,12 @@ ALTER TABLE `tbl_company`
 -- AUTO_INCREMENT for table `tbl_ingredient`
 --
 ALTER TABLE `tbl_ingredient`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_ingredient_cost`
+--
+ALTER TABLE `tbl_ingredient_cost`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -502,7 +489,13 @@ ALTER TABLE `tbl_ingredient_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=536;
+
+--
+-- AUTO_INCREMENT for table `tbl_orders`
+--
+ALTER TABLE `tbl_orders`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=515;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
@@ -514,7 +507,7 @@ ALTER TABLE `tbl_person`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tbl_sales`
@@ -527,6 +520,12 @@ ALTER TABLE `tbl_sales`
 --
 ALTER TABLE `tbl_store`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_store_ingredient`
+--
+ALTER TABLE `tbl_store_ingredient`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_table`

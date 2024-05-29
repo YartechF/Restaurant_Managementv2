@@ -30,6 +30,7 @@ import restaurant.models.store_ingredient;
 import restaurant.models.store_ingredient_model;
 import restaurant.models.user;
 import restaurant.models.ingredient_cost_model;
+import restaurant.models.invoice_model;
 import restaurant.models.order;
 
 import java.util.ArrayList;
@@ -62,7 +63,9 @@ public class stuff_pos_controller implements Initializable {
     private double src_sub_total;
     private category_model CategoryModel;
     private ArrayList<category> categories;
-    Map<String, Integer> categoryMap;
+    private Map<String, Integer> categoryMap;
+    private invoice_model InvoiceModel;
+
 
     public stuff_pos_controller() throws SQLException, IOException {
 
@@ -124,11 +127,16 @@ public class stuff_pos_controller implements Initializable {
     @FXML
     void cancel_order_e(MouseEvent event) {
         System.out.println("cancel order");
+        
     }
 
     @FXML
     void create_new_order_e(MouseEvent event) {
-        System.out.println("create new order");
+        for(order ListOrder:this.ordersmodel.get_orders()){
+            ordersmodel.create_order(ListOrder);
+        }
+        
+        // cost all ingredient
     }
     protected void load_category() throws SQLException{
         
@@ -285,8 +293,8 @@ public class stuff_pos_controller implements Initializable {
                             }
                             order Order = new order();
                             
-                            Order.setinvoiceID(this.invoice);
-                            Order.setproductID(products.get(index));
+                            Order.setinvoice(this.invoice);
+                            Order.setproduct(products.get(index));
                             order_controller.setdata(Order);
                             order_controller.setRoot(orderPane);
                             order_controller.set_order_order_row(this.order_row);
@@ -371,6 +379,7 @@ public class stuff_pos_controller implements Initializable {
         this.CategoryModel = new category_model();
         this.categoryMap = new HashMap<>();
         this.set_category_listener();
+        this.InvoiceModel = new invoice_model();
         
     }
 }

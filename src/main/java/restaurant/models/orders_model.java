@@ -24,6 +24,18 @@ public class orders_model extends database {
     public void delete_order(order Order){
         orders.remove(Order);
     }
+    public void create_order(order Order){
+        String sql = "INSERT INTO `tbl_orders`(`invoiceID`, `productID`, `quantity`) VALUES (?,?,?)";
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, Order.getinvoice().getID());
+            ps.setInt(2, Order.getproduct().getID());
+            ps.setInt(3, Order.getquantity());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     //check order exist
     public boolean order_exist(product Product) {
         for (order o : orders) {
@@ -42,6 +54,9 @@ public class orders_model extends database {
             double product_subtotal = o.getproduct().getPrice() * o.getquantity();
             subtatal += product_subtotal;
         }
+    }
+    public ArrayList<order> get_orders() {
+        return orders;
     }
 
     

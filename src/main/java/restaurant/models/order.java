@@ -12,15 +12,15 @@ public class order {
         this.quantity = 1;
     }
 
-    public void setinvoiceID(Invoice invoice) {
+    public void setinvoice(Invoice invoice) {
         this.invoice = invoice;
     }
 
-    public Invoice getinvoiceID() {
+    public Invoice getinvoice() {
         return this.invoice;
     }
 
-    public void setproductID(product Product) {
+    public void setproduct(product Product) {
         this.Product = Product;
     }
 
