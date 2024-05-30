@@ -7,6 +7,7 @@ public class Invoice {
     private int tableID;
     private double discount;
     private boolean ispaid;
+    private int storeID;
 
     public Invoice() {
         istakeout = false;
@@ -17,6 +18,13 @@ public class Invoice {
     // create getters and setters
     public int getID() {
         return ID;
+    }
+    public void setStoreID(int storeID){
+        this.storeID = storeID;
+    }
+    
+    public int getStoreID(){
+        return this.storeID;
     }
 
     public void setID(int ID) {

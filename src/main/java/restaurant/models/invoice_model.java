@@ -28,13 +28,14 @@ public class invoice_model extends database {
 
     public int create_invoice(Invoice invoice)
             throws SQLException {
-        String sql = "INSERT INTO `tbl_invoice`(`costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO `tbl_invoice`(`costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`,`storeID`) VALUES (?,?,?,?,?,?)";
         ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, invoice.getCostumer_name());
         ps.setBoolean(2, invoice.get_istakeout());
         ps.setInt(3, invoice.getTableID());
         ps.setDouble(4, invoice.getDiscount());
         ps.setBoolean(5, invoice.get_ispaid());
+        ps.setInt(6, invoice.getStoreID());
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
         if (rs.next()) {

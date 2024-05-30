@@ -131,12 +131,30 @@ public class stuff_pos_controller implements Initializable {
     }
 
     @FXML
-    void create_new_order_e(MouseEvent event) {
-        for(order ListOrder:this.ordersmodel.get_orders()){
-            ordersmodel.create_order(ListOrder);
+    void create_new_order_e(MouseEvent event){
+        System.out.println("new order clicked");
+        // Create orders from the order model
+        for (order listOrder : this.ordersmodel.get_orders()) {
+            listOrder.setIsdone(true);
+            ordersmodel.create_order(listOrder);
+
+            ResultSet rs;
+            try {
+                rs = ingredient_cost.retrive_ingredient_cost_by_productID(listOrder.getproduct().getID());
+                while (rs.next()) {
+                    if(listOrder.getproduct().getID() == rs.getInt("productID")){
+                        double totalcost = rs.getDouble("quantity") * listOrder.getquantity();
+                        storeingredientmodel.cost_ingredient_by_storeID(this.current_user.getStoreID(), rs.getInt("ingredientID"), totalcost);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+
         }
         
-        // cost all ingredient
+
     }
     protected void load_category() throws SQLException{
         

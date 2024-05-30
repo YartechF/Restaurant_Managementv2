@@ -5,8 +5,16 @@ public class order {
     private Invoice invoice;
     private product Product;
     private int quantity;
+    private boolean isdone;
 
     
+    public void setIsdone(boolean isdone) {
+        this.isdone = isdone;
+    }
+
+    public boolean getIsdone() {
+        return this.isdone;
+    }
 
     public order() {
         this.quantity = 1;

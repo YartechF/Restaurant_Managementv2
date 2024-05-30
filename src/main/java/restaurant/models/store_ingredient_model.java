@@ -10,6 +10,7 @@ import restaurant.db.database;
 public class store_ingredient_model extends database {
     private PreparedStatement ps;
 
+    ArrayList<store_ingredient> old_storeingredients = new ArrayList<>();
     ArrayList<store_ingredient> StoreIngredients = new ArrayList<>();
 
     public void create_store_ingredient(int ingredientID, int storeID, double stock) throws SQLException {
@@ -82,9 +83,23 @@ public class store_ingredient_model extends database {
             StoreIngredient.set_ingredientID(rs.getInt("ingredientID"));
             StoreIngredient.set_stock(rs.getDouble("stock"));
             StoreIngredients.add(StoreIngredient);
+            old_storeingredients.add(StoreIngredient);
         }
     }
 
+    public void cost_ingredient_by_storeID(int storeID, int ingredientID, double qty) throws SQLException{
+        String sql = "UPDATE tbl_store_ingredient set stock = stock -? where storeID =? and ingredientID =?";
+        this.ps = getConnection().prepareStatement(sql);
+        this.ps.setDouble(1, qty);
+        this.ps.setInt(2, storeID);
+        this.ps.setInt(3, ingredientID);
+        this.ps.executeUpdate();
+        this.ps.close();
+    }
+
+    public ArrayList<store_ingredient> get_old_storeingredients(){
+        return old_storeingredients;
+    }
 
     public ArrayList<store_ingredient> get_store_Ingredients() {
         return StoreIngredients;

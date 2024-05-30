@@ -25,12 +25,13 @@ public class orders_model extends database {
         orders.remove(Order);
     }
     public void create_order(order Order){
-        String sql = "INSERT INTO `tbl_orders`(`invoiceID`, `productID`, `quantity`) VALUES (?,?,?)";
+        String sql = "INSERT INTO `tbl_orders`(`invoiceID`, `productID`, `quantity`,`Isdone`) VALUES (?,?,?,?)";
         try {
             ps = getConnection().prepareStatement(sql);
             ps.setInt(1, Order.getinvoice().getID());
             ps.setInt(2, Order.getproduct().getID());
             ps.setInt(3, Order.getquantity());
+            ps.setBoolean(4, Order.getIsdone());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

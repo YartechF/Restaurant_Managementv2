@@ -93,6 +93,16 @@ public class ingredient_cost_model extends database implements Initializable {
         ps.close();
     }
 
+    public ResultSet retrive_ingredient_cost_by_productID(int productID) throws SQLException {
+        String sql = """
+                SELECT * FROM `tbl_ingredient_cost` where productID =? ;
+                """;
+        ps = getConnection().prepareStatement(sql);
+        ps.setInt(1, productID);
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
+
     //create cost_ingredient
     @Override
     public void initialize(URL location, ResourceBundle resources) {

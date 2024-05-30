@@ -87,6 +87,7 @@ public class stuff_controller {
         if (clickedbutton.get() == ButtonType.OK) {
             this.new_order_btn.setDisable(true);
             invoice = createinvoicedialogcontroller.getInvoice();
+            invoice.setStoreID(this.currentuser.getStoreID());
             int generatedInvoiceID = this.invoicemodel.create_invoice(invoice);
             invoice.setID(generatedInvoiceID);
             this.stuff_pos_controller.pos_set_invoice(invoice);
