@@ -16,14 +16,16 @@
       </Label>
       <AnchorPane layoutX="1.0" layoutY="91.0" prefHeight="811.0" prefWidth="1231.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <TableView layoutX="14.0" layoutY="5.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="5.0">
+            <TableView fx:id="order_table" layoutX="14.0" layoutY="5.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="5.0">
               <columns>
-                <TableColumn editable="false" prefWidth="128.0" style="-fx-background-color: e8e8e8;" text="Bill no" />
-                <TableColumn prefWidth="273.0" style="-fx-background-color: e8e8e8;" text="Date Time" />
-                  <TableColumn prefWidth="140.0" style="-fx-background-color: e8e8e8;" text="Total Product" />
-                  <TableColumn prefWidth="170.0" style="-fx-background-color: e8e8e8;" text="Total Amount" />
-                  <TableColumn prefWidth="178.0" style="-fx-background-color: e8e8e8;" text="Paid Status" />
-                  <TableColumn prefWidth="331.0" style="-fx-background-color: e8e8e8;" text="Action" />
+                <TableColumn fx:id="bill_no" editable="false" prefWidth="128.0" style="-fx-background-color: e8e8e8;" text="Bill no" />
+                <TableColumn fx:id="data_time" prefWidth="273.0" style="-fx-background-color: e8e8e8;" text="Date Time" />
+                  <TableColumn fx:id="total_product" prefWidth="140.0" style="-fx-background-color: e8e8e8;" text="Total Product" />
+                  <TableColumn fx:id="total_amount" prefWidth="170.0" style="-fx-background-color: e8e8e8;" text="Total Amount" />
+                  <TableColumn fx:id="paid_status" style="-fx-background-color: e8e8e8;" text="Paid Status" />
+                  <TableColumn prefWidth="139.0" style="-fx-background-color: e8e8e8;" text="Table" />
+                  <TableColumn fx:id="action" prefWidth="288.0" style="-fx-background-color: e8e8e8;" text="Action" />
+                  <TableColumn prefWidth="139.0" style="-fx-background-color: e8e8e8;" text="Table" />
               </columns>
             </TableView>
          </children>

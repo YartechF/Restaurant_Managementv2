@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 09:45 PM
+-- Generation Time: Jun 01, 2024 at 12:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -96,12 +96,12 @@ CREATE TABLE `tbl_ingredient_cost` (
 --
 
 INSERT INTO `tbl_ingredient_cost` (`ID`, `ingredientID`, `productID`, `quantity`) VALUES
-(1, 4, 23, 1),
-(2, 3, 23, 2),
-(3, 5, 24, 5),
-(4, 6, 24, 0.25),
-(5, 7, 27, 1),
-(6, 8, 28, 1);
+(7, 4, 23, 2),
+(8, 3, 23, 2),
+(9, 7, 27, 1),
+(10, 8, 28, 1),
+(11, 6, 24, 0.25),
+(12, 5, 24, 5);
 
 -- --------------------------------------------------------
 
@@ -134,8 +134,27 @@ CREATE TABLE `tbl_invoice` (
   `istakeout` tinyint(1) DEFAULT NULL,
   `tableID` int(11) DEFAULT NULL,
   `discount` double DEFAULT NULL,
-  `ispaid` tinyint(1) DEFAULT NULL
+  `ispaid` tinyint(1) DEFAULT NULL,
+  `storeID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_invoice`
+--
+
+INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`) VALUES
+(584, '', 0, 1, 0, 0, 1),
+(585, '', 0, 1, 0, 0, 1),
+(586, '', 0, 1, 0, 0, 1),
+(587, '', 0, 1, 0, 0, 1),
+(588, '', 0, 1, 0, 0, 1),
+(589, '', 0, 1, 0, 0, 1),
+(590, '', 0, 1, 0, 0, 1),
+(591, '', 0, 1, 0, 0, 1),
+(592, '', 0, 1, 0, 0, 1),
+(594, '', 0, 1, 0, 0, 1),
+(595, '', 0, 1, 0, 0, 1),
+(596, '', 0, 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -147,8 +166,24 @@ CREATE TABLE `tbl_orders` (
   `ID` int(11) NOT NULL,
   `invoiceID` int(11) NOT NULL,
   `productID` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `quantity` int(11) DEFAULT NULL,
+  `Isdone` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_orders`
+--
+
+INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
+(628, 585, 23, 2, 1),
+(629, 585, 24, 1, 1),
+(630, 585, 23, 2, 1),
+(631, 585, 24, 1, 1),
+(632, 586, 23, 1, 1),
+(633, 586, 28, 1, 1),
+(634, 587, 23, 2, 1),
+(635, 592, 27, 1, 1),
+(636, 592, 23, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -266,14 +301,14 @@ CREATE TABLE `tbl_store_ingredient` (
 --
 
 INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
-(1, 3, 1, 999),
-(2, 4, 1, 999),
+(1, 3, 1, 917),
+(2, 4, 1, 917),
 (3, 3, 2, 50),
 (4, 4, 2, 50),
-(5, 5, 1, 800),
-(6, 6, 1, 900),
-(7, 7, 1, 100),
-(8, 8, 1, 50);
+(5, 5, 1, 735),
+(6, 6, 1, 896.75),
+(7, 7, 1, 92),
+(8, 8, 1, 48);
 
 -- --------------------------------------------------------
 
@@ -477,7 +512,7 @@ ALTER TABLE `tbl_ingredient`
 -- AUTO_INCREMENT for table `tbl_ingredient_cost`
 --
 ALTER TABLE `tbl_ingredient_cost`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_ingredient_type`
@@ -489,13 +524,13 @@ ALTER TABLE `tbl_ingredient_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=536;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=597;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=515;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=637;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`

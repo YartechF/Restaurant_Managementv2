@@ -9,6 +9,7 @@ public class Invoice {
     private boolean ispaid;
     private int storeID;
     private table Table;
+    private double total_amount;
 
     public Invoice() {
         istakeout = false;
@@ -77,5 +78,12 @@ public class Invoice {
     public table getTable(){
         return this.Table;
     }
+    public void Set_total_amount(double total_amount){
+        this.total_amount =  total_amount;
+    }
+    public double get_total_amount(){
+        return this.total_amount;
+    }
+
 
 }
