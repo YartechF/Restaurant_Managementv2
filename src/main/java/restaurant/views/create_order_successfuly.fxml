@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="166.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <DialogPane layoutX="2.0" layoutY="88.0" prefHeight="62.0" prefWidth="392.0">
-         <buttonTypes>
-            <ButtonType fx:constant="OK" />
-         </buttonTypes>
-      </DialogPane>
-      <Label layoutX="113.0" layoutY="69.0" text="New Order Created">
-         <font>
-            <Font name="System Bold Italic" size="19.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<DialogPane expanded="true" prefHeight="138.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <HBox alignment="CENTER" prefHeight="99.0" prefWidth="360.0">
+         <children>
+            <Label text="Order Created">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </content>
+</DialogPane>

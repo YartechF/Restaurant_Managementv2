@@ -13,7 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
@@ -36,6 +40,7 @@ import restaurant.models.order;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,6 +51,7 @@ import restaurant.models.category_model;
 import restaurant.models.orders_model;
 import restaurant.models.ingredient_cost;
 import restaurant.models.category;
+import restaurant.controllers.order_succ_controller;
 
 public class stuff_pos_controller implements Initializable {
     private String storename;
@@ -65,6 +71,8 @@ public class stuff_pos_controller implements Initializable {
     private ArrayList<category> categories;
     private Map<String, Integer> categoryMap;
     private invoice_model InvoiceModel;
+    private Parent order_succesful_card;
+    
 
 
     public stuff_pos_controller() throws SQLException, IOException {
@@ -129,32 +137,46 @@ public class stuff_pos_controller implements Initializable {
         System.out.println("cancel order");
         
     }
-
+    public Parent load_order_successfuly_card() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/restaurant/views/create_order_successfuly.fxml"));
+        return fxmlLoader.load();
+    }
+    
     @FXML
-    void create_new_order_e(MouseEvent event){
+    void create_new_order_e(MouseEvent event) throws IOException{
         System.out.println("new order clicked");
         // Create orders from the order model
+        
+
         for (order listOrder : this.ordersmodel.get_orders()) {
             listOrder.setIsdone(true);
             ordersmodel.create_order(listOrder);
+            
 
             ResultSet rs;
             try {
                 rs = ingredient_cost.retrive_ingredient_cost_by_productID(listOrder.getproduct().getID());
                 while (rs.next()) {
                     if(listOrder.getproduct().getID() == rs.getInt("productID")){
-                        double totalcost = rs.getDouble("quantity") * listOrder.getquantity();
+                        double ingredient_cost_quantity = rs.getDouble("quantity");
+                        int product_order_qty = listOrder.getquantity();
+                        double totalcost = ingredient_cost_quantity * product_order_qty;
                         storeingredientmodel.cost_ingredient_by_storeID(this.current_user.getStoreID(), rs.getInt("ingredientID"), totalcost);
                     }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+            dialog.getDialogPane().setContent(order_succesful_card);
+            Optional<ButtonType> result = dialog.showAndWait();
 
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                System.out.println("OK button is clicked");        
+            }
         }
-        
-
     }
     protected void load_category() throws SQLException{
         
@@ -232,7 +254,7 @@ public class stuff_pos_controller implements Initializable {
         int row = 1;
         int column = 0;
     
-        // Clear the product grid before reloading products
+        // Clear the product grid before reloadiang products
         product_grid.getChildren().clear();
     
         /**
@@ -398,6 +420,11 @@ public class stuff_pos_controller implements Initializable {
         this.categoryMap = new HashMap<>();
         this.set_category_listener();
         this.InvoiceModel = new invoice_model();
+        try {
+            this.order_succesful_card = load_order_successfuly_card();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
     }
 }
