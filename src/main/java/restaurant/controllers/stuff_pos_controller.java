@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -128,6 +129,8 @@ public class stuff_pos_controller implements Initializable {
     @FXML
     private TextField discount;
 
+    @FXML
+    private HBox no_order_hbox;
 
     public GridPane get_order_grid_pane() {
         return this.order_grid_pane;
@@ -145,38 +148,42 @@ public class stuff_pos_controller implements Initializable {
     
     @FXML
     void create_new_order_e(MouseEvent event) throws IOException{
-        System.out.println("new order clicked");
-        // Create orders from the order model
-        
+        int orderCount = this.ordersmodel.get_orders().size();
+        if(orderCount == 0){
+            no_order_hbox.setVisible(true);
+        }else{
+            for (order listOrder : this.ordersmodel.get_orders()) {
+                listOrder.setIsdone(true);
+                ordersmodel.create_order(listOrder);
 
-        for (order listOrder : this.ordersmodel.get_orders()) {
-            listOrder.setIsdone(true);
-            ordersmodel.create_order(listOrder);
-            
-
-            ResultSet rs;
-            try {
-                rs = ingredient_cost.retrive_ingredient_cost_by_productID(listOrder.getproduct().getID());
-                while (rs.next()) {
-                    if(listOrder.getproduct().getID() == rs.getInt("productID")){
-                        double ingredient_cost_quantity = rs.getDouble("quantity");
-                        int product_order_qty = listOrder.getquantity();
-                        double totalcost = ingredient_cost_quantity * product_order_qty;
-                        storeingredientmodel.cost_ingredient_by_storeID(this.current_user.getStoreID(), rs.getInt("ingredientID"), totalcost);
+                ResultSet rs;
+                try {
+                    rs = ingredient_cost.retrive_ingredient_cost_by_productID(listOrder.getproduct().getID());
+                    while (rs.next()) {
+                        if(listOrder.getproduct().getID() == rs.getInt("productID")){
+                            double ingredient_cost_quantity = rs.getDouble("quantity");
+                            int product_order_qty = listOrder.getquantity();
+                            double totalcost = ingredient_cost_quantity * product_order_qty;
+                            storeingredientmodel.cost_ingredient_by_storeID(this.current_user.getStoreID(), rs.getInt("ingredientID"), totalcost);
+                        }
                     }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
             Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-            dialog.getDialogPane().setContent(order_succesful_card);
-            Optional<ButtonType> result = dialog.showAndWait();
+                dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+                dialog.getDialogPane().setContent(order_succesful_card);
+                Optional<ButtonType> result = dialog.showAndWait();
 
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                System.out.println("OK button is clicked");        
-            }
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    System.out.println("OK button is clicked");        
+                }
+            this.ordersmodel.get_orders().clear();
+            no_order_hbox.setVisible(false);
         }
+        
+        
     }
     protected void load_category() throws SQLException{
         

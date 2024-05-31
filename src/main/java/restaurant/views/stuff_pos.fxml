@@ -61,6 +61,9 @@
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                     </rowConstraints>
                   </GridPane>
                </content>
             </ScrollPane>
@@ -69,7 +72,7 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="258.0">
                      <children>
                         <Pane prefHeight="42.0" prefWidth="13.0" />
-                        <Label text="Sub Total">
+                        <Label text="Sub-total">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -128,7 +131,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <HBox alignment="CENTER" prefHeight="102.0" prefWidth="260.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 1; -fx-border-color: ffffff;" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="260.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 1; -fx-border-color: ffffff;" VBox.vgrow="ALWAYS">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#cancel_order_e" prefHeight="45.0" prefWidth="89.0" style="-fx-background-color: ffffff; -fx-background-radius: 15; -fx-border-color: E8E8E8; -fx-border-width: 2;" text="Cancel">
                      <font>
@@ -148,5 +151,14 @@
       <Label layoutX="30.0" layoutY="105.0" text="All Categories" />
       <ChoiceBox fx:id="category_choicebox" layoutX="825.0" layoutY="92.0" prefHeight="27.0" prefWidth="138.0" style="-fx-background-color: E8E8E8; -fx-background-radius: 5;" />
       <Label layoutX="825.0" layoutY="75.0" text="Select Category" />
+      <HBox fx:id="no_order_hbox" alignment="CENTER" layoutX="804.0" layoutY="23.0" prefHeight="42.0" prefWidth="181.0" visible="false">
+         <children>
+            <Label text="Please select an order" textFill="#d9534f">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

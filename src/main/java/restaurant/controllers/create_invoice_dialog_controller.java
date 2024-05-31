@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import restaurant.models.table_model;
 import restaurant.models.Invoice;
@@ -17,7 +18,7 @@ public class create_invoice_dialog_controller implements Initializable {
 
     private table_model table;
     private int storeID;
-
+    
     @FXML
     private TextField costomername_tf;
 
@@ -90,6 +91,7 @@ public class create_invoice_dialog_controller implements Initializable {
                 select_table.setDisable(false); // Enable the choice box
             }
         });
+        
     }
 
 }

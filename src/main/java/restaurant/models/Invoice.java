@@ -8,6 +8,7 @@ public class Invoice {
     private double discount;
     private boolean ispaid;
     private int storeID;
+    private table Table;
 
     public Invoice() {
         istakeout = false;
@@ -69,6 +70,12 @@ public class Invoice {
 
     public void setIspaid(boolean ispaid) {
         this.ispaid = ispaid;
+    }
+    public void setTable(table Table){
+        this.Table = Table;
+    }
+    public table getTable(){
+        return this.Table;
     }
 
 }

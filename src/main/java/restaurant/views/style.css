@@ -1,32 +1,33 @@
-.button{
-    -fx-background-radius:15;
-    -fx-border-radius:15;
-    -fx-background-color:#D36135;
-
+.button {
+  -fx-background-radius: 15;
+  -fx-border-radius: 15;
+  -fx-background-color: #d36135;
 }
-.text_field{
-    -fx-background-radius:10;
-    -fx-border-radius:10;
-    -fx-background-color:#E8E8E8;
+.text_field {
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-background-color: #e8e8e8;
 }
-.navbar{
-    -fx-background-color:#ffffff;
-    -fx-background-radius:5;
+.navbar {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5;
 }
-.navbutton:hover{
-    -fx-background-radius:15;
-    -fx-border-radius:15;
-    -fx-background-color:#E8E8E8;
-
+.navbutton:hover {
+  -fx-background-radius: 15;
+  -fx-border-radius: 15;
+  -fx-background-color: #e8e8e8;
 }
 .scroll-pane {
-    -fx-background-color: transparent;
+  -fx-background-color: transparent;
 }
 .image-shadow-effect {
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0), 10, 0, 0, 0);
 }
-.product_card{
-    -fx-background-radius:20;
-    -fx-border-radius:20;
-    -fx-background-color:#E8E8E8;
+.product_card {
+  -fx-background-radius: 20;
+  -fx-border-radius: 20;
+  -fx-background-color: #e8e8e8;
+}
+.table_column_color {
+  -fx-background-color: #e8e8e8;
 }

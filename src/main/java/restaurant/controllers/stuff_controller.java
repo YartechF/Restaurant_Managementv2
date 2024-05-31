@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -30,6 +31,9 @@ public class stuff_controller {
     private DialogPane create_invoice_dialog;
     private Invoice invoice;
     private create_invoice_dialog_controller createinvoicedialogcontroller;
+    private FXMLLoader order_manage_fxmlloader;
+    private AnchorPane ordermanage_pane;
+    private OrderManageController order_manage_controller;
 
     void product_loading() throws SQLException {
         // load the pos
@@ -53,7 +57,12 @@ public class stuff_controller {
         create_invoice_dialog = fxmlLoader3.load();
         this.createinvoicedialogcontroller = fxmlLoader3.getController();
         // get the controller
-
+        
+    }
+    void load_order_manage() throws IOException{
+        this.order_manage_fxmlloader = new FXMLLoader(getClass().getResource("/restaurant/views/Manage_order_view.fxml"));
+        this.ordermanage_pane = this.order_manage_fxmlloader.load();
+        this.order_manage_controller = this.order_manage_fxmlloader.getController();
     }
 
     public void setStoreID(int storeID) {
@@ -68,7 +77,7 @@ public class stuff_controller {
 
     @FXML
     void Order_e(MouseEvent event) {
-
+        this.stuff_page.getChildren().setAll(ordermanage_pane);
     }
 
     @FXML
@@ -120,5 +129,7 @@ public class stuff_controller {
         this.personID = current_user.getPersonID();
         this.storeID = current_user.getStoreID();
         this.user_type_ID = current_user.getUsertypeID();
+        this.order_manage_fxmlloader = new FXMLLoader();
+        load_order_manage();
     }
 }
