@@ -6,6 +6,7 @@ public class order {
     private product Product;
     private int quantity;
     private boolean isdone;
+    private double sub_total;
 
     
     public void setIsdone(boolean isdone) {
@@ -43,4 +44,11 @@ public class order {
     public int getquantity() {
         return this.quantity;
     }
+    public double get_sub_total(){
+        return sub_total;
+    }
+    public void set_sub_total(double sub_total){
+        this.sub_total = sub_total * this.quantity;
+    }
+    
 }

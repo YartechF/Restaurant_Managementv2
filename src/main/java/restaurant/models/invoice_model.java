@@ -1,14 +1,18 @@
 package restaurant.models;
 
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ResourceBundle;
 
+import javafx.fxml.Initializable;
 import restaurant.db.database;
 
-public class invoice_model extends database {
+public class invoice_model extends database implements Initializable{
     private PreparedStatement ps;
+
 
     public ResultSet retrieve_orders(int invoiceID) throws SQLException {
         String sql = "select productID quantity from tbl_orders where invoiceID = ?";
@@ -28,7 +32,7 @@ public class invoice_model extends database {
 
     public int create_invoice(Invoice invoice)
             throws SQLException {
-        String sql = "INSERT INTO `tbl_invoice`(`costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`,`storeID`) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO `tbl_invoice`(`costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`,`storeID`,`Date`) VALUES (?,?,?,?,?,?,Now())";
         ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, invoice.getCostumer_name());
         ps.setBoolean(2, invoice.get_istakeout());
@@ -72,5 +76,9 @@ public class invoice_model extends database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

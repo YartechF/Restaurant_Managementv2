@@ -18,6 +18,7 @@ public class product_model extends database implements Initializable {
     public void clear_product_list(){
         ProductsList.clear();
     }
+
     public void create_product(String name, double price, int categoryID, String picture, String type) {
         try {
             String sql = "insert into tbl_product(name,price,categoryID,picture,type)values(?,?,?,?,?)";

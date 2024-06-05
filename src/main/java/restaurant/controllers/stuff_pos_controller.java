@@ -171,6 +171,7 @@ public class stuff_pos_controller implements Initializable {
                     e.printStackTrace();
                 }
             }
+            
             Dialog<ButtonType> dialog = new Dialog<>();
                 dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
                 dialog.getDialogPane().setContent(order_succesful_card);
@@ -250,7 +251,9 @@ public class stuff_pos_controller implements Initializable {
 
         });
     }
-    
+    public product_model get_pos_product_model(){
+        return this.productmodel;
+    }
     public void product_load() throws SQLException {
         this.ordersmodel.updateSubtotal();
         src_sub_total = ordersmodel.get_sub_total();

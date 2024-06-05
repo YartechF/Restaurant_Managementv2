@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import restaurant.models.user;
 import restaurant.models.Invoice;
 import restaurant.models.invoice_model;
+import restaurant.models.product_model;
 import restaurant.controllers.create_invoice_dialog_controller;
 
 public class stuff_controller {
@@ -34,6 +35,7 @@ public class stuff_controller {
     private FXMLLoader order_manage_fxmlloader;
     private AnchorPane ordermanage_pane;
     private OrderManageController order_manage_controller;
+    private product_model pos_product_model;
 
     void product_loading() throws SQLException {
         // load the pos
@@ -44,6 +46,7 @@ public class stuff_controller {
             this.stuff_pos_controller.set_pos_currentuser(this.currentuser);
             this.stuff_pos_controller.product_load();
             this.stuff_pos_controller.load_category();
+            this.pos_product_model = this.stuff_pos_controller.get_pos_product_model();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,9 +68,7 @@ public class stuff_controller {
         this.order_manage_controller = this.order_manage_fxmlloader.getController();
     }
 
-    public void setStoreID(int storeID) {
-        this.storeID = storeID;
-    }
+
 
     @FXML
     private AnchorPane new_order_btn;
@@ -76,10 +77,18 @@ public class stuff_controller {
     private Pane stuff_page;
 
     @FXML
-    void Order_e(MouseEvent event) {
+    void Order_e(MouseEvent event) throws IOException {
+        order_manage_controller.set_staff_controller(this);
+        order_manage_controller.set_pos_product_model(this.pos_product_model);
+        order_manage_controller.OrderManageControllerBillData().getBill_data().clear();
+        order_manage_controller.OrderManageControllerBillData().set_invoice_by_storeID(this.storeID);
         this.stuff_page.getChildren().setAll(ordermanage_pane);
+
     }
 
+    public Pane get_stuff_page(){
+        return this.stuff_page;
+    }
     @FXML
     void dashboard_e(MouseEvent event) {
         System.out.println("dashboard");

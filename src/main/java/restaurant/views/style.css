@@ -31,3 +31,10 @@
 .table_column_color {
   -fx-background-color: #e8e8e8;
 }
+.selected-row {
+  -fx-background-color: #d36135; /* Green color */
+  -fx-text-fill: black;
+}
+.centered-cell {
+  -fx-alignment: CENTER;
+}

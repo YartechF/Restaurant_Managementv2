@@ -6,26 +6,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1251.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.OrderManageController">
+<AnchorPane cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1251.0" scaleShape="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.OrderManageController">
    <children>
-      <Label layoutX="30.0" layoutY="27.0" text="Manage Order">
+      <Label layoutX="27.0" layoutY="14.0" text="Manage Order">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold Italic" size="17.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="1.0" layoutY="91.0" prefHeight="811.0" prefWidth="1231.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <AnchorPane layoutX="10.0" layoutY="40.0" prefHeight="811.0" prefWidth="1231.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <TableView fx:id="order_table" layoutX="14.0" layoutY="5.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="5.0">
+            <TableView fx:id="order_table" fixedCellSize="0.0" layoutX="5.0" layoutY="14.0" prefHeight="796.0" prefWidth="1221.0" style="-fx-border-color: D36135;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
               <columns>
-                <TableColumn fx:id="bill_no" editable="false" prefWidth="128.0" style="-fx-background-color: e8e8e8;" text="Bill no" />
-                <TableColumn fx:id="data_time" prefWidth="273.0" style="-fx-background-color: e8e8e8;" text="Date Time" />
-                  <TableColumn fx:id="total_product" prefWidth="140.0" style="-fx-background-color: e8e8e8;" text="Total Product" />
-                  <TableColumn fx:id="total_amount" prefWidth="170.0" style="-fx-background-color: e8e8e8;" text="Total Amount" />
-                  <TableColumn fx:id="paid_status" style="-fx-background-color: e8e8e8;" text="Paid Status" />
-                  <TableColumn prefWidth="139.0" style="-fx-background-color: e8e8e8;" text="Table" />
-                  <TableColumn fx:id="action" prefWidth="288.0" style="-fx-background-color: e8e8e8;" text="Action" />
-                  <TableColumn prefWidth="139.0" style="-fx-background-color: e8e8e8;" text="Table" />
+                <TableColumn fx:id="bill_no" editable="false" prefWidth="128.0" text="Bill no" />
+                <TableColumn fx:id="data_time" prefWidth="216.0" sortType="DESCENDING" text="Date Time" />
+                  <TableColumn fx:id="total_product" prefWidth="177.0" text="Total Product" />
+                  <TableColumn fx:id="total_amount" prefWidth="200.0" text="Total Amount" />
+                  <TableColumn fx:id="paid_status" prefWidth="185.0" text="Paid Status" />
+                  <TableColumn fx:id="table" prefWidth="179.0" text="Table" />
+                  <TableColumn fx:id="order_type" prefWidth="135.0" text="Order Type" />
               </columns>
             </TableView>
          </children>
