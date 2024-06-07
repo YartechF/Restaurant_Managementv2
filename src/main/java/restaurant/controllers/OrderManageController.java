@@ -2,6 +2,7 @@ package restaurant.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -21,9 +22,12 @@ import javafx.scene.layout.AnchorPane;
 import restaurant.models.invoice_model;
 import restaurant.models.product;
 import restaurant.models.product_model;
+import restaurant.models.store_ingredient_model;
 import restaurant.models.Invoice;
 import restaurant.models.bill;
 import restaurant.models.bill_data;
+import restaurant.models.ingredient_cost;
+import restaurant.models.ingredient_cost_model;
 import restaurant.controllers.stuff_controller;
 
 public class OrderManageController implements Initializable {
@@ -34,6 +38,9 @@ public class OrderManageController implements Initializable {
     private AnchorPane update_order_pane;
     private update_order_controller update_order_controller;
     private product_model pos_product_model;
+    private ingredient_cost_model IngredientCostModel;
+    private store_ingredient_model StoreIngredientModel;
+    private stuff_pos_controller pos;
 
     @FXML
     private TableColumn<bill, String> action;
@@ -68,10 +75,10 @@ public class OrderManageController implements Initializable {
         this.update_order_pane = fxmlLoader.load();
         this.update_order_controller = fxmlLoader.getController();
     }
-    public void set_pos_product_model(product_model pos_product_model) throws IOException{
-        this.pos_product_model = pos_product_model;
-        this.update_order_controller.set_pos_product_model(this.pos_product_model);
-    }
+    // public void set_pos_product_model(product_model pos_product_model) throws IOException, SQLException{
+    //     this.pos_product_model = pos_product_model;
+    //     this.update_order_controller.set_pos_product_model(this.pos_product_model);
+    // }
     
 
     public void set_staff_controller(stuff_controller StuffController){
@@ -80,6 +87,12 @@ public class OrderManageController implements Initializable {
     
     public void setStoreID(int storeID){
         this.storeID = storeID;
+        this.update_order_controller.setStoreID(this.storeID);
+    }
+
+    public void set_pos(stuff_pos_controller pos) throws IOException, SQLException{
+        this.pos = pos;
+        this.update_order_controller.set_pos(pos);
     }
     void setcellvalue(){
         bill_no.setCellValueFactory(new PropertyValueFactory<bill, String>("ID"));// or bill number
@@ -119,7 +132,12 @@ public class OrderManageController implements Initializable {
                     System.out.println("Selected Bill: " + selectedBill.getID());//the bill ID is invoiceID
                     this.StuffController.get_stuff_page().getChildren().clear();
                     this.StuffController.get_stuff_page().getChildren().setAll(update_order_pane);
-                    this.update_order_controller.set_invoiceID(Integer.valueOf(selectedBill.getID()));
+                    try {
+                        this.update_order_controller.set_invoiceID(Integer.valueOf(selectedBill.getID()));
+                    } catch (NumberFormatException | SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             });
             row.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
@@ -136,6 +154,7 @@ public class OrderManageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // this.IngredientCostModel = new ingredient_cost_model();
 
 
     }

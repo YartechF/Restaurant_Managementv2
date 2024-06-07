@@ -16,7 +16,10 @@ import javafx.scene.layout.Pane;
 import restaurant.models.user;
 import restaurant.models.Invoice;
 import restaurant.models.invoice_model;
+import restaurant.models.order;
 import restaurant.models.product_model;
+import restaurant.models.store_ingredient_model;
+import restaurant.models.table_model;
 import restaurant.controllers.create_invoice_dialog_controller;
 
 public class stuff_controller {
@@ -36,6 +39,9 @@ public class stuff_controller {
     private AnchorPane ordermanage_pane;
     private OrderManageController order_manage_controller;
     private product_model pos_product_model;
+    private store_ingredient_model pos_store_ingredient_model;
+    private stuff_pos_controller pos;
+    private table_model tablemodel;
 
     void product_loading() throws SQLException {
         // load the pos
@@ -47,6 +53,8 @@ public class stuff_controller {
             this.stuff_pos_controller.product_load();
             this.stuff_pos_controller.load_category();
             this.pos_product_model = this.stuff_pos_controller.get_pos_product_model();
+            this.pos_store_ingredient_model = this.stuff_pos_controller.get_pos_store_ingredient_model();
+            this.pos = this.stuff_pos_controller.get_pos_stuff_controller();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,13 +85,21 @@ public class stuff_controller {
     private Pane stuff_page;
 
     @FXML
-    void Order_e(MouseEvent event) throws IOException {
+    private AnchorPane orders_btn;
+
+    @FXML
+    private AnchorPane table_btn;
+
+    @FXML
+    private AnchorPane dashboard_btn;
+
+    @FXML
+    void Order_e(MouseEvent event) throws IOException, SQLException {
         order_manage_controller.set_staff_controller(this);
-        order_manage_controller.set_pos_product_model(this.pos_product_model);
+        order_manage_controller.set_pos(this.pos);
         order_manage_controller.OrderManageControllerBillData().getBill_data().clear();
         order_manage_controller.OrderManageControllerBillData().set_invoice_by_storeID(this.storeID);
         this.stuff_page.getChildren().setAll(ordermanage_pane);
-
     }
 
     public Pane get_stuff_page(){
@@ -92,6 +108,12 @@ public class stuff_controller {
     @FXML
     void dashboard_e(MouseEvent event) {
         System.out.println("dashboard");
+    }
+    public void enable_buttons(){
+        this.new_order_btn.setDisable(false);
+        this.table_btn.setDisable(false);
+        this.orders_btn.setDisable(false);
+        this.dashboard_btn.setDisable(false);
     }
 
     @FXML
@@ -111,6 +133,8 @@ public class stuff_controller {
             this.stuff_pos_controller.pos_set_invoice(invoice);
             this.stuff_pos_controller.set_storeID(this.storeID);
             this.stuff_page.getChildren().setAll(stuff_pos_root);
+            this.stuff_pos_controller.setStuffController(this);
+            this.tablemodel.set_table_status_not_available(invoice.getTableID());
             stuff_pos_root.setVisible(true);
             createinvoicedialogcontroller.get_select_table().getItems().clear();
         } else if (clickedbutton.get() == ButtonType.CLOSE) {
@@ -140,5 +164,6 @@ public class stuff_controller {
         this.user_type_ID = current_user.getUsertypeID();
         this.order_manage_fxmlloader = new FXMLLoader();
         load_order_manage();
+        this.tablemodel = new table_model();
     }
 }

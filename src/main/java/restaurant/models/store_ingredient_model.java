@@ -86,6 +86,21 @@ public class store_ingredient_model extends database {
             old_storeingredients.add(StoreIngredient);
         }
     }
+    public void retrieve_store_ingredient(int storeID) throws SQLException {
+        String sql = "select * from tbl_store_ingredient where storeID =?";
+        this.ps = getConnection().prepareStatement(sql);
+        this.ps.setInt(1, storeID);
+        ResultSet rs = this.ps.executeQuery();
+        while (rs.next()) {
+            store_ingredient StoreIngredient = new store_ingredient();
+            StoreIngredient.setID(rs.getInt("ID"));
+            StoreIngredient.setStoreID(rs.getInt("storeID"));
+            StoreIngredient.set_ingredientID(rs.getInt("inrgredientID"));
+            StoreIngredient.set_stock(rs.getDouble("stock"));
+            StoreIngredients.add(StoreIngredient);
+            old_storeingredients.add(StoreIngredient);
+        }
+    }
 
     public void cost_ingredient_by_storeID(int storeID, int ingredientID, double qty) throws SQLException{
         String sql = "UPDATE tbl_store_ingredient set stock = stock -? where storeID =? and ingredientID =?";

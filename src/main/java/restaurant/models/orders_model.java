@@ -20,12 +20,6 @@ public class orders_model extends database {
     private ArrayList<order> orders = new ArrayList<>();//current order
     private double subtatal = 0;
 
-    private ObservableList<order> recent_order = FXCollections.observableArrayList();//recent order this for update order
-
-    public void AddRecentOrder(order Order){
-        this.recent_order.add(Order);
-    }
-
     public void add_order(order Order) {
         orders.add(Order);
     }
@@ -55,28 +49,17 @@ public class orders_model extends database {
         return false;
     }
     public double get_sub_total(){
-        return subtatal;
+        return this.subtatal;
     }
     public void updateSubtotal(){
-        subtatal = 0;
+        this.subtatal = 0;
         for(order o : orders){
             double product_subtotal = o.getproduct().getPrice() * o.getquantity();
-            subtatal += product_subtotal;
+            this.subtatal += product_subtotal;
         }
     }
     public ArrayList<order> get_orders() {
         return orders;
     }
-    public ResultSet GetOrderByInvoiceID(int invoiceID) {
-        String sql = "SELECT tbl_product.ID as productID, tbl_product.name as product_name, tbl_product.picture as product_img, tbl_product.price as product_price, tbl_orders.quantity, tbl_orders.Isdone FROM tbl_orders inner join tbl_product on tbl_orders.productID = tbl_product.ID WHERE `invoiceID` =?";
-        try {
-            ps = getConnection().prepareStatement(sql);
-            ps.setInt(1, invoiceID);
-            return ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        
-    }
+    
 }

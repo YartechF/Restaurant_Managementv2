@@ -73,15 +73,19 @@ public class stuff_pos_controller implements Initializable {
     private Map<String, Integer> categoryMap;
     private invoice_model InvoiceModel;
     private Parent order_succesful_card;
+    private stuff_controller stuffcontroller;
     
 
+    public void setStuffController(stuff_controller stuffcontroller) {
+        this.stuffcontroller = stuffcontroller;
+    }   
 
     public stuff_pos_controller() throws SQLException, IOException {
 
         this.ingredient_cost = new ingredient_cost_model();
 
         order_row = 0;
-        ordersmodel = new orders_model();
+        ordersmodel = new orders_model();   
     }
 
     protected void pos_set_invoice(Invoice invoice) {
@@ -147,7 +151,9 @@ public class stuff_pos_controller implements Initializable {
     }
     
     @FXML
-    void create_new_order_e(MouseEvent event) throws IOException{
+    void create_new_order_e(MouseEvent event) throws IOException, SQLException{
+        double discount = Double.parseDouble(this.discount.getText());
+        InvoiceModel.setDiscount(discount, this.invoice.getID());
         int orderCount = this.ordersmodel.get_orders().size();
         if(orderCount == 0){
             no_order_hbox.setVisible(true);
@@ -183,6 +189,8 @@ public class stuff_pos_controller implements Initializable {
             this.ordersmodel.get_orders().clear();
             no_order_hbox.setVisible(false);
         }
+        this.stuffcontroller.enable_buttons();
+        
         
         
     }
@@ -254,7 +262,11 @@ public class stuff_pos_controller implements Initializable {
     public product_model get_pos_product_model(){
         return this.productmodel;
     }
-    public void product_load() throws SQLException {
+    public stuff_pos_controller get_pos_stuff_controller(){
+        return this;
+    }
+    
+    protected void product_load() throws SQLException {
         this.ordersmodel.updateSubtotal();
         src_sub_total = ordersmodel.get_sub_total();
         this.subtotal.setText("P"+src_sub_total);
@@ -312,7 +324,9 @@ public class stuff_pos_controller implements Initializable {
                     for (store_ingredient fst : filtered_storeingredientmodel) {
                         if (fst.get_ingredientID() == ProductingredientID) {
                             double productfromingredient = fst.get_stock() / ingredient_cost_per_current_product;
+
                             calculate_stock.add(productfromingredient);
+
                         }
                     }
                 }
@@ -407,6 +421,9 @@ public class stuff_pos_controller implements Initializable {
      * and data.
      * This method is called when the controller is first loaded.
      */
+    public store_ingredient_model get_pos_store_ingredient_model(){
+        return this.storeingredientmodel;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.productmodel = new product_model();

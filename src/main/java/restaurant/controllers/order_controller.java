@@ -21,7 +21,7 @@ import restaurant.models.ingredient_cost;
 import restaurant.models.ingredient_cost_model;
 import restaurant.models.ingredient_model;
 
-public class order_controller implements Initializable {
+public class order_controller implements Initializable  {
 
     private order Order;
     private ArrayList<ingredient_cost> IngredientCost;

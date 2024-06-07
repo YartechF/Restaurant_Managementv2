@@ -14,6 +14,21 @@ public class invoice_model extends database implements Initializable{
     private PreparedStatement ps;
 
 
+    public double getDiscount(int invoiceID) throws SQLException {
+        String sql = "select discount from tbl_invoice where ID =?";
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, invoiceID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getDouble("discount");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            getConnection().close();
+            ps.close();
+            return 0;
+        }
+    }
     public ResultSet retrieve_orders(int invoiceID) throws SQLException {
         String sql = "select productID quantity from tbl_orders where invoiceID = ?";
         try {
@@ -29,7 +44,15 @@ public class invoice_model extends database implements Initializable{
         }
 
     }
-
+    public void setDiscount(double discount,int invoiceID) throws SQLException{
+        String sql = "update tbl_invoice set discount = ? where ID =?";
+        ps = getConnection().prepareStatement(sql);
+        ps.setDouble(1, discount);
+        ps.setInt(2, invoiceID);
+        ps.executeUpdate();
+        getConnection().close();
+        ps.close();
+    }
     public int create_invoice(Invoice invoice)
             throws SQLException {
         String sql = "INSERT INTO `tbl_invoice`(`costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`,`storeID`,`Date`) VALUES (?,?,?,?,?,?,Now())";

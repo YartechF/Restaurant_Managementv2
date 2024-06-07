@@ -75,7 +75,19 @@ public class table_model extends database {
             e.printStackTrace();
         }
     }
-
+    public void set_table_status_not_available(int tableID) {
+        String sql = "UPDATE `tbl_table` SET `isAvailable`= 0 WHERE `ID`=?";
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, tableID);
+            ps.executeUpdate();
+            ps.close();
+            getConnection().close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     // retrieve table where ID
     public ResultSet retrieve_table(int storeID) throws SQLException {
         String sql = "select * from tbl_table where storeID = ? and isAvailable = 1";
