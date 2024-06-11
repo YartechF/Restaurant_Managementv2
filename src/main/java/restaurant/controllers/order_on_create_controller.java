@@ -21,17 +21,17 @@ import restaurant.models.ingredient_cost;
 import restaurant.models.ingredient_cost_model;
 import restaurant.models.ingredient_model;
 
-public class order_controller implements Initializable  {
+public class order_on_create_controller implements Initializable  {
 
-    private order Order;
-    private ArrayList<ingredient_cost> IngredientCost;
-    private ingredient_cost_model IngredientCostModel;
-    private stuff_pos_controller pos;
-    private ingredient_cost_model Ingredient_Cost_Model;
-    private ArrayList<store_ingredient> filtered_storeingredient;
-    private ArrayList<store_ingredient> sim;
-    private AnchorPane root;
-    private int root_row;
+    protected order Order;
+    protected ArrayList<ingredient_cost> IngredientCost;
+    protected ingredient_cost_model IngredientCostModel;
+    protected stuff_pos_controller pos;
+    protected ingredient_cost_model Ingredient_Cost_Model;
+    protected ArrayList<store_ingredient> filtered_storeingredient;
+    protected ArrayList<store_ingredient> sim;
+    protected AnchorPane root;
+    protected int root_row;
 
     @FXML
     private ImageView delete_btn;

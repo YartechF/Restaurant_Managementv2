@@ -44,12 +44,7 @@
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
-                  <AnchorPane prefHeight="64.0" prefWidth="74.0" />
-                  <Button mnemonicParsing="false" stylesheets="@style.css" text="Clear All" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="10.0" />
-                     </font>
-                  </Button>
+                  <AnchorPane prefHeight="63.0" prefWidth="50.0" />
                </children>
             </HBox>
             <ScrollPane hbarPolicy="NEVER" prefHeight="560.0" prefWidth="260.0" style="-fx-border-color: ffffff; -fx-border-radius: 15; -fx-background-radius: 15;" vbarPolicy="NEVER">
@@ -130,7 +125,11 @@
             </AnchorPane>
             <HBox alignment="CENTER" prefHeight="62.0" prefWidth="260.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 1; -fx-border-color: ffffff;" VBox.vgrow="ALWAYS">
                <children>
-                  <ChoiceBox fx:id="paid_status" prefHeight="39.0" prefWidth="104.0" style="-fx-background-color: E8E8E8; -fx-background-radius: 10;" />
+                  <Button fx:id="markAsPaidBtn" mnemonicParsing="false" onMouseClicked="#mark_as_paid_btn_e" prefHeight="45.0" prefWidth="111.0" text="Mark As Paid" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                   <Pane prefHeight="82.0" prefWidth="13.0" />
                   <Button mnemonicParsing="false" onMouseClicked="#update_order_btn_e" prefHeight="45.0" prefWidth="123.0" text="Update Order" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
@@ -163,5 +162,6 @@
             <Image url="@icons/back.png" />
          </image>
       </ImageView>
+      <HBox layoutX="19.0" layoutY="11.0" onMouseClicked="#back_btn_e" prefHeight="45.0" prefWidth="83.0" />
    </children>
 </AnchorPane>

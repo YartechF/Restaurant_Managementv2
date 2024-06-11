@@ -3,14 +3,22 @@ package restaurant.models;
 import javafx.beans.property.SimpleStringProperty;
 
 public class bill {
-    SimpleStringProperty ID;
-    SimpleStringProperty date;
-    SimpleStringProperty total_product;
-    SimpleStringProperty total_amount;
-    SimpleStringProperty paid_status;
-    SimpleStringProperty table;
-    SimpleStringProperty order_type;
+    
+    private SimpleStringProperty ID;
+    private SimpleStringProperty date;
+    private SimpleStringProperty total_product;
+    private SimpleStringProperty total_amount;
+    private SimpleStringProperty paid_status;
+    private SimpleStringProperty table;
+    private SimpleStringProperty order_type;
+    private int tableID;
 
+    public void setTableID(int tableID) {
+        this.tableID = tableID;
+    }
+    public int getTableID() {
+        return this.tableID;
+    }
     public String getID() {
         return ID.get();
     }

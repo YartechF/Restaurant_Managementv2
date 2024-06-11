@@ -12,7 +12,7 @@
       <AnchorPane prefHeight="900.0" prefWidth="184.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: E8E8E8; -fx-background-color: ffffff;" stylesheets="@style.css">
          <children>
             <Polyline fill="#d36135" layoutX="93.0" layoutY="40.0" points="-93.0, -40.0, 95.5, -40.5, 0.0, 32.0, -93.0, -40.0" strokeType="INSIDE" strokeWidth="0.0" />
-            <AnchorPane layoutY="75.0" onMouseClicked="#dashboard_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+            <AnchorPane fx:id="dashboard_btn" layoutY="75.0" onMouseClicked="#dashboard_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="31.0" layoutY="13.0">
                      <image>
@@ -45,7 +45,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="2.0" layoutY="125.0" onMouseClicked="#table_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+            <AnchorPane fx:id="table_btn" layoutX="2.0" layoutY="125.0" onMouseClicked="#table_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
                <children>
                   <Label layoutX="72.0" layoutY="16.0" text="Table">
                      <font>
@@ -59,7 +59,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="225.0" onMouseClicked="#Order_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+            <AnchorPane fx:id="orders_btn" layoutY="225.0" onMouseClicked="#Order_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
                <children>
                   <Label layoutX="73.0" layoutY="14.0" text="Orders">
                      <font>

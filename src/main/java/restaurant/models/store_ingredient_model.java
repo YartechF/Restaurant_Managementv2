@@ -10,8 +10,8 @@ import restaurant.db.database;
 public class store_ingredient_model extends database {
     private PreparedStatement ps;
 
-    ArrayList<store_ingredient> old_storeingredients = new ArrayList<>();
-    ArrayList<store_ingredient> StoreIngredients = new ArrayList<>();
+    private ArrayList<store_ingredient> old_storeingredients = new ArrayList<>();
+    private ArrayList<store_ingredient> StoreIngredients = new ArrayList<>();
 
     public void create_store_ingredient(int ingredientID, int storeID, double stock) throws SQLException {
         String sql = "INSERT INTO `tbl_store_ingredient`(`ingredientID`, `storeID`, `stock`) VALUES (?,?,?)";

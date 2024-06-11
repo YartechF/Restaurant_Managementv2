@@ -46,7 +46,7 @@ import java.util.ResourceBundle;
 import java.util.Collections;
 import java.util.HashMap;
 
-import restaurant.controllers.order_controller;
+import restaurant.controllers.order_on_create_controller;
 import restaurant.models.Invoice;
 import restaurant.models.category_model;
 import restaurant.models.orders_model;
@@ -58,7 +58,7 @@ public class stuff_pos_controller implements Initializable {
     private String storename;
     private product_model productmodel;
     private user current_user;
-    private order_controller ordercontroller;
+    private order_on_create_controller ordercontroller;
     private FXMLLoader order_view;
     private AnchorPane order_view_root;
     private ingredient_cost_model ingredient_cost;
@@ -140,8 +140,10 @@ public class stuff_pos_controller implements Initializable {
         return this.order_grid_pane;
     }
     @FXML
-    void cancel_order_e(MouseEvent event) {
-        System.out.println("cancel order");
+    void cancel_order_e(MouseEvent event) throws IOException, SQLException {
+        this.stuffcontroller.delete_current_generated_invoice_on_database();
+        this.stuffcontroller.Order_e(event);
+        this.stuffcontroller.enable_buttons();
         
     }
     public Parent load_order_successfuly_card() throws IOException {
@@ -159,9 +161,8 @@ public class stuff_pos_controller implements Initializable {
             no_order_hbox.setVisible(true);
         }else{
             for (order listOrder : this.ordersmodel.get_orders()) {
-                listOrder.setIsdone(true);
+                listOrder.setIsdone(false);
                 ordersmodel.create_order(listOrder);
-
                 ResultSet rs;
                 try {
                     rs = ingredient_cost.retrive_ingredient_cost_by_productID(listOrder.getproduct().getID());
@@ -343,9 +344,9 @@ public class stuff_pos_controller implements Initializable {
                     } else {
                         try {
                             FXMLLoader orderfxmlLoader = new FXMLLoader();
-                            orderfxmlLoader.setLocation(getClass().getResource("/restaurant/views/order_view.fxml"));
+                            orderfxmlLoader.setLocation(getClass().getResource("/restaurant/views/orders_on_create_order.fxml"));
                             AnchorPane orderPane = orderfxmlLoader.load();
-                            order_controller order_controller = orderfxmlLoader.getController();
+                            order_on_create_controller order_controller = orderfxmlLoader.getController();
                             for (ingredient_cost fic : filtered_Ingredient_costs) {
                                 for (store_ingredient fsi : filtered_storeingredientmodel) {
                                     if (fsi.get_ingredientID() == fic.getIngredientID()) {
@@ -369,7 +370,7 @@ public class stuff_pos_controller implements Initializable {
                             this.subtotal.setText("P" + src_sub_total);
                             this.setTotal();
                             product_load();
-
+                            
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (SQLException e) {

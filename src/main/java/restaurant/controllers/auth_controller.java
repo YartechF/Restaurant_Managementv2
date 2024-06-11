@@ -88,6 +88,28 @@ public class auth_controller {
             e.printStackTrace();
         }
     }
+    void inventory_manager(user current_user, MouseEvent event) throws SQLException {
+        try {
+            // Load the next scene (e.g., stuff screen)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/inventory.fxml"));
+            Parent nextRoot = loader.load();
+            Scene nextScene = new Scene(nextRoot);
+
+            // Access the stuff controller methods
+            Inventory_Controller Inventory_controller = loader.getController();
+            Inventory_controller.SetCurrentUser(current_user); // Example method call
+
+            // Get the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(nextScene);
+            currentStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Handles the login button click event.
@@ -112,7 +134,7 @@ public class auth_controller {
             } else if (current_user.getUsertypeID() == staff) {
                 staff(current_user, event);
             } else if (current_user.getUsertypeID() == inventory_manager) {
-
+                inventory_manager(current_user, event);
             }
         } else {
             System.out.println("Login Fail");
@@ -135,7 +157,6 @@ public class auth_controller {
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return User;
 

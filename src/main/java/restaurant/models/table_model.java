@@ -29,15 +29,13 @@ public class table_model extends database {
     }
 
     // update table where table id set is available
-    public void update_table_isAvailable(int tableID, boolean isAvailable) {
-        String sql = "UPDATE `tbl_table` SET `isAvailable`=? WHERE `tableID`=?";
+    public void update_table_isAvailable(int tableID, int isAvailable) {
+        String sql = "UPDATE `tbl_table` SET `isAvailable`=? WHERE `ID`=?";
         try {
             ps = getConnection().prepareStatement(sql);
-            ps.setBoolean(1, isAvailable);
+            ps.setInt(1, isAvailable);
             ps.setInt(2, tableID);
             ps.executeUpdate();
-            ps.close();
-            getConnection().close();
             System.out.println("Table Updated");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,8 +79,6 @@ public class table_model extends database {
             ps = getConnection().prepareStatement(sql);
             ps.setInt(1, tableID);
             ps.executeUpdate();
-            ps.close();
-            getConnection().close();
         }
         catch (SQLException e) {
             e.printStackTrace();

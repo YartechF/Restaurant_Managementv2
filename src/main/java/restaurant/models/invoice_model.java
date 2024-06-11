@@ -68,8 +68,6 @@ public class invoice_model extends database implements Initializable{
         if (rs.next()) {
             return rs.getInt(1);
         }
-        ps.close();
-        getConnection().close();
         return 0;
     }
 
@@ -89,13 +87,24 @@ public class invoice_model extends database implements Initializable{
 
     // delete
     public void delete_invoice(int invoiceID) {
-        String sql = "DELETE FROM `tbl_invoice` WHERE `invoiceID`=?";
+        String sql = "DELETE FROM `tbl_invoice` WHERE `ID`=?";
         try {
             ps = getConnection().prepareStatement(sql);
             ps.setInt(1, invoiceID);
             ps.executeUpdate();
             ps.close();
             getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mark_as_paid(int invoiceID){
+        String sql = "UPDATE `tbl_invoice` SET `ispaid`=1 WHERE `ID`=?";
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, invoiceID);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

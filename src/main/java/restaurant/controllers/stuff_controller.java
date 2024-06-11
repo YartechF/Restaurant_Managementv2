@@ -24,9 +24,6 @@ import restaurant.controllers.create_invoice_dialog_controller;
 
 public class stuff_controller {
     private int storeID;
-    private FXMLLoader stuff_pos_view;
-    private stuff_pos_controller stuff_pos_controller;
-    private AnchorPane stuff_pos_root;
     private int personID;
     private String storename;
     private int user_type_ID;
@@ -43,22 +40,18 @@ public class stuff_controller {
     private stuff_pos_controller pos;
     private table_model tablemodel;
 
-    void product_loading() throws SQLException {
+    void product_loading() throws SQLException, IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_pos.fxml"));
+        AnchorPane create_new_order_pane = fxmlLoader.load();
+        stuff_pos_controller Stuff_Pos_Controller = fxmlLoader.getController();
+        Stuff_Pos_Controller.set_pos_currentuser(this.currentuser);
+        Stuff_Pos_Controller.product_load();
+        Stuff_Pos_Controller.load_category();
+        this.pos_product_model = Stuff_Pos_Controller.get_pos_product_model();
+        this.pos_store_ingredient_model = Stuff_Pos_Controller.get_pos_store_ingredient_model();
+        this.pos = Stuff_Pos_Controller.get_pos_stuff_controller();
         // load the pos
-        try {
-            this.stuff_pos_view = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_pos.fxml"));
-            this.stuff_pos_root = this.stuff_pos_view.load();
-            this.stuff_pos_controller = this.stuff_pos_view.getController();
-            this.stuff_pos_controller.set_pos_currentuser(this.currentuser);
-            this.stuff_pos_controller.product_load();
-            this.stuff_pos_controller.load_category();
-            this.pos_product_model = this.stuff_pos_controller.get_pos_product_model();
-            this.pos_store_ingredient_model = this.stuff_pos_controller.get_pos_store_ingredient_model();
-            this.pos = this.stuff_pos_controller.get_pos_stuff_controller();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
 
     }
 
@@ -68,7 +61,6 @@ public class stuff_controller {
         create_invoice_dialog = fxmlLoader3.load();
         this.createinvoicedialogcontroller = fxmlLoader3.getController();
         // get the controller
-        
     }
     void load_order_manage() throws IOException{
         this.order_manage_fxmlloader = new FXMLLoader(getClass().getResource("/restaurant/views/Manage_order_view.fxml"));
@@ -93,6 +85,12 @@ public class stuff_controller {
     @FXML
     private AnchorPane dashboard_btn;
 
+    public void delete_current_generated_invoice_on_database(){
+        new invoice_model().delete_invoice(this.invoice.getID());
+        this.tablemodel.update_table_isAvailable(this.invoice.getTableID(), 1);
+    }
+
+
     @FXML
     void Order_e(MouseEvent event) throws IOException, SQLException {
         order_manage_controller.set_staff_controller(this);
@@ -115,9 +113,15 @@ public class stuff_controller {
         this.orders_btn.setDisable(false);
         this.dashboard_btn.setDisable(false);
     }
+    public void disable_buttons(){
+        this.new_order_btn.setDisable(true);
+        this.table_btn.setDisable(true);
+        this.orders_btn.setDisable(true);
+        this.dashboard_btn.setDisable(true);
+    }
 
     @FXML
-    void pos_e(MouseEvent event) throws SQLException {// create new order
+    void pos_e(MouseEvent event) throws SQLException, IOException {// create new order
         createinvoicedialogcontroller.set_storeID(this.storeID);
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(create_invoice_dialog);
@@ -128,21 +132,33 @@ public class stuff_controller {
             this.new_order_btn.setDisable(true);
             invoice = createinvoicedialogcontroller.getInvoice();
             invoice.setStoreID(this.currentuser.getStoreID());
-            int generatedInvoiceID = this.invoicemodel.create_invoice(invoice);
+            int generatedInvoiceID = new invoice_model().create_invoice(invoice);
             invoice.setID(generatedInvoiceID);
-            this.stuff_pos_controller.pos_set_invoice(invoice);
-            this.stuff_pos_controller.set_storeID(this.storeID);
-            this.stuff_page.getChildren().setAll(stuff_pos_root);
-            this.stuff_pos_controller.setStuffController(this);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurant/views/stuff_pos.fxml"));
+            AnchorPane create_new_order_pane = fxmlLoader.load();
+            stuff_pos_controller Stuff_Pos_Controller = fxmlLoader.getController();
+            Stuff_Pos_Controller.set_pos_currentuser(this.currentuser);
+            Stuff_Pos_Controller.product_load();
+            Stuff_Pos_Controller.load_category();
+            this.pos_product_model = Stuff_Pos_Controller.get_pos_product_model();
+            this.pos_store_ingredient_model = Stuff_Pos_Controller.get_pos_store_ingredient_model();
+            this.pos = Stuff_Pos_Controller.get_pos_stuff_controller();
+
+            Stuff_Pos_Controller.pos_set_invoice(invoice);
+            Stuff_Pos_Controller.set_storeID(this.storeID);
+            Stuff_Pos_Controller.setStuffController(this);
             this.tablemodel.set_table_status_not_available(invoice.getTableID());
-            stuff_pos_root.setVisible(true);
+            create_new_order_pane.setVisible(true);
+            this.disable_buttons();
+            this.stuff_page.getChildren().setAll(create_new_order_pane);
             createinvoicedialogcontroller.get_select_table().getItems().clear();
         } else if (clickedbutton.get() == ButtonType.CLOSE) {
-            stuff_pos_root.setVisible(false);
+            // create_new_order_pane.setVisible(false);
             createinvoicedialogcontroller.get_select_table().getItems().clear();
             dashboard_e(event);
         } else if (clickedbutton.get() == ButtonType.CANCEL) {
-            stuff_pos_root.setVisible(false);
+            // create_new_order_pane.setVisible(false);
             createinvoicedialogcontroller.get_select_table().getItems().clear();
             dashboard_e(event);
         }
