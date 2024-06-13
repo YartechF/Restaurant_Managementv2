@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -13,6 +15,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import restaurant.models.user;
 import restaurant.models.Invoice;
 import restaurant.models.invoice_model;
@@ -21,6 +24,7 @@ import restaurant.models.product_model;
 import restaurant.models.store_ingredient_model;
 import restaurant.models.table_model;
 import restaurant.controllers.create_invoice_dialog_controller;
+import javafx.scene.Node;
 
 public class stuff_controller {
     private int storeID;
@@ -68,8 +72,6 @@ public class stuff_controller {
         this.order_manage_controller = this.order_manage_fxmlloader.getController();
     }
 
-
-
     @FXML
     private AnchorPane new_order_btn;
 
@@ -80,10 +82,32 @@ public class stuff_controller {
     private AnchorPane orders_btn;
 
     @FXML
+    private AnchorPane Logout_btn;
+    
+    @FXML
     private AnchorPane table_btn;
 
     @FXML
     private AnchorPane dashboard_btn;
+
+    @FXML
+    void logout_e(MouseEvent event) {
+        try {
+        // Load the login view
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/auth_view.fxml"));
+        Parent root = loader.load();
+
+        // Get the current stage
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Set the new scene
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
 
     public void delete_current_generated_invoice_on_database(){
         new invoice_model().delete_invoice(this.invoice.getID());
@@ -112,12 +136,14 @@ public class stuff_controller {
         this.table_btn.setDisable(false);
         this.orders_btn.setDisable(false);
         this.dashboard_btn.setDisable(false);
+        this.Logout_btn.setDisable(false);
     }
     public void disable_buttons(){
         this.new_order_btn.setDisable(true);
         this.table_btn.setDisable(true);
         this.orders_btn.setDisable(true);
         this.dashboard_btn.setDisable(true);
+        this.Logout_btn.setDisable(true);
     }
 
     @FXML

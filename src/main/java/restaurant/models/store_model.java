@@ -3,13 +3,22 @@ package restaurant.models;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import restaurant.db.database;
 
 public class store_model extends database {
     private PreparedStatement ps;
 
+    private ObservableList<store_table_cell> stores = FXCollections.observableArrayList();
+
     // create crud on store the table name is tbl_store the field is name and
     // description mysql
+
+    public ObservableList<store_table_cell> getStores(){
+        return this.stores;
+    }
+
     public void create_store(String name, String description) {
         try {
             String sql = "insert into tbl_store(name,description)values(?,?)";
@@ -52,6 +61,15 @@ public class store_model extends database {
             ps.executeQuery();
             ResultSet rs = ps.executeQuery();
             System.out.println("store retrieved");
+            while(rs.next()){
+                store_table_cell s = new store_table_cell();
+                s.setID(rs.getInt("ID"));
+                s.setName(rs.getString("name"));
+                s.setDescription(rs.getString("decription"));
+                stores.add(s);
+            }
+            
+            
             return rs;
 
         } catch (Exception e) {

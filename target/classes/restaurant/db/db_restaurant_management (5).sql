@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2024 at 08:43 PM
+-- Generation Time: Jun 13, 2024 at 01:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -62,21 +62,22 @@ CREATE TABLE `tbl_ingredient` (
   `ID` int(11) NOT NULL,
   `name` varchar(75) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `ingredient_type_ID` int(11) NOT NULL,
-  `IsProductIngredient` tinyint(4) NOT NULL
+  `ingredient_cost_typeID` int(11) NOT NULL,
+  `IsProductIngredient` tinyint(4) NOT NULL,
+  `Is_per_pcs` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_ingredient`
 --
 
-INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_type_ID`, `IsProductIngredient`) VALUES
-(3, 'patty', 'for burger', 2, 1),
-(4, 'bun', 'for burger', 2, 1),
-(5, 'susaige', NULL, 2, 1),
-(6, 'topping', NULL, 1, 1),
-(7, 'Coke', 'non ingredient', 2, 0),
-(8, 'Pepsi 20oz', NULL, 2, 0);
+INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_cost_typeID`, `IsProductIngredient`, `Is_per_pcs`) VALUES
+(3, 'patty', 'for burger', 2, 1, 1),
+(4, 'bun', 'for burger', 2, 1, 1),
+(5, 'susaige', NULL, 2, 1, 1),
+(6, 'topping', NULL, 1, 1, 0),
+(7, 'Coke', 'non ingredient', 2, 0, 1),
+(8, 'Pepsi 20oz', NULL, 2, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,7 @@ CREATE TABLE `tbl_ingredient_cost` (
 --
 
 INSERT INTO `tbl_ingredient_cost` (`ID`, `ingredientID`, `productID`, `quantity`) VALUES
-(7, 4, 23, 2),
+(7, 4, 23, 1),
 (8, 3, 23, 2),
 (9, 7, 27, 1),
 (10, 8, 28, 1),
@@ -106,21 +107,21 @@ INSERT INTO `tbl_ingredient_cost` (`ID`, `ingredientID`, `productID`, `quantity`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_ingredient_type`
+-- Table structure for table `tbl_ingredient_cost_type`
 --
 
-CREATE TABLE `tbl_ingredient_type` (
+CREATE TABLE `tbl_ingredient_cost_type` (
   `ID` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_ingredient_type`
+-- Dumping data for table `tbl_ingredient_cost_type`
 --
 
-INSERT INTO `tbl_ingredient_type` (`ID`, `name`) VALUES
-(1, 'Per kg'),
-(2, 'Per pcs');
+INSERT INTO `tbl_ingredient_cost_type` (`ID`, `name`) VALUES
+(1, 'mg'),
+(2, 'pcs');
 
 -- --------------------------------------------------------
 
@@ -139,15 +140,6 @@ CREATE TABLE `tbl_invoice` (
   `Date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_invoice`
---
-
-INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`, `Date`) VALUES
-(598, '', 0, 1, 0, 0, 1, '2024-06-03 21:30:11'),
-(599, '', 0, 1, 0, 0, 1, NULL),
-(600, '', 0, 1, 0, 0, 1, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -161,15 +153,6 @@ CREATE TABLE `tbl_orders` (
   `quantity` int(11) DEFAULT NULL,
   `Isdone` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_orders`
---
-
-INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
-(639, 598, 24, 1, 1),
-(640, 598, 23, 2, 1),
-(641, 598, 27, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -287,14 +270,14 @@ CREATE TABLE `tbl_store_ingredient` (
 --
 
 INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
-(1, 3, 1, 913),
-(2, 4, 1, 913),
+(1, 3, 1, 100),
+(2, 4, 1, 49),
 (3, 3, 2, 50),
 (4, 4, 2, 50),
-(5, 5, 1, 730),
-(6, 6, 1, 896.5),
-(7, 7, 1, 88),
-(8, 8, 1, 46);
+(5, 5, 1, 45),
+(6, 6, 1, 24.75),
+(7, 7, 1, 98),
+(8, 8, 1, 60);
 
 -- --------------------------------------------------------
 
@@ -317,7 +300,8 @@ CREATE TABLE `tbl_table` (
 
 INSERT INTO `tbl_table` (`ID`, `name`, `isActive`, `isAvailable`, `storeID`, `capacity`) VALUES
 (1, 'Table 1', 1, 1, 1, 4),
-(2, 'table 2', 1, 1, 1, 2);
+(2, 'table 2', 1, 1, 1, 2),
+(3, 'Table1', 1, 1, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -339,9 +323,9 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`ID`, `username`, `password`, `personID`, `usertypeID`, `storeID`) VALUES
-(1, '', '', 1, 2, 1),
-(2, 'felix', 'felix421', 1, 2, 1),
-(3, '  ', '   ', 1, 2, 1),
+(1, 'felbert', 'felbert14', 1, 2, 1),
+(2, '', '', 1, 3, 1),
+(3, 'felbert', 'felbert14', 1, 4, 1),
 (4, 'mary-cris', '123456', 9, 2, 1);
 
 -- --------------------------------------------------------
@@ -362,7 +346,8 @@ CREATE TABLE `tbl_usertype` (
 INSERT INTO `tbl_usertype` (`ID`, `usertype`) VALUES
 (1, 'admin'),
 (2, 'stuff'),
-(3, 'inventory_manager');
+(3, 'inventory_manager'),
+(4, 'order_manager');
 
 --
 -- Indexes for dumped tables
@@ -385,7 +370,7 @@ ALTER TABLE `tbl_company`
 --
 ALTER TABLE `tbl_ingredient`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `ingredient_type_ID` (`ingredient_type_ID`);
+  ADD KEY `ingredient_type_ID` (`ingredient_cost_typeID`);
 
 --
 -- Indexes for table `tbl_ingredient_cost`
@@ -396,9 +381,9 @@ ALTER TABLE `tbl_ingredient_cost`
   ADD KEY `productID` (`productID`);
 
 --
--- Indexes for table `tbl_ingredient_type`
+-- Indexes for table `tbl_ingredient_cost_type`
 --
-ALTER TABLE `tbl_ingredient_type`
+ALTER TABLE `tbl_ingredient_cost_type`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -501,22 +486,22 @@ ALTER TABLE `tbl_ingredient_cost`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `tbl_ingredient_type`
+-- AUTO_INCREMENT for table `tbl_ingredient_cost_type`
 --
-ALTER TABLE `tbl_ingredient_type`
+ALTER TABLE `tbl_ingredient_cost_type`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=601;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=642;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=752;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
@@ -552,7 +537,7 @@ ALTER TABLE `tbl_store_ingredient`
 -- AUTO_INCREMENT for table `tbl_table`
 --
 ALTER TABLE `tbl_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -564,7 +549,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_usertype`
 --
 ALTER TABLE `tbl_usertype`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -574,7 +559,7 @@ ALTER TABLE `tbl_usertype`
 -- Constraints for table `tbl_ingredient`
 --
 ALTER TABLE `tbl_ingredient`
-  ADD CONSTRAINT `tbl_ingredient_ibfk_1` FOREIGN KEY (`ingredient_type_ID`) REFERENCES `tbl_ingredient_type` (`ID`);
+  ADD CONSTRAINT `tbl_ingredient_ibfk_1` FOREIGN KEY (`ingredient_cost_typeID`) REFERENCES `tbl_ingredient_cost_type` (`ID`);
 
 --
 -- Constraints for table `tbl_ingredient_cost`

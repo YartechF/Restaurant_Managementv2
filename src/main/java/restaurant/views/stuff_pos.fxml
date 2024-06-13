@@ -29,7 +29,7 @@
                   <Insets bottom="4.0" left="4.0" right="2.0" top="2.0" />
                </HBox.margin>
                <content>
-                  <GridPane fx:id="product_grid" prefHeight="776.0" prefWidth="986.0" style="-fx-background-color: ffffff; -fx-background-radius: 15;">
+                  <GridPane fx:id="product_grid" prefHeight="776.0" prefWidth="986.0" style="-fx-background-color: ffffff;">
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
                      </rowConstraints>

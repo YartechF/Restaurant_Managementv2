@@ -110,6 +110,41 @@ public class auth_controller {
             e.printStackTrace();
         }
     }
+    void order_manager(user current_user, MouseEvent event) throws SQLException {
+        try {
+            // Load the next scene (e.g., stuff screen)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/order_manager.fxml"));
+            Parent nextRoot = loader.load();
+            Scene nextScene = new Scene(nextRoot);
+
+            order_manager_controller OrderManagerController = loader.getController();
+            OrderManagerController.SetCurrentUser(current_user); // Example method call
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(nextScene);
+            currentStage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    void admin(user current_user, MouseEvent event) throws SQLException {
+        try {
+            // Load the next scene (e.g., stuff screen)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_view.fxml"));
+            Parent nextRoot = loader.load();
+            Scene nextScene = new Scene(nextRoot);
+
+            admin_controller AdminController = loader.getController(); // Example method call
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(nextScene);
+            currentStage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Handles the login button click event.
@@ -129,12 +164,16 @@ public class auth_controller {
             int admin = 1;
             int staff = 2;
             int inventory_manager = 3;
+            int order_manager = 4;
             if (current_user.getUsertypeID() == admin) {
-                // flow for admin
+                admin(current_user, event);
             } else if (current_user.getUsertypeID() == staff) {
                 staff(current_user, event);
             } else if (current_user.getUsertypeID() == inventory_manager) {
                 inventory_manager(current_user, event);
+            }else if(current_user.getUsertypeID() == order_manager){
+                //order manager
+                order_manager(current_user, event);
             }
         } else {
             System.out.println("Login Fail");

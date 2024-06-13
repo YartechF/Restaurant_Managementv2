@@ -7,12 +7,51 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import restaurant.db.database;
 
 public class invoice_model extends database implements Initializable{
     private PreparedStatement ps;
 
+    private ObservableList<table_invoice> TableInvoice = FXCollections.observableArrayList();
+
+    public ObservableList<table_invoice> getTableInvoice() {
+        return TableInvoice;
+    }
+
+    public void retreive_all_invoice_by_storeID(int storeID){// use for order_manager_controller
+        TableInvoice.clear();
+        String invoice_sql = "select tbl_invoice.ID, tbl_table.name as tablename,tbl_invoice.istakeout, tbl_invoice.Date from tbl_invoice INNER JOIN tbl_table on tbl_invoice.tableID = tbl_table.ID where tbl_invoice.storeID =? and ispaid= 0 ORDER BY Date";
+        String orders_sql2 = "select sum(quantity) as total_products ,sum(!Isdone) as total_pending_order from tbl_orders where invoiceID = ? and !Isdone";
+        try {
+            ps = getConnection().prepareStatement(invoice_sql);
+            ps.setInt(1, storeID);
+            ResultSet invoice_rs = ps.executeQuery();
+
+
+            while(invoice_rs.next()){
+                table_invoice t = new table_invoice();
+                t.setID(invoice_rs.getString("ID"));
+                t.setDate(invoice_rs.getString("Date"));
+                t.setTable(invoice_rs.getString("tablename"));
+                PreparedStatement ps2 = getConnection().prepareStatement(orders_sql2);
+                ps2.setInt(1,invoice_rs.getInt("ID"));
+                ResultSet orders_rs = ps2.executeQuery();
+                if (orders_rs.next()) {
+                    t.setTotal_product(orders_rs.getString("total_products"));
+                    t.setPending_orders(orders_rs.getString("total_pending_order"));
+                } else {
+                    t.setTotal_product("0");
+                    t.setPending_orders("0");
+                }
+                TableInvoice.add(t);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public double getDiscount(int invoiceID) throws SQLException {
         String sql = "select discount from tbl_invoice where ID =?";

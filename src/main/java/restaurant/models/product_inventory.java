@@ -8,7 +8,12 @@ public class product_inventory {
     private SimpleStringProperty Stock;
     private SimpleStringProperty Is_ingredient;
     private int ID;
+    private String Cost_Type;
     //create getters and setters for each variable
+    public void setCost_Type(String cost_type){
+        this.Cost_Type = cost_type;
+    }
+
     public int getID() {
         return ID;
     }
@@ -40,7 +45,7 @@ public class product_inventory {
         if (this.Stock == null) {
             this.Stock = new SimpleStringProperty();
         }
-        this.Stock.set(Stock);
+        this.Stock.set(Stock+" "+this.Cost_Type);
     }
 
 }

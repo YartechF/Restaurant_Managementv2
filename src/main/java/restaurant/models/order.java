@@ -16,7 +16,7 @@ public class order {
     public boolean getIsdone() {
         return this.isdone;
     }
-
+    
     public order() {
         this.quantity = 1;
     }

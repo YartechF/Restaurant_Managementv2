@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.order_manager_controller">
+   <children>
+      <Line endX="26.0" endY="886.0" layoutX="694.0" layoutY="14.0" startX="26.0" startY="-14.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="6.0" layoutY="4.0" prefHeight="39.0" prefWidth="707.0">
+         <children>
+            <AnchorPane prefHeight="39.0" prefWidth="29.0" />
+            <Label fx:id="storename" text="StoreName">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <TableView fx:id="order_table" layoutX="9.0" layoutY="47.0" prefHeight="846.0" prefWidth="701.0" style="-fx-border-color: D36135;" stylesheets="@style.css">
+        <columns>
+          <TableColumn fx:id="invoice_id_col" prefWidth="110.0" text="Invoice ID" />
+          <TableColumn fx:id="table_col" prefWidth="258.0" text="Table" />
+            <TableColumn fx:id="total_product_col" prefWidth="128.0" text="Total Product" />
+            <TableColumn fx:id="pending_orders_col" prefWidth="202.0" text="Pending Orders" />
+        </columns>
+      </TableView>
+      <GridPane layoutX="725.0" layoutY="47.0" prefHeight="0.0" prefWidth="1.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+      </GridPane>
+      <ScrollPane hbarPolicy="NEVER" layoutX="730.0" layoutY="47.0" prefHeight="846.0" prefWidth="701.0" vbarPolicy="NEVER">
+         <content>
+            <GridPane fx:id="order_grid_pane" prefHeight="0.0" prefWidth="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_LEFT" layoutX="744.0" layoutY="4.0" prefHeight="39.0" prefWidth="170.0">
+         <children>
+            <Label fx:id="table" text="Orders">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button fx:id="mark_as_done_btn" layoutX="1311.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#mark_as_done_btn_e" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Mark as Done" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -20,17 +21,24 @@
       <HBox alignment="CENTER_LEFT" layoutX="-1.0" prefHeight="72.0" prefWidth="1440.0">
          <children>
             <AnchorPane prefHeight="72.0" prefWidth="47.0" />
-            <Label text="Inventory Management">
+            <Label prefHeight="30.0" prefWidth="280.0" text="Manage Inventory">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <AnchorPane prefHeight="72.0" prefWidth="643.0" />
-            <HBox prefHeight="72.0" prefWidth="532.0">
+            <AnchorPane prefHeight="72.0" prefWidth="447.0" />
+            <HBox prefHeight="72.0" prefWidth="709.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="72.0" prefWidth="536.0">
+                  <HBox alignment="CENTER" prefHeight="72.0" prefWidth="710.0">
                      <children>
+                        <AnchorPane prefHeight="72.0" prefWidth="30.0" />
                         <TextField fx:id="search" prefHeight="32.0" prefWidth="425.0" promptText="Search" style="-fx-background-color: E8E8E8; -fx-background-radius: 10;" />
+                        <AnchorPane prefHeight="72.0" prefWidth="78.0" />
+                        <Button mnemonicParsing="false" onMouseClicked="#logout_btn_e" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Logout" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>
