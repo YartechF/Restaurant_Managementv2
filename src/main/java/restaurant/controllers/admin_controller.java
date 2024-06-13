@@ -38,6 +38,9 @@ public class admin_controller {
     private AnchorPane store_btn;
 
     @FXML
+    private AnchorPane Inventory;
+
+    @FXML
     void category_e(MouseEvent event) {
 
     }
@@ -51,6 +54,12 @@ public class admin_controller {
     void groups_e(MouseEvent event) {
 
     }
+
+    @FXML
+    void Inventory_e(MouseEvent event) {
+
+    }
+    
 
     @FXML
     void logout_e(MouseEvent event) {

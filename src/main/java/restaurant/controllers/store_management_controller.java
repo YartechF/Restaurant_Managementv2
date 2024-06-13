@@ -1,15 +1,21 @@
 package restaurant.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.naming.spi.DirStateFactory.Result;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,7 +38,23 @@ public class store_management_controller implements Initializable {
     private TableView<store_table_cell> store_table;
 
     @FXML
-    void add_store_e(MouseEvent event) {
+    void add_store_e(MouseEvent event) throws IOException {
+        //create add store dialog text field storename and description and some ok cancel button
+        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/restaurant/views/create_store_dialog.fxml"));
+        DialogPane create_store_dialog = fxmlloader.load();
+        create_store_controller CreateStoreController = fxmlloader.getController();
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Create Store");
+        dialog.setDialogPane(create_store_dialog);
+        Optional<ButtonType> clickedbutton = dialog.showAndWait();
+
+        if(clickedbutton.get() == ButtonType.OK){
+            String storename = CreateStoreController.getStorenameValue();
+            String description = CreateStoreController.getDescriptionValue();
+            new store_model().create_store(storename, description);
+        }
+
 
     }
 
@@ -46,12 +68,6 @@ public class store_management_controller implements Initializable {
     void load_store() throws SQLException{
         this.StoreModel.retrieve_all_store();
         ObservableList<store_table_cell> stores = this.StoreModel.getStores();
-
-        // for(store_table_cell s:stores){
-        //     System.out.println(s.getname());
-        //     System.out.println(s.getdescription());
-        // }
-
         this.store_table.setItems(stores);
     }
 

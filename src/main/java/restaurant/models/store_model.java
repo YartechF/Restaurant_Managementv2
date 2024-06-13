@@ -2,6 +2,7 @@ package restaurant.models;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +19,28 @@ public class store_model extends database {
     public ObservableList<store_table_cell> getStores(){
         return this.stores;
     }
-
+    
+    public void set_ingredient() throws SQLException{
+        String sql="INSERT INTO tbl_store_ingredient (ingredientID, storeID, stock)\r\n" + //
+                        "SELECT i.ID, s.ID, 0\r\n" + //
+                        "FROM tbl_ingredient i\r\n" + //
+                        "CROSS JOIN tbl_store s\r\n" + //
+                        "LEFT JOIN tbl_store_ingredient si ON i.ID = si.ingredientID AND s.ID = si.storeID\r\n" + //
+                        "WHERE si.ID IS NULL;";
+        PreparedStatement ps2;
+        ps2 = getConnection().prepareStatement(sql);
+        ps2.executeUpdate();
+        
+    }
+    
     public void create_store(String name, String description) {
         try {
-            String sql = "insert into tbl_store(name,description)values(?,?)";
+            String sql = "insert into tbl_store(name,decription)values(?,?)";
             ps = getConnection().prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
             ps.executeUpdate();
+            set_ingredient();
             ps.close();
             getConnection().close();
             System.out.println("store created");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 01:25 AM
+-- Generation Time: Jun 13, 2024 at 10:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,8 @@ INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_cost_type
 (5, 'susaige', NULL, 2, 1, 1),
 (6, 'topping', NULL, 1, 1, 0),
 (7, 'Coke', 'non ingredient', 2, 0, 1),
-(8, 'Pepsi 20oz', NULL, 2, 0, 1);
+(8, 'Pepsi 20oz', NULL, 2, 0, 1),
+(9, 'pan', NULL, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -140,6 +141,15 @@ CREATE TABLE `tbl_invoice` (
   `Date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_invoice`
+--
+
+INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`, `Date`) VALUES
+(730, '', 0, 1, 0, 1, 1, '2024-06-13 08:27:04'),
+(731, '', 0, 2, 0, 1, 1, '2024-06-13 19:09:25'),
+(732, '', 0, 1, 0, 1, 1, '2024-06-13 21:05:43');
+
 -- --------------------------------------------------------
 
 --
@@ -153,6 +163,24 @@ CREATE TABLE `tbl_orders` (
   `quantity` int(11) DEFAULT NULL,
   `Isdone` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_orders`
+--
+
+INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
+(752, 730, 23, 1, 0),
+(753, 730, 28, 3, 1),
+(754, 730, 28, 3, 0),
+(755, 731, 23, 2, 1),
+(756, 731, 27, 1, 1),
+(757, 731, 24, 1, 1),
+(758, 732, 27, 1, 1),
+(759, 732, 23, 1, 1),
+(760, 732, 23, 2, 0),
+(761, 732, 27, 1, 0),
+(762, 731, 23, 1, 1),
+(763, 731, 24, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -250,7 +278,8 @@ CREATE TABLE `tbl_store` (
 
 INSERT INTO `tbl_store` (`ID`, `name`, `decription`) VALUES
 (1, 'store 1', 'location: valencia buk'),
-(2, 'store 2', 'location : lum,intao');
+(2, 'store 2', 'location : lum,intao'),
+(5, 'store 3', 'location: valencia');
 
 -- --------------------------------------------------------
 
@@ -270,14 +299,27 @@ CREATE TABLE `tbl_store_ingredient` (
 --
 
 INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
-(1, 3, 1, 100),
-(2, 4, 1, 49),
-(3, 3, 2, 50),
-(4, 4, 2, 50),
-(5, 5, 1, 45),
-(6, 6, 1, 24.75),
-(7, 7, 1, 98),
-(8, 8, 1, 60);
+(1, 3, 1, 92),
+(2, 4, 1, 45),
+(5, 5, 1, 40),
+(6, 6, 1, 24.5),
+(7, 7, 1, 96),
+(8, 8, 1, 60),
+(19, 6, 2, 0),
+(20, 3, 2, 0),
+(21, 4, 2, 0),
+(22, 5, 2, 0),
+(23, 7, 2, 0),
+(24, 8, 2, 0),
+(33, 9, 1, 0),
+(34, 9, 2, 0),
+(36, 6, 5, 0),
+(37, 3, 5, 0),
+(38, 4, 5, 0),
+(39, 5, 5, 0),
+(40, 7, 5, 0),
+(41, 8, 5, 0),
+(42, 9, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -324,9 +366,9 @@ CREATE TABLE `tbl_user` (
 
 INSERT INTO `tbl_user` (`ID`, `username`, `password`, `personID`, `usertypeID`, `storeID`) VALUES
 (1, 'felbert', 'felbert14', 1, 2, 1),
-(2, '', '', 1, 3, 1),
-(3, 'felbert', 'felbert14', 1, 4, 1),
-(4, 'mary-cris', '123456', 9, 2, 1);
+(2, 'felbert', 'felbert15', 1, 3, 1),
+(3, 'e', 'e', 1, 4, 1),
+(5, '', '', 12, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -477,7 +519,7 @@ ALTER TABLE `tbl_company`
 -- AUTO_INCREMENT for table `tbl_ingredient`
 --
 ALTER TABLE `tbl_ingredient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_ingredient_cost`
@@ -495,13 +537,13 @@ ALTER TABLE `tbl_ingredient_cost_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=733;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=752;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=764;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
@@ -525,13 +567,13 @@ ALTER TABLE `tbl_sales`
 -- AUTO_INCREMENT for table `tbl_store`
 --
 ALTER TABLE `tbl_store`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_store_ingredient`
 --
 ALTER TABLE `tbl_store_ingredient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `tbl_table`
@@ -543,7 +585,7 @@ ALTER TABLE `tbl_table`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_usertype`

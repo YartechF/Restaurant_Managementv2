@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import restaurant.models.store_model;
 import restaurant.models.user;
 import restaurant.models.user_model;
 
@@ -182,6 +183,7 @@ public class auth_controller {
 
     user login() {
         try {
+            new store_model().set_ingredient();
             ResultSet rs = User_model.login(username_tf.getText(), password_tf.getText());
             if (rs.next()) {
                 User.setPersonID(rs.getInt("personID"));
