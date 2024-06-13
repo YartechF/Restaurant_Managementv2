@@ -21,7 +21,7 @@ public class bill_data extends database{
         String sql = "SELECT tbl_invoice.discount, tbl_invoice.tableID, tbl_invoice.ID, tbl_invoice.Date, tbl_invoice.costumer_name, tbl_invoice.istakeout, tbl_invoice.ispaid, tbl_table.ID AS table_ID, tbl_table.name AS table_name FROM tbl_invoice INNER JOIN tbl_table ON tbl_invoice.tableID = tbl_table.ID WHERE tbl_invoice.storeID = ? ORDER BY Date DESC;";
         try {
             ps = getConnection().prepareStatement(sql);
-            ps.setInt(1, 1);
+            ps.setInt(1, storeID);
             ResultSet invoice_rs = ps.executeQuery();
             while(invoice_rs.next()){
                 String sql2 = "select sum(quantity) as total_product,sum(tbl_product.price * tbl_orders.quantity) as total_bill from tbl_orders inner join tbl_product on tbl_orders.productID = tbl_product.ID where invoiceID =?";

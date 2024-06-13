@@ -231,6 +231,7 @@ public class stuff_pos_controller implements Initializable {
     public void set_pos_currentuser(user current_user) {
         this.current_user = current_user;
         this.storeID = this.current_user.getStoreID();
+        this.store_name.setText(this.current_user.getStorename());
     }
 
     void set_onchange_discount(TextField discount) {
