@@ -19,6 +19,23 @@ public class store_model extends database {
     public ObservableList<store_table_cell> getStores(){
         return this.stores;
     }
+
+    public void update_table(int ID, String tablename, String description){
+        String sql = "UPDATE SET name = ?, decription = ? where ID = ?";
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(sql);
+            pst.setString(1, tablename);
+            pst.setString(2, description);
+            pst.setInt(3, ID);
+            pst.executeUpdate();
+            getConnection().close();
+            pst.close();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
     
     public void set_ingredient() throws SQLException{
         String sql="INSERT INTO tbl_store_ingredient (ingredientID, storeID, stock)\r\n" + //
@@ -54,7 +71,7 @@ public class store_model extends database {
     // create update store method
     public void update_store(int id, String name, String description) {
         try {
-            String sql = "update tbl_store set name=?,description=? where id=?";
+            String sql = "update tbl_store set name=?,decription=? where id=?";
             ps = getConnection().prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
@@ -106,6 +123,31 @@ public class store_model extends database {
             System.out.println(e);
         }
         return null;
+    }
+    //delete table
+    public void delete_store(int tableID){
+        String sql3 = "delete from tbl_user where storeID = ?";
+        String sql1 = "delete from tbl_store_ingredient where storeID = ? ";
+        String sql2 = "DELETE FROM tbl_store WHERE ID = ?";
+        try {
+
+            PreparedStatement ps1 = getConnection().prepareStatement(sql1);
+            ps1.setInt(1, tableID);
+            ps1.executeUpdate();
+
+            PreparedStatement ps3 = getConnection().prepareStatement(sql3);
+            ps3.setInt(1, tableID);
+            ps3.executeUpdate();
+
+            ps = getConnection().prepareStatement(sql2);
+            ps.setInt(1, tableID);
+            ps.executeUpdate();
+            getConnection().close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
 
 }

@@ -340,7 +340,10 @@ public class stuff_pos_controller implements Initializable {
                 // Add event handler for product card click
                 int index = i;
                 product_card.setOnMouseClicked(event -> {
-                    if (this.ordersmodel.order_exist(products.get(index))) {
+                    if(products.get(index).getStock() < 0){
+                        System.out.println("out of stock");
+                    }
+                    else if (this.ordersmodel.order_exist(products.get(index))) {
                         System.out.println("order exist");
                     } else {
                         try {

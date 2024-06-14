@@ -105,18 +105,51 @@ public class update_order_controller implements Initializable{
     
     @FXML
     void mark_as_paid_btn_e(MouseEvent event) throws IOException, SQLException {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/restaurant/views/Pay.fxml"));
+        DialogPane PayDialog = fxmlLoader.load();
+        pay_controller PayController = fxmlLoader.getController();
+
+        PayController.setTotal(this.total.getText());
+
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(this.make_as_paid_confirmation_dialog);
+        dialog.setDialogPane(PayDialog);
+
+        while(true){
         Optional<ButtonType> clickedbutton = dialog.showAndWait();
-        if(clickedbutton.get() == ButtonType.YES){
-            this.InvoiceModel.mark_as_paid(this.invoiceID);
-            this.staff_controller.Order_e(event);
-            this.TableModel.update_table_isAvailable(this.tableID, 1);
-            // this.TableModel.update_table_isAvailable();
-        }else{
-            //do nothing
+
+        
+            if(clickedbutton.get() == ButtonType.OK){
+                if(PayController.getchange() < 0){
+                    System.out.println("kulang");
+                    PayController.set_sufficient_amount_visible();
+                    
+                }else{
+                    this.InvoiceModel.mark_as_paid(this.invoiceID);
+                    this.staff_controller.Order_e(event);
+                    this.TableModel.update_table_isAvailable(this.tableID, 1);
+                    break;
+                }    
+            }else if(clickedbutton.get() == ButtonType.CANCEL){
+                break;
+            }
         }
-        //get the current in voiceID and mark as paid into database.
+           
+
+
+        // Dialog<ButtonType> dialog = new Dialog<>();
+        // dialog.setDialogPane(this.make_as_paid_confirmation_dialog);
+        // Optional<ButtonType> clickedbutton = dialog.showAndWait();
+        // if(clickedbutton.get() == ButtonType.YES){
+        //     this.InvoiceModel.mark_as_paid(this.invoiceID);
+        //     this.staff_controller.Order_e(event);
+        //     this.TableModel.update_table_isAvailable(this.tableID, 1);
+        //     // this.TableModel.update_table_isAvailable();
+        // }else{
+        //     //do nothing
+        // }
+        // //get the current in voiceID and mark as paid into database.
 
     }
 
