@@ -27,7 +27,7 @@ public class admin_controller {
     private AnchorPane dashboard_btn;
 
     @FXML
-    private AnchorPane groups_btn;
+    private AnchorPane user_btn;
 
     @FXML
     private AnchorPane products_btn;
@@ -52,7 +52,7 @@ public class admin_controller {
     }
 
     @FXML
-    void groups_e(MouseEvent event) {
+    void user_btn_e(MouseEvent event) {
 
     }
 

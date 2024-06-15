@@ -89,6 +89,6 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="stuff_page" layoutX="191.0" prefHeight="900.0" prefWidth="1251.0" style="-fx-background-color: ffffff; -fx-background-radius: 0;" />
+      <AnchorPane fx:id="stuff_page" layoutX="191.0" prefHeight="900.0" prefWidth="1251.0" style="-fx-background-color: ffffff; -fx-background-radius: 0; -fx-border-color: ffffff;" />
    </children>
 </AnchorPane>

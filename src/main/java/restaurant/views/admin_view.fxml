@@ -9,10 +9,9 @@
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_controller">
    <center>
-      <AnchorPane fx:id="admin_page" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="admin_page" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER" />
    </center>
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="900.0" prefWidth="184.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER">
@@ -41,14 +40,14 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="groups_btn" onMouseClicked="#groups_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+            <AnchorPane fx:id="user_btn" onMouseClicked="#user_btn_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
                <children>
                   <ImageView layoutX="31.0" layoutY="13.0">
                      <image>
                         <Image url="@icons/groups.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="73.0" layoutY="16.0" text="Groups">
+                  <Label layoutX="73.0" layoutY="16.0" text="Users">
                      <font>
                         <Font size="13.0" />
                      </font>
