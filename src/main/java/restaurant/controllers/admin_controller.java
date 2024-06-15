@@ -92,8 +92,6 @@ public class admin_controller {
         fxmlLoader.setLocation(getClass().getResource("/restaurant/views/reports_view.fxml"));
         AnchorPane reportPane = fxmlLoader.load();
         reports_controller ReportsController = fxmlLoader.getController();
-
-        ReportsController.init();
         this.admin_page.getChildren().setAll(reportPane);
     }
 

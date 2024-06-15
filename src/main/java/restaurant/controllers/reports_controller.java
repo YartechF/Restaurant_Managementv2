@@ -9,22 +9,27 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import restaurant.models.orders_model;
+import restaurant.models.sales_chart_model;
 
-public class reports_controller {
+public class reports_controller implements Initializable {
 
     @FXML
-    private BarChart<String, Double> report_chart;
-
-    public void init(){
-        setdatachart();
-    }
+    private BarChart<String, Number> report_chart;
+    
     void setdatachart(){
-        XYChart.Series<String,Double> series = new XYChart.Series<>();
+        XYChart.Series<String,Number> series = new XYChart.Series<>();
 
-        series.getData().add(new XYChart.Data<String,Double>("May",1000.5));
-        series.getData().add(new XYChart.Data<String,Double>("june",200.0));
+        series.getData().add(new XYChart.Data<String,Number>("May",1000.5));
+        series.getData().add(new XYChart.Data<String,Number>("june",200.0));
 
         report_chart.getData().add(series);
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        sales_chart_model SalesChartModel = new sales_chart_model();
+        
+        setdatachart();
     }
     
 }
