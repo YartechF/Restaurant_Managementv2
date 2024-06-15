@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -56,8 +57,8 @@ public class admin_controller {
     }
 
     @FXML
-    void Inventory_e(MouseEvent event) {
-
+    void Inventory_e(MouseEvent event) throws IOException {
+        
     }
     
 
@@ -86,8 +87,14 @@ public class admin_controller {
     }
 
     @FXML
-    void reports_e(MouseEvent event) {
+    void reports_e(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/restaurant/views/reports_view.fxml"));
+        AnchorPane reportPane = fxmlLoader.load();
+        reports_controller ReportsController = fxmlLoader.getController();
 
+        ReportsController.init();
+        this.admin_page.getChildren().setAll(reportPane);
     }
 
     @FXML
