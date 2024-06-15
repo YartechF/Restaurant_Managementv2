@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 10:54 PM
+-- Generation Time: Jun 15, 2024 at 06:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -146,9 +146,8 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`, `Date`) VALUES
-(730, '', 0, 1, 0, 1, 1, '2024-06-13 08:27:04'),
-(731, '', 0, 2, 0, 1, 1, '2024-06-13 19:09:25'),
-(732, '', 0, 1, 0, 1, 1, '2024-06-13 21:05:43');
+(748, '', 0, 1, 0, 1, 1, '2024-07-15 10:56:43'),
+(749, '', 0, 1, 0, 1, 1, '2024-06-15 10:57:50');
 
 -- --------------------------------------------------------
 
@@ -169,18 +168,11 @@ CREATE TABLE `tbl_orders` (
 --
 
 INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
-(752, 730, 23, 1, 0),
-(753, 730, 28, 3, 1),
-(754, 730, 28, 3, 0),
-(755, 731, 23, 2, 1),
-(756, 731, 27, 1, 1),
-(757, 731, 24, 1, 1),
-(758, 732, 27, 1, 1),
-(759, 732, 23, 1, 1),
-(760, 732, 23, 2, 0),
-(761, 732, 27, 1, 0),
-(762, 731, 23, 1, 1),
-(763, 731, 24, 2, 1);
+(783, 748, 23, 2, 0),
+(784, 748, 27, 1, 0),
+(785, 749, 24, 2, 0),
+(786, 749, 23, 1, 0),
+(787, 749, 28, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -277,9 +269,8 @@ CREATE TABLE `tbl_store` (
 --
 
 INSERT INTO `tbl_store` (`ID`, `name`, `decription`) VALUES
-(1, 'store 1', 'location: valencia buk'),
-(2, 'store 2', 'location : lum,intao'),
-(5, 'store 3', 'location: valencia');
+(1, 'store 1', 'location: quezon.'),
+(11, 'Store 2', 'location: valencia');
 
 -- --------------------------------------------------------
 
@@ -299,27 +290,27 @@ CREATE TABLE `tbl_store_ingredient` (
 --
 
 INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
-(1, 3, 1, 92),
-(2, 4, 1, 45),
-(5, 5, 1, 40),
-(6, 6, 1, 24.5),
-(7, 7, 1, 96),
-(8, 8, 1, 60),
-(19, 6, 2, 0),
-(20, 3, 2, 0),
-(21, 4, 2, 0),
-(22, 5, 2, 0),
-(23, 7, 2, 0),
-(24, 8, 2, 0),
+(1, 3, 1, 58),
+(2, 4, 1, 28),
+(5, 5, 1, 20),
+(6, 6, 1, 23.5),
+(7, 7, 1, 92),
+(8, 8, 1, 55),
 (33, 9, 1, 0),
-(34, 9, 2, 0),
 (36, 6, 5, 0),
 (37, 3, 5, 0),
 (38, 4, 5, 0),
 (39, 5, 5, 0),
 (40, 7, 5, 0),
 (41, 8, 5, 0),
-(42, 9, 5, 0);
+(42, 9, 5, 0),
+(92, 6, 11, 0),
+(93, 3, 11, 0),
+(94, 4, 11, 0),
+(95, 5, 11, 0),
+(96, 7, 11, 0),
+(97, 8, 11, 0),
+(98, 9, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -341,9 +332,7 @@ CREATE TABLE `tbl_table` (
 --
 
 INSERT INTO `tbl_table` (`ID`, `name`, `isActive`, `isAvailable`, `storeID`, `capacity`) VALUES
-(1, 'Table 1', 1, 1, 1, 4),
-(2, 'table 2', 1, 1, 1, 2),
-(3, 'Table1', 1, 1, 2, 4);
+(1, 'Table 1', 1, 1, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -537,13 +526,13 @@ ALTER TABLE `tbl_ingredient_cost_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=733;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=750;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=764;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=788;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
@@ -567,13 +556,13 @@ ALTER TABLE `tbl_sales`
 -- AUTO_INCREMENT for table `tbl_store`
 --
 ALTER TABLE `tbl_store`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_store_ingredient`
 --
 ALTER TABLE `tbl_store_ingredient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `tbl_table`
@@ -585,7 +574,7 @@ ALTER TABLE `tbl_table`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_usertype`
