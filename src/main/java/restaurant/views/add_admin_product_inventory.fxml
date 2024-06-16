@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<DialogPane expanded="true" prefHeight="78.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.AddAdminProductInventoryController">
+   <content>
+      <AnchorPane prefHeight="220.0" prefWidth="348.0">
+         <children>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="341.0">
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="341.0">
+                     <children>
+                        <VBox prefHeight="60.0" prefWidth="203.0">
+                           <children>
+                              <Label text="Cost type" />
+                              <ChoiceBox fx:id="cost_type" prefWidth="150.0" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="60.0" prefWidth="180.0">
+                           <children>
+                              <Label text="Stock type" />
+                              <ChoiceBox fx:id="stock_type" prefHeight="25.0" prefWidth="172.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="Product name" />
+                  <TextField fx:id="product_name_tf" />
+                  <Label text="Description" />
+                  <TextField fx:id="descrption_tf" alignment="TOP_LEFT" prefHeight="81.0" prefWidth="341.0" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

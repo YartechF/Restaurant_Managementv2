@@ -185,7 +185,8 @@ public class stuff_pos_controller implements Initializable {
                 Optional<ButtonType> result = dialog.showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    System.out.println("OK button is clicked");        
+                    System.out.println("OK button is clicked");  
+                    this.stuffcontroller.Order_e(event);      
                 }
             this.ordersmodel.get_orders().clear();
             no_order_hbox.setVisible(false);
@@ -332,15 +333,19 @@ public class stuff_pos_controller implements Initializable {
                         }
                     }
                 }
-
-                double product_stock = Collections.min(calculate_stock);
-                products.get(i).setStock((int) product_stock);
+                try {
+                    double product_stock = Collections.min(calculate_stock);
+                    products.get(i).setStock((int) product_stock);
+                } catch (Exception e) {
+                    products.get(i).setStock(0);
+                }
+                
                 productcardcontroller.setdata(products.get(i));
 
                 // Add event handler for product card click
                 int index = i;
                 product_card.setOnMouseClicked(event -> {
-                    if(products.get(index).getStock() < 0){
+                    if(products.get(index).getStock() < 1){
                         System.out.println("out of stock");
                     }
                     else if (this.ordersmodel.order_exist(products.get(index))) {

@@ -136,20 +136,26 @@ public class order_on_create_controller implements Initializable  {
 
     @FXML
     void plus_e(MouseEvent event) throws SQLException {
-        for (store_ingredient sim : this.sim) {
-            if (filtered_storeingredient.contains(sim)) {
-                for (ingredient_cost ic : this.IngredientCost) {
-                    if (ic.getIngredientID() == sim.get_ingredientID()) {
-                        System.out.println("Reducing stock for ingredient " + sim.get_ingredientID() + " in store " + sim.getStoreID());
-                        sim.set_stock(sim.get_stock() - ic.getQuantity());
-                        break;
+        if(this.Order.getproduct().getStock() == 0){
+
+        }else{
+            for (store_ingredient sim : this.sim) {
+                if (filtered_storeingredient.contains(sim)) {
+                    for (ingredient_cost ic : this.IngredientCost) {
+                        if (ic.getIngredientID() == sim.get_ingredientID()) {
+                            System.out.println("Reducing stock for ingredient " + sim.get_ingredientID() + " in store " + sim.getStoreID());
+                            sim.set_stock(sim.get_stock() - ic.getQuantity());
+                            break;
+                        }
                     }
                 }
             }
+            this.Order.setquantity(this.Order.getquantity() + 1);
+            update_order();
+            this.pos.product_load();
         }
-        this.Order.setquantity(this.Order.getquantity() + 1);
-        update_order();
-        this.pos.product_load();
+        
+        
     }
 
     public void printSim() {

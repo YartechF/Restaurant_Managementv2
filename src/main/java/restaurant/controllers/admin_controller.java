@@ -58,7 +58,11 @@ public class admin_controller {
 
     @FXML
     void Inventory_e(MouseEvent event) throws IOException {
-        
+        //fxml loader
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_inventory.fxml"));
+        AnchorPane AdminInventory = loader.load();
+
+        admin_page.getChildren().setAll(AdminInventory);
     }
     
 
@@ -82,8 +86,10 @@ public class admin_controller {
     }
 
     @FXML
-    void products_e(MouseEvent event) {
-
+    void products_e(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_product_management.fxml"));
+        AnchorPane AdminProductManagement = loader.load();
+        admin_page.getChildren().setAll(AdminProductManagement);
     }
 
     @FXML

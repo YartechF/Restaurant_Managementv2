@@ -89,7 +89,7 @@
                         <Image url="@icons/product.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="73.0" layoutY="16.0" text="Products">
+                  <Label layoutX="73.0" layoutY="16.0" text="Manage Product">
                      <font>
                         <Font size="13.0" />
                      </font>

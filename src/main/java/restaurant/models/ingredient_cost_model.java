@@ -27,16 +27,13 @@ public class ingredient_cost_model extends database implements Initializable {
         ps.close();
     }
 
-    public void update_ingredient_cost(int ingredientID, int productID, double quantity) throws SQLException {
+    public void update_ingredient_cost(int ID, double quantity) throws SQLException {
         String sql = """
-                UPDATE `tbl_ingredient_cost` SET `ingredientID` =?, `productID` =?, `quantity` =? WHERE `ingredientID` =? AND `productID` =?;
+                UPDATE `tbl_ingredient_cost` SET `quantity` =? where ID = ?";
                 """;
         ps = getConnection().prepareStatement(sql);
-        ps.setInt(1, ingredientID);
-        ps.setInt(2, productID);
-        ps.setDouble(3, quantity);
-        ps.setInt(4, ingredientID);
-        ps.setInt(5, productID);
+        ps.setDouble(1, quantity);
+        ps.setInt(2, ID);
         ps.executeUpdate();
         ps.close();
     }

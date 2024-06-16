@@ -18,7 +18,20 @@ public class product_model extends database implements Initializable {
     public void clear_product_list(){
         ProductsList.clear();
     }
-
+    public ObservableList<AdminProductInventory> get_all_products_admin() throws SQLException{
+        ObservableList<AdminProductInventory> api_list = FXCollections.observableArrayList();
+        String sql = "select ID, name from tbl_product";
+        PreparedStatement pst;
+        pst =  getConnection().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            AdminProductInventory API = new AdminProductInventory();
+            API.setID(rs.getInt("ID"));
+            API.setProductName(rs.getString("name"));
+            api_list.add(API);
+        }
+        return api_list;
+    }
     public void create_product(String name, double price, int categoryID, String picture, String type) {
         try {
             String sql = "insert into tbl_product(name,price,categoryID,picture,type)values(?,?,?,?,?)";

@@ -11,17 +11,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import restaurant.models.AdminProductInventory;
+import restaurant.models.Inventory_store_ingredient;
 import restaurant.models.ingredient_model;
 import restaurant.models.product_inventory;
+import restaurant.models.table_invoice;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class admin_inventory_controller implements Initializable {
 
@@ -34,61 +40,117 @@ public class admin_inventory_controller implements Initializable {
     private TextField search;
 
     @FXML
-    private TableColumn<product_inventory, String> cost_type_col;
+    private TableColumn<AdminProductInventory, String> cost_type_col;
 
     @FXML
-    private TableColumn<product_inventory, String> desription_col;
+    private TableColumn<AdminProductInventory, String> desription_col;
 
     @FXML
-    private TableColumn<product_inventory, String> productname_col;
+    private TableColumn<AdminProductInventory, String> productname_col;
 
     @FXML
-    private TableView<product_inventory> inventory_table;
+    private TableView<AdminProductInventory> inventory_table;
 
     @FXML
-    void add_btn_e(MouseEvent event) {
+    void add_btn_e(MouseEvent event) throws IOException {
         // ingredient
-        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurant/views/add_admin_product_inventory.fxml"));
+        DialogPane add_product_inventory_pane = fxmlLoader.load();
+        AddAdminProductInventoryController AAPIC = fxmlLoader.getController();
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(add_product_inventory_pane);
+
+        dialog.setTitle("Add Product Inventory");
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            //print all
+            String productname = AAPIC.getProductname();
+            String description = AAPIC.getDescription();
+            String cost_type = AAPIC.getCostType();
+            String stock_type = AAPIC.getStockType();
+
+            if(cost_type.equals("per pcs")){
+                cost_type = "2";
+            }
+            else if(cost_type.equals("per mg")){
+                cost_type = "1";
+            }
+
+            if(stock_type.equals("per pcs")){
+                stock_type = "1";
+            }
+            else if(stock_type.equals("per kg")){
+                stock_type = "0";
+            }
+
+            
+            new ingredient_model().create_ingredient(productname,description,Integer.parseInt(cost_type),Integer.parseInt(stock_type));
+            
+
+            
+            
+        }
     }
     private void setCellValue(){
-        this.productname_col.setCellValueFactory(new PropertyValueFactory<product_inventory, String>("Product_Name"));// or bill number
-        this.productname_col.getStyleClass().add("centered-cell");
-
-        this.desription_col.setCellValueFactory(new PropertyValueFactory<product_inventory, String>("Description"));// or bill number
-        this.desription_col.getStyleClass().add("centered-cell");
-
-        this.cost_type_col.setCellValueFactory(new PropertyValueFactory<product_inventory, String>("Cost_Type"));// or bill number
-        this.cost_type_col.getStyleClass().add("centered-cell");
+        //set the admin_product_inventory
+        productname_col.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        desription_col.setCellValueFactory(new PropertyValueFactory<>("description"));
+        cost_type_col.setCellValueFactory(new PropertyValueFactory<>("costType"));
     }
 
     private void filterInventoryTable(String searchText) {
-    // Get the filtered list of product_inventory based on the search text
-    // ObservableList<product_inventory> filteredList = StoreIngredientModel.getFilteredProductInventoryList(searchText);
+        inventory_table.setItems(this.IngredientModel.retrieve_all_ingredient_by_search(searchText));
 
-    // // Update the inventory_table with the filtered list
-    // inventory_table.setItems(filteredList);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.IngredientModel = new ingredient_model();
-
+        filterInventoryTable(search.getText());
         setCellValue();
+        
         search.textProperty().addListener((observable, oldValue, newValue) -> {
             // Filter the inventory table based on the search text
             filterInventoryTable(newValue);
         });
+        // add row clicked listener
         inventory_table.setRowFactory(tv -> {
-            TableRow<product_inventory> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    product_inventory selectedProduct = row.getItem();
-                    // Perform action on the selected product
-                    System.out.println("Selected Product: " + selectedProduct.getID());
+        TableRow<AdminProductInventory> row = new TableRow<>();
+        row.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                AdminProductInventory rowData = row.getItem();
 
+                // Create a dialog
+                Dialog<ButtonType> dialog = new Dialog<>();
+                dialog.setTitle("Product Inventory");
+                dialog.setHeaderText(null);
+
+                // Create update and delete buttons
+                ButtonType updateButton = new ButtonType("Update", ButtonData.OK_DONE);
+                ButtonType deleteButton = new ButtonType("Delete", ButtonData.CANCEL_CLOSE);
+
+                // Set the dialog content and buttons
+                dialog.getDialogPane().setContent(new Label("Select an action for the product: " + rowData.getProductName()));
+                dialog.getDialogPane().getButtonTypes().addAll(updateButton, deleteButton);
+
+                // Show the dialog and handle the result
+                Optional<ButtonType> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get() == updateButton) {
+                        // Handle update action
+                        System.out.println("Update: " + rowData.getProductName());
+                    } else if (result.get() == deleteButton) {
+                        // Handle delete action
+                        System.out.println("Delete: " + rowData.getProductName());
+                        new ingredient_model().delete_ingredient(rowData.getID());
+                        filterInventoryTable(search.getText());
+                    }
                 }
-            });
-            return row;
+            }
         });
+        return row;
+    });
 
 
     }
