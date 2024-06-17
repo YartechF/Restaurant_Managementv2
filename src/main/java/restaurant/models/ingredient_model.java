@@ -130,6 +130,21 @@ public class ingredient_model extends database {
         }
     }
 
+    public ObservableList<product_ingredient> get_all_ingredient() throws SQLException{
+        String sql = "SELECT tbl_ingredient.name,tbl_ingredient.ID,tbl_ingredient_cost_type.name as cost_type FROM tbl_ingredient inner join tbl_ingredient_cost_type on tbl_ingredient.ingredient_cost_typeID = tbl_ingredient_cost_type.ID;";
+        PreparedStatement pst = getConnection().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ObservableList<product_ingredient> productList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            product_ingredient product = new product_ingredient();
+            product.setName(rs.getString("name"));
+            product.setID(rs.getInt("ID"));
+            product.setCostType(rs.getString("cost_type"));
+            productList.add(product);
+        }
+        return productList;
+    }   
+
     // create delete
     public void delete_ingredient(int ingredient_ID) {
         try {

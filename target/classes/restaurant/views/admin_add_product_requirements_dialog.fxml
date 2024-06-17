@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane prefHeight="107.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_add_product_requirements_dialog_controller">
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+   <content>
+      <VBox prefHeight="0.0" prefWidth="457.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="42.0" prefWidth="195.0">
+                     <children>
+                        <Label text="Choose Product" />
+                        <ChoiceBox fx:id="ingredient_choice_box" prefHeight="25.0" prefWidth="163.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="42.0" prefWidth="133.0">
+                     <children>
+                        <Label text="Quantity" />
+                        <TextField fx:id="quantity_tf" prefHeight="25.0" prefWidth="131.0" />
+                     </children>
+                  </VBox>
+                  <AnchorPane prefHeight="42.0" prefWidth="25.0" />
+                  <VBox prefHeight="42.0" prefWidth="48.0">
+                     <children>
+                        <Label />
+                        <Label fx:id="cost_type" prefHeight="17.0" prefWidth="29.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</DialogPane>

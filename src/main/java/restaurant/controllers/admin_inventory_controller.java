@@ -67,8 +67,11 @@ public class admin_inventory_controller implements Initializable {
         if (result.get() == ButtonType.OK) {
             //print all
             String productname = AAPIC.getProductname();
+
             String description = AAPIC.getDescription();
+
             String cost_type = AAPIC.getCostType();
+
             String stock_type = AAPIC.getStockType();
 
             if(cost_type.equals("per pcs")){
@@ -128,11 +131,12 @@ public class admin_inventory_controller implements Initializable {
 
                 // Create update and delete buttons
                 ButtonType updateButton = new ButtonType("Update", ButtonData.OK_DONE);
-                ButtonType deleteButton = new ButtonType("Delete", ButtonData.CANCEL_CLOSE);
+                ButtonType deleteButton = new ButtonType("Delete", ButtonData.FINISH);
+                ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
                 // Set the dialog content and buttons
                 dialog.getDialogPane().setContent(new Label("Select an action for the product: " + rowData.getProductName()));
-                dialog.getDialogPane().getButtonTypes().addAll(updateButton, deleteButton);
+                dialog.getDialogPane().getButtonTypes().addAll(updateButton, deleteButton,cancel);
 
                 // Show the dialog and handle the result
                 Optional<ButtonType> result = dialog.showAndWait();
@@ -145,6 +149,9 @@ public class admin_inventory_controller implements Initializable {
                         System.out.println("Delete: " + rowData.getProductName());
                         new ingredient_model().delete_ingredient(rowData.getID());
                         filterInventoryTable(search.getText());
+                    }else if (result.get() == cancel) {
+                        // Handle delete action
+                        dialog.close();
                     }
                 }
             }

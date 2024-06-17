@@ -82,14 +82,14 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="products_btn" onMouseClicked="#products_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+            <AnchorPane fx:id="ingredient_manage_btn" onMouseClicked="#Ingredient_manage_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
                <children>
                   <ImageView layoutX="31.0" layoutY="13.0">
                      <image>
-                        <Image url="@icons/product.png" />
+                        <Image url="@icons/product_manage.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="73.0" layoutY="16.0" text="Manage Product">
+                  <Label layoutX="73.0" layoutY="16.0" text="Ingredient Manage">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -124,7 +124,21 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="343.0" prefWidth="184.0" />
+            <AnchorPane fx:id="product_manage_btn" onMouseClicked="#product_manage_e" prefHeight="50.0" prefWidth="186.0" styleClass="navbutton" stylesheets="@style.css">
+               <children>
+                  <ImageView layoutX="31.0" layoutY="13.0">
+                     <image>
+                        <Image url="@icons/product.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="73.0" layoutY="16.0" text="Product">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="301.0" prefWidth="184.0" />
             <AnchorPane fx:id="Logout_btn" onMouseClicked="#logout_e" prefHeight="41.0" prefWidth="179.0" style="-fx-background-radius: 15;" stylesheets="@style.css">
                <children>
                   <Label layoutX="71.0" layoutY="11.0" text="Logout">

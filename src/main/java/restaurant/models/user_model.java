@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javafx.collections.ObservableList;
 import restaurant.db.database;
 
 public class user_model extends database {
@@ -113,5 +115,9 @@ public class user_model extends database {
             ps.close();
             e.printStackTrace();
         }
+
+        // public ObservableList<user_person> user_person(){
+        //     String sql = "";
+        // }
     }
 }

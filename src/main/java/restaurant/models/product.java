@@ -8,8 +8,17 @@ public class product {
     private String picture;
     private String type;
     private int stock;
-
+    private String category;
     // create getter and setters
+
+    public void setCategory(String category){
+        this.category = category;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+
     public String getName() {
         return name;
     }

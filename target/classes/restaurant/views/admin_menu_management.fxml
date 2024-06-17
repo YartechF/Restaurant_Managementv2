@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1256.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_ingredient_manage_controller">
+   <children>
+      <Label layoutX="27.0" layoutY="21.0" text="Ingredient Management">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <Line endX="-100.0" endY="811.0" layoutX="729.0" layoutY="89.0" startX="-100.0" stroke="#d36135" />
+      <TableView fx:id="Product_Dishes_table" layoutX="14.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="product_dishes_col" prefWidth="599.0" text="Product Menu" />
+        </columns>
+      </TableView>
+      <TableView fx:id="product_table" layoutX="644.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="product_name_col" prefWidth="337.0" text="Product Name" />
+          <TableColumn fx:id="required_quantity_col" prefWidth="262.0" text="Required Quantity" />
+        </columns>
+      </TableView>
+      <Button fx:id="add_btn" disable="true" layoutX="644.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#add_btn_click_e" prefHeight="35.0" prefWidth="600.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Add Product Requirement" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="selectedProduct" layoutX="712.0" layoutY="25.0" text=" ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

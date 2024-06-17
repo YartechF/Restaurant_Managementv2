@@ -232,6 +232,7 @@ public class stuff_pos_controller implements Initializable {
     public void set_pos_currentuser(user current_user) {
         this.current_user = current_user;
         this.storeID = this.current_user.getStoreID();
+        this.productmodel.retreive_all_product_by_store(storeID);
         this.store_name.setText(this.current_user.getStorename());
     }
 
@@ -418,7 +419,7 @@ public class stuff_pos_controller implements Initializable {
                     try {
                         this.productmodel.clear_product_list();
                         int categoryID = this.categoryMap.get(newValue);
-                        this.productmodel.retrieve_product_by_category(categoryID);
+                        this.productmodel.retrieve_product_by_category(categoryID,this.storeID);
                         product_load();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -437,7 +438,7 @@ public class stuff_pos_controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.productmodel = new product_model();
-        this.productmodel.retrieve_all_product();
+        this.productmodel.retreive_all_product_by_store(storeID);
         this.ingredient_cost = new ingredient_cost_model();
         try {
             this.ingredient_cost.retrive_all_ingredient_cost();

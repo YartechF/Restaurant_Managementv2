@@ -42,8 +42,11 @@ public class admin_controller {
     private AnchorPane Inventory;
 
     @FXML
-    void category_e(MouseEvent event) {
+    void category_e(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_manage_category_view.fxml"));
+        AnchorPane AdminCategory = loader.load();
 
+        admin_page.getChildren().setAll(AdminCategory);
     }
 
     @FXML
@@ -53,7 +56,23 @@ public class admin_controller {
 
     @FXML
     void user_btn_e(MouseEvent event) {
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_users_management.fxml"));
+            AnchorPane AdminUser = loader.load();
 
+            admin_page.getChildren().setAll(AdminUser);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    void product_manage_e(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_product_manage.fxml"));
+        AnchorPane AdminInventory = loader.load();
+
+        admin_page.getChildren().setAll(AdminInventory);
     }
 
     @FXML
@@ -86,8 +105,8 @@ public class admin_controller {
     }
 
     @FXML
-    void products_e(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_product_management.fxml"));
+    void Ingredient_manage_e(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/admin_menu_management.fxml"));
         AnchorPane AdminProductManagement = loader.load();
         admin_page.getChildren().setAll(AdminProductManagement);
     }

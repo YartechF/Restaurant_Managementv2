@@ -2,7 +2,12 @@ package restaurant.models;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import restaurant.db.database;
 
 public class category_model extends database {
@@ -77,5 +82,41 @@ public class category_model extends database {
             return null;
         }
     }
+
+    public List<String> get_all_category(){
+        List<String> categories = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM tbl_category";
+            ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                categories.add(rs.getString("name"));
+            }
+            return categories;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     //create fuction retrieve specific category return type resultset
+    public ObservableList<category> get_categoryOBList(){
+        String sql = "SELECT ID,name from tbl_category";
+        try (PreparedStatement pst = getConnection().prepareStatement(sql)) {
+            ResultSet rs = pst.executeQuery();
+            ObservableList<category> categoryList = FXCollections.observableArrayList();
+            while(rs.next()){
+                category Category = new category();
+                Category.setId(rs.getInt("ID"));
+                Category.setName(rs.getString("name"));
+                categoryList.add(Category);
+            }
+            return categoryList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        
+    }
 }

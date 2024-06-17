@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1256.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_user_manage_controller">
+   <children>
+      <Label layoutX="28.0" layoutY="21.0" text="Users Manage">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="users_table" layoutX="21.0" layoutY="79.0" prefHeight="764.0" prefWidth="1214.0">
+        <columns>
+          <TableColumn fx:id="username_col" prefWidth="197.0" text="Username" />
+          <TableColumn fx:id="password_col" prefWidth="181.0" text="Password" />
+            <TableColumn fx:id="name_col" prefWidth="207.0" text="Name" />
+            <TableColumn fx:id="contact_col" prefWidth="214.0" text="Contact" />
+            <TableColumn fx:id="usertype_col" prefWidth="190.0" text="User Type" />
+            <TableColumn fx:id="Store_name_col" prefWidth="224.0" text="Store Name" />
+        </columns>
+      </TableView>
+      <Button layoutX="1098.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#add_user_btn_e" prefHeight="35.0" prefWidth="137.0" style="-fx-background-color: D36135; -fx-background-radius: 30;" text="Add User" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
