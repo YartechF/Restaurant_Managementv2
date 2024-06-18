@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 06:24 AM
+-- Generation Time: Jun 18, 2024 at 05:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `store_product`
+--
+
+CREATE TABLE `store_product` (
+  `productID` int(11) NOT NULL,
+  `storeID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `store_product`
+--
+
+INSERT INTO `store_product` (`productID`, `storeID`) VALUES
+(35, 1),
+(36, 1),
+(35, 2),
+(35, 11);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_category`
 --
 
@@ -37,9 +58,9 @@ CREATE TABLE `tbl_category` (
 --
 
 INSERT INTO `tbl_category` (`ID`, `name`) VALUES
-(3, 'food'),
-(7, 'drinks'),
-(9, 'sea foods');
+(14, 'snack'),
+(15, 'food'),
+(16, 'drinks');
 
 -- --------------------------------------------------------
 
@@ -72,13 +93,9 @@ CREATE TABLE `tbl_ingredient` (
 --
 
 INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_cost_typeID`, `IsProductIngredient`, `Is_per_pcs`) VALUES
-(3, 'patty', 'for burger', 2, 1, 1),
-(4, 'bun', 'for burger', 2, 1, 1),
-(5, 'susaige', NULL, 2, 1, 1),
-(6, 'topping', NULL, 1, 1, 0),
-(7, 'Coke', 'non ingredient', 2, 0, 1),
-(8, 'Pepsi 20oz', NULL, 2, 0, 1),
-(9, 'pan', NULL, 2, 1, 1);
+(19, 'patty', 'for burger', 2, 1, 1),
+(20, 'bun', 'burger', 2, 1, 1),
+(21, 'topping', '', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -98,12 +115,8 @@ CREATE TABLE `tbl_ingredient_cost` (
 --
 
 INSERT INTO `tbl_ingredient_cost` (`ID`, `ingredientID`, `productID`, `quantity`) VALUES
-(7, 4, 23, 1),
-(8, 3, 23, 2),
-(9, 7, 27, 1),
-(10, 8, 28, 1),
-(11, 6, 24, 0.25),
-(12, 5, 24, 5);
+(24, 19, 35, 2),
+(25, 20, 35, 1);
 
 -- --------------------------------------------------------
 
@@ -146,8 +159,7 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`, `Date`) VALUES
-(748, '', 0, 1, 0, 1, 1, '2024-07-15 10:56:43'),
-(749, '', 0, 1, 0, 1, 1, '2024-06-15 10:57:50');
+(782, '', 0, 1, 0, 0, 1, '2024-06-18 11:16:39');
 
 -- --------------------------------------------------------
 
@@ -162,17 +174,6 @@ CREATE TABLE `tbl_orders` (
   `quantity` int(11) DEFAULT NULL,
   `Isdone` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_orders`
---
-
-INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
-(783, 748, 23, 2, 0),
-(784, 748, 27, 1, 0),
-(785, 749, 24, 2, 0),
-(786, 749, 23, 1, 0),
-(787, 749, 28, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -193,17 +194,10 @@ CREATE TABLE `tbl_person` (
 --
 
 INSERT INTO `tbl_person` (`ID`, `name`, `address`, `Email`, `Contact`) VALUES
-(1, 'felbert', 'lumintao', 'felbertyarte6@gmail.com', '09556646149'),
-(2, 'felix', 'lumintao', 'lixte@gmail.com', '095656648'),
-(4, '', '', '', ''),
-(5, 'gsdfg', 'gsd', 'gdfsg', 'gds'),
-(6, 'gsdfg', 'gsd', 'gdfsg', 'gds'),
-(7, 'gs  dfg', 'gsd', 'gdfsg', 'gds'),
-(8, 'gs  dfg', 'gsd', 'gdfsg', 'gds'),
-(9, 'gs  dfg', 'gsd', 'gdfsg', 'gds'),
-(10, '', '', '', ''),
-(11, 'ben', 'lumintao', 'gmagfg', '094245;1245'),
-(12, 'ben', 'lumintao', 'gmagfg', '094245;1245');
+(14, 'admin', 'admin', 'admin', 'admin'),
+(15, 'mars', 'none', 'none', '0956458184'),
+(16, 'inventory', 'none', 'none', '09565465'),
+(17, 'order1', 'none', 'none', '0955648512');
 
 -- --------------------------------------------------------
 
@@ -225,10 +219,28 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`ID`, `name`, `price`, `categoryID`, `picture`, `type`) VALUES
-(23, 'Burger', 99, 3, 'C:\\Users\\Administrator\\Desktop\\burger3.png', NULL),
-(24, 'pizza', 100, 3, 'C:\\Users\\Administrator\\Downloads\\pizza-2.png', NULL),
-(27, 'Cola-cola', 45, 7, 'C:\\Users\\Administrator\\Downloads\\cola-cola.png', NULL),
-(28, 'pepsi 20oz', 45, 7, 'C:\\Users\\Administrator\\Downloads\\pepsi.png', NULL);
+(35, 'burger', 45, NULL, 'C:\\Users\\Administrator\\Documents\\Restaurant_Managementv2\\src\\main\\java\\restaurant\\images\\burger.png', NULL),
+(36, 'pizza', 56, NULL, 'C:\\Users\\Administrator\\Documents\\Restaurant_Managementv2\\src\\main\\java\\restaurant\\images\\pizza-2.png', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_product_categories`
+--
+
+CREATE TABLE `tbl_product_categories` (
+  `productID` int(11) DEFAULT NULL,
+  `categoryID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_product_categories`
+--
+
+INSERT INTO `tbl_product_categories` (`productID`, `categoryID`) VALUES
+(35, 14),
+(36, 14),
+(36, 15);
 
 -- --------------------------------------------------------
 
@@ -290,27 +302,18 @@ CREATE TABLE `tbl_store_ingredient` (
 --
 
 INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VALUES
-(1, 3, 1, 58),
-(2, 4, 1, 28),
-(5, 5, 1, 20),
-(6, 6, 1, 23.5),
-(7, 7, 1, 92),
-(8, 8, 1, 55),
-(33, 9, 1, 0),
-(36, 6, 5, 0),
-(37, 3, 5, 0),
-(38, 4, 5, 0),
-(39, 5, 5, 0),
-(40, 7, 5, 0),
-(41, 8, 5, 0),
-(42, 9, 5, 0),
-(92, 6, 11, 0),
-(93, 3, 11, 0),
-(94, 4, 11, 0),
-(95, 5, 11, 0),
-(96, 7, 11, 0),
-(97, 8, 11, 0),
-(98, 9, 11, 0);
+(114, 18, 1, 44.35),
+(115, 18, 11, 0),
+(116, 16, 1, 21),
+(117, 16, 11, 0),
+(118, 17, 1, 16),
+(119, 17, 11, 0),
+(121, 19, 1, 45),
+(122, 20, 1, 45),
+(123, 19, 11, 0),
+(124, 20, 11, 0),
+(128, 21, 1, 10),
+(129, 21, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -332,7 +335,9 @@ CREATE TABLE `tbl_table` (
 --
 
 INSERT INTO `tbl_table` (`ID`, `name`, `isActive`, `isAvailable`, `storeID`, `capacity`) VALUES
-(1, 'Table 1', 1, 1, 1, 4);
+(1, 'Table 1', 1, 0, 1, 4),
+(4, 'table 2', 1, 1, 1, 4),
+(5, 'table 2', 1, 1, 11, 4);
 
 -- --------------------------------------------------------
 
@@ -354,10 +359,10 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`ID`, `username`, `password`, `personID`, `usertypeID`, `storeID`) VALUES
-(1, 'felbert', 'felbert14', 1, 2, 1),
-(2, 'felbert', 'felbert15', 1, 3, 1),
-(3, 'e', 'e', 1, 4, 1),
-(5, '', '', 12, 1, 1);
+(10, 'admin', 'admin', 14, 1, 1),
+(11, 'mars', 'mars', 15, 2, 1),
+(12, 'inventory1', 'inventory1', 16, 3, 1),
+(13, 'order1', 'order1', 17, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -383,6 +388,12 @@ INSERT INTO `tbl_usertype` (`ID`, `usertype`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `store_product`
+--
+ALTER TABLE `store_product`
+  ADD KEY `productID` (`productID`);
 
 --
 -- Indexes for table `tbl_category`
@@ -446,6 +457,13 @@ ALTER TABLE `tbl_product`
   ADD KEY `categoryID` (`categoryID`);
 
 --
+-- Indexes for table `tbl_product_categories`
+--
+ALTER TABLE `tbl_product_categories`
+  ADD KEY `productID` (`productID`),
+  ADD KEY `categoryID` (`categoryID`);
+
+--
 -- Indexes for table `tbl_sales`
 --
 ALTER TABLE `tbl_sales`
@@ -496,7 +514,7 @@ ALTER TABLE `tbl_usertype`
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_company`
@@ -508,13 +526,13 @@ ALTER TABLE `tbl_company`
 -- AUTO_INCREMENT for table `tbl_ingredient`
 --
 ALTER TABLE `tbl_ingredient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tbl_ingredient_cost`
 --
 ALTER TABLE `tbl_ingredient_cost`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tbl_ingredient_cost_type`
@@ -526,25 +544,25 @@ ALTER TABLE `tbl_ingredient_cost_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=750;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=783;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=788;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=797;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
 --
 ALTER TABLE `tbl_person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `tbl_sales`
@@ -562,19 +580,19 @@ ALTER TABLE `tbl_store`
 -- AUTO_INCREMENT for table `tbl_store_ingredient`
 --
 ALTER TABLE `tbl_store_ingredient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `tbl_table`
 --
 ALTER TABLE `tbl_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_usertype`
@@ -585,6 +603,12 @@ ALTER TABLE `tbl_usertype`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `store_product`
+--
+ALTER TABLE `store_product`
+  ADD CONSTRAINT `productID` FOREIGN KEY (`productID`) REFERENCES `tbl_product` (`ID`);
 
 --
 -- Constraints for table `tbl_ingredient`
@@ -619,17 +643,17 @@ ALTER TABLE `tbl_product`
   ADD CONSTRAINT `tbl_product_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `tbl_category` (`ID`);
 
 --
+-- Constraints for table `tbl_product_categories`
+--
+ALTER TABLE `tbl_product_categories`
+  ADD CONSTRAINT `tbl_product_categories_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `tbl_product` (`ID`),
+  ADD CONSTRAINT `tbl_product_categories_ibfk_2` FOREIGN KEY (`categoryID`) REFERENCES `tbl_category` (`ID`);
+
+--
 -- Constraints for table `tbl_sales`
 --
 ALTER TABLE `tbl_sales`
   ADD CONSTRAINT `tbl_sales_ibfk_1` FOREIGN KEY (`storeID`) REFERENCES `tbl_store` (`ID`);
-
---
--- Constraints for table `tbl_store_ingredient`
---
-ALTER TABLE `tbl_store_ingredient`
-  ADD CONSTRAINT `tbl_store_ingredient_ibfk_1` FOREIGN KEY (`ingredientID`) REFERENCES `tbl_ingredient` (`ID`),
-  ADD CONSTRAINT `tbl_store_ingredient_ibfk_2` FOREIGN KEY (`storeID`) REFERENCES `tbl_store` (`ID`);
 
 --
 -- Constraints for table `tbl_table`
@@ -641,9 +665,9 @@ ALTER TABLE `tbl_table`
 -- Constraints for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  ADD CONSTRAINT `tbl_user_ibfk_1` FOREIGN KEY (`personID`) REFERENCES `tbl_person` (`ID`),
-  ADD CONSTRAINT `tbl_user_ibfk_2` FOREIGN KEY (`usertypeID`) REFERENCES `tbl_usertype` (`ID`),
-  ADD CONSTRAINT `tbl_user_ibfk_3` FOREIGN KEY (`storeID`) REFERENCES `tbl_store` (`ID`);
+  ADD CONSTRAINT `personID` FOREIGN KEY (`personID`) REFERENCES `tbl_person` (`ID`),
+  ADD CONSTRAINT `storeID` FOREIGN KEY (`storeID`) REFERENCES `tbl_store` (`ID`),
+  ADD CONSTRAINT `usertypeID` FOREIGN KEY (`usertypeID`) REFERENCES `tbl_usertype` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

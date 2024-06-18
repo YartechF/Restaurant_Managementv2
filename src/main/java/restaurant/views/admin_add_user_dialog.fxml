@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<DialogPane prefHeight="205.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_add_user_dialog_controller">
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <VBox layoutX="20.0" layoutY="20.0" prefHeight="166.0" prefWidth="397.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <HBox prefHeight="45.0" prefWidth="397.0">
+                     <children>
+                        <VBox prefHeight="58.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Store" />
+                              <ChoiceBox fx:id="store_drop_down" prefHeight="25.0" prefWidth="196.0" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="58.0" prefWidth="203.0">
+                           <children>
+                              <Label text="User Type" />
+                              <ChoiceBox fx:id="usertype_dropdown" prefHeight="25.0" prefWidth="202.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="61.0" prefWidth="397.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="61.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Username" />
+                              <TextField fx:id="username_tf" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="61.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Password" />
+                              <TextField fx:id="password_tf" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="61.0" prefWidth="397.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="61.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Name" />
+                              <TextField fx:id="name_tf" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="61.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Contact" />
+                              <TextField fx:id="contact_tf" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+</DialogPane>

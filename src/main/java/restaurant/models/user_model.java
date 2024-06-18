@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import restaurant.db.database;
 
@@ -46,7 +47,7 @@ public class user_model extends database {
     public int register_personal_info(String name, String address, String email, String contact) throws SQLException {
         try {
             // Validate input values
-            if (name.trim().isEmpty() || address.trim().isEmpty() || email.trim().isEmpty()
+            if (name.trim().isEmpty()
                     || contact.trim().isEmpty()) {
                 // Handle empty or whitespace-only values (you can throw an exception or log a
                 // message)
@@ -58,8 +59,8 @@ public class user_model extends database {
                     "INSERT INTO tbl_person (name, address, Email, Contact) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS); // Explicitly request generated keys
             ps.setString(1, name);
-            ps.setString(2, address);
-            ps.setString(3, email);
+            ps.setString(2, "none");
+            ps.setString(3, "none");
             ps.setString(4, contact);
             ps.executeUpdate(); // Execute the INSERT statement
 
@@ -99,8 +100,7 @@ public class user_model extends database {
             ps = getConnection().prepareStatement(
                     "INSERT INTO tbl_user (username, password, personID, usertypeID, storeID) VALUES (?,?,?,?,?)"); // Explicitly
                                                                                                                     // request
-                                                                                                                    // generated
-                                                                                                                    // keys
+                                                                                                                    // generated                                                                                                        // keys
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setInt(3, personID);
@@ -115,9 +115,39 @@ public class user_model extends database {
             ps.close();
             e.printStackTrace();
         }
-
-        // public ObservableList<user_person> user_person(){
-        //     String sql = "";
-        // }
+            
+            
+    }
+    public ObservableList<user_person> get_user_person() throws SQLException{
+        String sql = "select tbl_user.ID as userID, tbl_user.username, tbl_user.password, tbl_usertype.usertype, tbl_store.name as store_name, tbl_user.personID, tbl_person.name as person_name, tbl_person.Contact, tbl_user.usertypeID,tbl_user.storeID from tbl_user INNER JOIN tbl_store on tbl_user.storeID = tbl_store.ID INNER JOIN tbl_usertype on tbl_user.usertypeID = tbl_usertype.ID INNER JOIN tbl_person on tbl_user.personID = tbl_person.ID";
+        PreparedStatement pst = getConnection().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ObservableList<user_person> list = FXCollections.observableArrayList();
+        while (rs.next()) {
+            user_person UserPerson = new user_person();
+            UserPerson.setStorename(rs.getString("store_name"));
+            UserPerson.setusername(rs.getString("username"));
+            UserPerson.setpassword(rs.getString("password"));
+            UserPerson.setusertype(rs.getString("usertype"));
+            UserPerson.setname(rs.getString("person_name"));
+            UserPerson.setcontact(rs.getString("Contact"));
+            list.add(UserPerson);
+            
+        }
+        return list;
+    }
+    public ObservableList<user_type> get_user_type() throws SQLException{
+        String sql = "select * from tbl_usertype";
+        PreparedStatement pst = getConnection().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ObservableList<user_type> list = FXCollections.observableArrayList();
+        while (rs.next()) {
+            user_type UserType = new user_type();
+            UserType.set_user_type(rs.getString("usertype"));
+            UserType.set_ID(rs.getInt("ID"));
+            list.add(UserType);
+            
+        }
+        return list;
     }
 }
