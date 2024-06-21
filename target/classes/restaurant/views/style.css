@@ -50,7 +50,7 @@
 .table-view{
  -fx-background-color: #e8e8e8;
 }
-
+ 
 .table-view:focused{
   -fx-background-color: #e8e8e8;
 }
