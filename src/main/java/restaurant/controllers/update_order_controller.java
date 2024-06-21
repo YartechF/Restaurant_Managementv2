@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -33,6 +34,7 @@ import restaurant.models.store_ingredient;
 import restaurant.models.store_ingredient_model;
 import restaurant.models.table_model;
 import restaurant.models.Invoice;
+import restaurant.models.category;
 import restaurant.models.ingredient_cost;
 import restaurant.models.ingredient_model;
 import restaurant.models.invoice_model;
@@ -58,6 +60,7 @@ public class update_order_controller implements Initializable{
     private stuff_controller staff_controller;
     private table_model TableModel;
     private int tableID;
+    private HashMap<String , Integer> categorymap;
 
     @FXML
     private ChoiceBox<?> category_choicebox;
@@ -410,5 +413,6 @@ public class update_order_controller implements Initializable{
         this.load_confirm_dialog_pane();
         this.load_mark_as_paid_confirmation_dialog_pane();
         this.TableModel = new table_model();
+        this.categorymap = new HashMap<>();
     }
 }

@@ -12,19 +12,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.order_manager_controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: ffffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.order_manager_controller">
    <children>
       <Line endX="26.0" endY="886.0" layoutX="694.0" layoutY="14.0" startX="26.0" startY="-14.0" />
-      <HBox alignment="CENTER_LEFT" layoutX="6.0" layoutY="4.0" prefHeight="39.0" prefWidth="707.0">
-         <children>
-            <AnchorPane prefHeight="39.0" prefWidth="29.0" />
-            <Label fx:id="storename" text="StoreName">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
       <TableView fx:id="order_table" layoutX="9.0" layoutY="47.0" prefHeight="846.0" prefWidth="701.0" style="-fx-border-color: D36135;" stylesheets="@style.css">
         <columns>
           <TableColumn fx:id="invoice_id_col" prefWidth="110.0" text="Invoice ID" />
@@ -57,6 +47,16 @@
          </children>
       </HBox>
       <Button fx:id="mark_as_done_btn" layoutX="1311.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#mark_as_done_btn_e" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Mark as Done" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="storename" layoutX="33.0" layoutY="14.0" text="StoreName">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="590.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#logout_btn" prefHeight="30.0" prefWidth="118.0" text="Logout" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

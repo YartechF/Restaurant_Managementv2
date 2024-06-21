@@ -15,6 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -28,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import restaurant.models.Invoice;
 import restaurant.models.invoice_model;
 import restaurant.models.order;
@@ -73,6 +77,26 @@ public class order_manager_controller implements Initializable {
     @FXML
     private TableColumn<table_invoice, String> total_product_col;
 
+    @FXML
+    void logout_btn(MouseEvent event) {
+        try {
+            // Load the login screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/auth_view.fxml"));
+            Parent loginRoot = loader.load();
+            Scene loginScene = new Scene(loginRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(loginScene);
+            currentStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    }
     @FXML
     void mark_as_done_btn_e(MouseEvent event) {
         // TODO Auto-generated method stub

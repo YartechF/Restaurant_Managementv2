@@ -119,7 +119,7 @@ public class user_model extends database {
             
     }
     public ObservableList<user_person> get_user_person() throws SQLException{
-        String sql = "select tbl_user.ID as userID, tbl_user.username, tbl_user.password, tbl_usertype.usertype, tbl_store.name as store_name, tbl_user.personID, tbl_person.name as person_name, tbl_person.Contact, tbl_user.usertypeID,tbl_user.storeID from tbl_user INNER JOIN tbl_store on tbl_user.storeID = tbl_store.ID INNER JOIN tbl_usertype on tbl_user.usertypeID = tbl_usertype.ID INNER JOIN tbl_person on tbl_user.personID = tbl_person.ID";
+        String sql = "select tbl_user.ID as userID, tbl_user.username, tbl_user.password, tbl_usertype.usertype, tbl_store.name as store_name, tbl_user.personID, tbl_person.name as person_name, tbl_person.Contact, tbl_user.usertypeID,tbl_user.storeID from tbl_user INNER JOIN tbl_store on tbl_user.storeID = tbl_store.ID INNER JOIN tbl_usertype on tbl_user.usertypeID = tbl_usertype.ID INNER JOIN tbl_person on tbl_user.personID = tbl_person.ID where tbl_user.usertypeID != 1  ";
         PreparedStatement pst = getConnection().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ObservableList<user_person> list = FXCollections.observableArrayList();
@@ -137,7 +137,7 @@ public class user_model extends database {
         return list;
     }
     public ObservableList<user_type> get_user_type() throws SQLException{
-        String sql = "select * from tbl_usertype";
+        String sql = "select * from tbl_usertype where ID != 1";
         PreparedStatement pst = getConnection().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ObservableList<user_type> list = FXCollections.observableArrayList();

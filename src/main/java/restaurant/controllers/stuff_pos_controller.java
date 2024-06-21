@@ -139,6 +139,9 @@ public class stuff_pos_controller implements Initializable {
     public GridPane get_order_grid_pane() {
         return this.order_grid_pane;
     }
+    public ChoiceBox<String> get_category_choicebox(){
+        return this.category_choicebox;
+    }
     @FXML
     void cancel_order_e(MouseEvent event) throws IOException, SQLException {
         this.stuffcontroller.delete_current_generated_invoice_on_database();
@@ -229,6 +232,9 @@ public class stuff_pos_controller implements Initializable {
         this.total.setText("P" + String.valueOf(total));
     }
 
+    public void set_first_category(){
+        this.category_choicebox.getSelectionModel().select(0);
+    }
     public void set_pos_currentuser(user current_user) {
         this.current_user = current_user;
         this.storeID = this.current_user.getStoreID();
@@ -462,7 +468,9 @@ public class stuff_pos_controller implements Initializable {
             this.order_succesful_card = load_order_successfuly_card();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
+        //category_choicebox create default selected
+        
         
     }
 }

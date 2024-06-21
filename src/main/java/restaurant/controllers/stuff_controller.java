@@ -49,6 +49,7 @@ public class stuff_controller {
         AnchorPane create_new_order_pane = fxmlLoader.load();
         stuff_pos_controller Stuff_Pos_Controller = fxmlLoader.getController();
         Stuff_Pos_Controller.set_pos_currentuser(this.currentuser);
+        Stuff_Pos_Controller.set_first_category();
         Stuff_Pos_Controller.product_load();
         Stuff_Pos_Controller.load_category();
         this.pos_product_model = Stuff_Pos_Controller.get_pos_product_model();
