@@ -22,8 +22,8 @@ public class AddAdminProductInventoryController implements Initializable {
     @FXML
     private ChoiceBox<String> stock_type;
 
-    private String[] cost_type_list = {"per pcs","per mg"};
-    private String[] stock_type_list = {"per pcs","per kg"};
+    private String[] cost_type_list = {"per pcs","per grams"};
+    private String[] stock_type_list = {"per pcs","per kilos"};
     //costtype 2pcs 1mg
     //isperpcs 
 

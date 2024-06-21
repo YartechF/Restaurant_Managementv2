@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import restaurant.db.database;
 
 public class table_model extends database {
@@ -92,6 +94,31 @@ public class table_model extends database {
             ps.setInt(1, storeID);
             ResultSet rs = ps.executeQuery();
             return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            getConnection().close();
+            ps.close();
+            return null;
+        }
+
+    }
+    public ObservableList<table> retrieve_all_table() throws SQLException {
+        ObservableList<table> tableList = FXCollections.observableArrayList();
+        
+        String sql = "select t.name as table_name, t.ID as tableID, t.isAvailable, t.capacity, s.name store_name from tbl_table as t inner join tbl_store as s on t.storeID = s.ID";
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                table Table =  new table();
+                Table.setID(rs.getInt("tableID"));
+                Table.setName(rs.getString("table_name"));
+                Table.setAvailable(rs.getBoolean("isAvailable"));
+                Table.setCapacity(rs.getInt("capacity"));
+                Table.set_store_name(rs.getString("store_name"));
+                tableList.add(Table);
+            }
+            return tableList;
         } catch (SQLException e) {
             e.printStackTrace();
             getConnection().close();

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane prefHeight="191.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.table_atri_dialog_controller">
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+   <content>
+      <VBox prefHeight="146.0" prefWidth="250.0">
+         <children>
+            <Label text="Store name" />
+            <TextField fx:id="store_name_tf" prefHeight="25.0" prefWidth="252.0" />
+            <Label text="Capacity" />
+            <TextField fx:id="capacity_tf" />
+            <Label text="Select Store" />
+            <ChoiceBox fx:id="store_name_choice" prefHeight="25.0" prefWidth="180.0" />
+         </children>
+      </VBox>
+   </content>
+</DialogPane>

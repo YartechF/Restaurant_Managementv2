@@ -101,20 +101,32 @@ public class product_model extends database implements Initializable {
 
     public ObservableList<Product_table_cell> get_all_product_for_cell(){
         ObservableList<Product_table_cell> product_list = FXCollections.observableArrayList();
-        try {
+        try { 
             String sql = "select * from tbl_product";
+            String sql2 = "select c.name as category_name from tbl_product_categories INNER JOIN tbl_category as c on tbl_product_categories.categoryID = c.ID WHERE productID = ?";
+            PreparedStatement pst = getConnection().prepareStatement(sql2);
             ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            
             ProductsList.clear(); // Clear the list to avoid duplicates
             while (rs.next()) {
                 Product_table_cell Product = new Product_table_cell();
                 Product.setID(rs.getInt("ID"));
+                pst.setInt(1, rs.getInt("ID"));
                 Product.setName(rs.getString("name"));
                 Product.setCategory_ID(rs.getInt("categoryID"));
                 Product.setPicture(rs.getString("picture"));
                 Product.setType(rs.getString("type"));
                 Product.setPrice(rs.getDouble("price"));
+                Product.setCategory("");
                 product_list.add(Product);
+                ResultSet rs2 = pst.executeQuery();
+                while (rs2.next()) {
+                    Product.setcategories(rs2.getString("category_name"));
+                    
+                }
+                Product.concat_categories();
+                
             }
             return product_list;
         } catch (Exception e) {
@@ -240,6 +252,23 @@ public class product_model extends database implements Initializable {
         }
     }
 
+    public void admin_delete_product(int productID) throws SQLException {
+        String sql3 = "DELETE FROM `store_product` WHERE productID = ?";
+        String sql2 = "DELETE FROM tbl_product_categories WHERE productID = ?";
+        String sql = "DELETE FROM tbl_product WHERE ID =?";
+        
+        PreparedStatement pst2 = getConnection().prepareStatement(sql2);
+        pst2.setInt(1, productID);
+        pst2.executeUpdate();
+
+        PreparedStatement pst = getConnection().prepareStatement(sql3);
+        pst.setInt(1, productID);
+        pst.executeUpdate();
+        
+        PreparedStatement pst3 = getConnection().prepareStatement(sql);
+        pst3.setInt(1, productID);
+        pst3.executeUpdate();
+    }
     public ResultSet retrieve_product(int categoryID) {
         String sql = "SELECT * FROM tbl_product where categoryID = ?";
         try {

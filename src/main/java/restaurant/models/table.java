@@ -1,5 +1,7 @@
 package restaurant.models;
 
+import restaurant.controllers.reports_controller;
+
 public class table {
     private int ID;
     private String name;
@@ -7,7 +9,14 @@ public class table {
     private boolean isAvailable;
     private int StoreID;
     private int capacity;
+    private String store_name;
 
+    public String get_storename(){
+        return store_name;
+    }
+    public void set_store_name(String store_name){
+        this.store_name = store_name;
+    }
     // create getters and setters
     public int getID() {
         return ID;
@@ -36,6 +45,12 @@ public class table {
     public boolean isAvailable() {
         return isAvailable;
     }
+    public String GetStringIsAvailable(){
+        if(!isAvailable){
+            return "Unavailable";
+        }
+        return "Available";
+    }
 
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
@@ -51,6 +66,9 @@ public class table {
 
     public int getCapacity() {
         return capacity;
+    }
+    public String getStringCapacity(){
+        return String.valueOf(this.capacity);
     }
 
     public void setCapacity(int capacity) {

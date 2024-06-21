@@ -5,13 +5,16 @@ import javafx.beans.property.SimpleStringProperty;
 public class product_inventory {
     private SimpleStringProperty Product_Name;
     private SimpleStringProperty Description;
-    private SimpleStringProperty Stock;
+    private String Stock;
     private SimpleStringProperty Is_ingredient;
     private int ID;
     private String Cost_Type;
     //create getters and setters for each variable
     public void setCost_Type(String cost_type){
         this.Cost_Type = cost_type;
+    }
+    public String getcost_type(){
+        return this.Cost_Type;
     }
 
     public int getID() {
@@ -39,13 +42,10 @@ public class product_inventory {
         this.Description.set(Description);
     }
     public String getStock() {
-        return Stock.get();
+        return Stock+" "+Cost_Type;
     }
     public void setStock(String Stock) {
-        if (this.Stock == null) {
-            this.Stock = new SimpleStringProperty();
-        }
-        this.Stock.set(Stock+" "+this.Cost_Type);
+        this.Stock = Stock;
     }
 
 }

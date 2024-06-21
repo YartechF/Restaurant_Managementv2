@@ -39,6 +39,9 @@ public class admin_controller {
     private AnchorPane store_btn;
 
     @FXML
+    private AnchorPane table_btn;
+
+    @FXML
     private AnchorPane Inventory;
 
     @FXML
@@ -127,6 +130,22 @@ public class admin_controller {
         store_management_controller StoreManagementController = loader.getController();
 
         this.admin_page.getChildren().setAll(storepane);
+    }
+
+    @FXML
+    void table_btn_e(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/restaurant/views/table_manage.fxml"));
+            AnchorPane storepane = loader.load();
+            table_controller TableController = loader.getController();
+            
+            TableController.get_add_btn().setVisible(true);
+
+            this.admin_page.getChildren().setAll(storepane);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

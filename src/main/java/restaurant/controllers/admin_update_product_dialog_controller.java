@@ -31,7 +31,7 @@ import restaurant.models.store_model;
 import restaurant.models.store_table_cell;
 import restaurant.models.table;
 
-public class admin_add_product_dialog_controller implements Initializable {
+public class admin_update_product_dialog_controller implements Initializable {
     private admin_category_model CategoryModel;
     private ObservableList<category> product_category_list;
     private ObservableList<store_table_cell> product_store_list;
@@ -130,6 +130,18 @@ public class admin_add_product_dialog_controller implements Initializable {
             this.Product.set_stores(i);
         }
         return this.Product;
+    }
+
+    public void set_product(product_multiple_category product){
+        this.Product = product;
+        this.product_name_tf.setText(product.getName());
+        this.price_tf.setText(String.valueOf(product.getPrice()));
+        this.product_img_file_path = product.getPicture();
+        Image image = new Image(this.product_img_file_path);
+        product_img.setImage(image);
+        this.ingredientID_list = product.get_categories();
+        this.storeID_list = product.get_stores();
+        
     }
 
 

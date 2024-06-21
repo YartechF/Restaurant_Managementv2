@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,8 +93,10 @@ public class Inventory_Controller implements Initializable {
         decription_col.setCellValueFactory(new PropertyValueFactory<product_inventory, String>("Description"));// or bill number
         decription_col.getStyleClass().add("centered-cell");
 
-        stock_col.setCellValueFactory(new PropertyValueFactory<product_inventory, String>("Stock"));// or bill number
+        stock_col.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStock()));
         stock_col.getStyleClass().add("centered-cell");
+
+        
     }
 
     private void filterInventoryTable(String searchText) {
@@ -135,6 +138,9 @@ public class Inventory_Controller implements Initializable {
 
                         if(result.get() == ButtonType.APPLY){
                             double updated_stock = UpdateProductStockController.get_updated_stock_tf_value();
+                            if(selectedProduct.getcost_type() != "pcs"){
+                                updated_stock = updated_stock * 1000;
+                            }  
                             selectedProduct.setStock(String.valueOf(updated_stock));
                             this.StoreIngredientModel.update_store_ingredient_from_inventory(selectedProduct.getID(),updated_stock);
 

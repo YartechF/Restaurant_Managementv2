@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1256.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_product_manage_controller">
    <children>
       <Label layoutX="32.0" layoutY="21.0" prefHeight="35.0" prefWidth="95.0" text="Product">
@@ -15,15 +14,14 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="product_table" layoutX="186.0" layoutY="75.0" prefHeight="770.0" prefWidth="674.0">
+      <TableView fx:id="product_table" layoutX="176.0" layoutY="79.0" prefHeight="770.0" prefWidth="905.0" stylesheets="@style.css">
         <columns>
-          <TableColumn fx:id="product_name_col" prefWidth="277.0" text="Name" />
-          <TableColumn fx:id="price_col" prefWidth="168.0" text="Price" />
-            <TableColumn fx:id="category_col" prefWidth="228.0" text="Category" />
+          <TableColumn fx:id="product_name_col" prefWidth="342.0" text="Name" />
+          <TableColumn fx:id="price_col" prefWidth="247.0" text="Price" />
+            <TableColumn fx:id="category_col" prefWidth="315.0" text="Category" />
         </columns>
       </TableView>
-      <AnchorPane fx:id="productcard_img" layoutX="954.0" layoutY="121.0" prefHeight="150.0" prefWidth="225.0" style="-fx-background-color: E8E8E8; -fx-background-radius: 20;" />
-      <Button layoutX="719.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#add_product_e" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Add Product" textFill="WHITE">
+      <Button layoutX="939.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#add_product_e" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: D36135; -fx-background-radius: 15;" text="Add Product" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

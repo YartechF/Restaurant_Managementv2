@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class update_product_stock_on_inventory_controller {
-
+    private String cost_type;
     @FXML
     private Label product_name;
 

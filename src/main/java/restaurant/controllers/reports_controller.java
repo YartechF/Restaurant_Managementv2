@@ -39,9 +39,9 @@ public class reports_controller implements Initializable {
         // Set the axes for the chart
         report_chart.getXAxis().setLabel("Month");
         report_chart.setBarGap(0.2);
-        report_chart.setLegendVisible(false);
+        report_chart.setLegendVisible(true);
         report_chart.setTitle("Monthly Sales Report");
-        report_chart.setAnimated(false);
+        report_chart.setAnimated(true);
 
         // Set the categories for the x-axis
         xAxis.setCategories(FXCollections.observableArrayList(
@@ -49,7 +49,7 @@ public class reports_controller implements Initializable {
             "July", "August", "September", "October", "November", "December"
         ));
 
-        report_chart.getXAxis().setAnimated(false);
+        report_chart.getXAxis().setAnimated(true);
 
         // Create a data series
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -57,6 +57,10 @@ public class reports_controller implements Initializable {
         // Add data to the series
         try {
             series.getData().addAll(new sales_chart_model().getdata(2024));
+            
+            for(XYChart.Data<String, Number> i:new sales_chart_model().getdata(2024)){
+                System.out.println(i.getXValue());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

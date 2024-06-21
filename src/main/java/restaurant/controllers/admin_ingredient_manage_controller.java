@@ -136,7 +136,9 @@ public class admin_ingredient_manage_controller implements Initializable {
 
             // Create a text field for entering the new quantity
             TextField quantityField = new TextField();
-            quantityField.setText(rowData.get_required_quantity());
+            String numeric_part = rowData.get_required_quantity().replaceAll("[^0-9.]", "");
+            quantityField.setText(numeric_part);
+
 
             // Create action buttons
             ButtonType updateButton = new ButtonType("Update", ButtonData.OK_DONE);

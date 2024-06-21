@@ -4,7 +4,15 @@ public class Admin_product_ingredient {
     private int id;
     private String product_name;
     private String required_quantity;
+    private String cost_type;
 
+
+    public void set_cost_type(String cost_type){
+        this.cost_type = cost_type;
+    }
+    public String get_cost_type(){
+        return cost_type;
+    }
     public void set_id(int id){
         this.id = id;
     }
@@ -21,6 +29,6 @@ public class Admin_product_ingredient {
         this.required_quantity = required_quantity;
     }
     public String get_required_quantity(){
-        return required_quantity;
+        return required_quantity+" "+cost_type;
     }
 }

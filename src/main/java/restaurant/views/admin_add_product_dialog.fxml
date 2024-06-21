@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
 <DialogPane prefHeight="109.0" prefWidth="603.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restaurant.controllers.admin_add_product_dialog_controller">
    <buttonTypes>
       <ButtonType fx:constant="OK" />
@@ -36,21 +35,30 @@
                         <ImageView fx:id="product_img" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="product_category_table" layoutX="91.0" layoutY="51.0" prefHeight="182.0" prefWidth="226.0">
+                  <TableView fx:id="product_category_table" layoutX="91.0" layoutY="51.0" prefHeight="182.0" prefWidth="122.0">
                     <columns>
-                      <TableColumn fx:id="product_category_col" prefWidth="225.0" text="Product Category" />
+                      <TableColumn fx:id="product_category_col" prefWidth="121.0" text="Category" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="product_store_table" layoutX="213.0" layoutY="51.0" prefHeight="182.0" prefWidth="118.0">
+                    <columns>
+                      <TableColumn fx:id="product_store_col" prefWidth="117.0" text="Stores" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="category_table" layoutY="31.0" prefHeight="205.0" prefWidth="220.0">
+                  <TableView fx:id="category_table" layoutY="-2.0" prefHeight="246.0" prefWidth="114.0">
                     <columns>
-                      <TableColumn fx:id="category_col" prefWidth="219.0" text="Category" />
+                      <TableColumn fx:id="category_col" prefWidth="113.0" text="Select category" />
                     </columns>
                   </TableView>
-                  <TextField fx:id="search_category_tf" layoutY="2.0" prefHeight="25.0" prefWidth="220.0" promptText="Search Category" />
+                  <TableView fx:id="store_table" layoutX="112.0" layoutY="-2.0" prefHeight="246.0" prefWidth="114.0">
+                    <columns>
+                      <TableColumn fx:id="store_col" prefWidth="113.0" text="Select store" />
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>

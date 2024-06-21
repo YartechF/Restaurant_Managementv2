@@ -39,7 +39,7 @@ public class Inventory_store_ingredient extends store_ingredient_model{
             }
             else if(rs.getInt("store_type") == 0){
                 ProductInventory.setCost_Type("kg");
-                ProductInventory.setStock(String.valueOf(rs.getDouble("stock")));
+                ProductInventory.setStock(String.valueOf(rs.getDouble("stock")/1000));
 
             }
             

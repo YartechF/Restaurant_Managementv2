@@ -50,7 +50,7 @@ public class ingredient_model extends database {
     public ObservableList<Admin_product_ingredient> get_Ingredient_costs_by_productID(int ID){
         ObservableList<Admin_product_ingredient> dishes_list = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT tbl_ingredient_cost.ID as ID,tbl_ingredient.name as ingredient_name,tbl_ingredient_cost.quantity FROM tbl_ingredient_cost INNER JOIN tbl_ingredient on tbl_ingredient_cost.ingredientID = tbl_ingredient.ID where tbl_ingredient_cost.productID = ?";
+            String sql = "SELECT tbl_ingredient.ingredient_cost_typeID as costID, tbl_ingredient_cost.ID as ID,tbl_ingredient.name as ingredient_name,tbl_ingredient_cost.quantity FROM tbl_ingredient_cost INNER JOIN tbl_ingredient on tbl_ingredient_cost.ingredientID = tbl_ingredient.ID where tbl_ingredient_cost.productID = ?";
             java.sql.PreparedStatement statement = getConnection().prepareStatement(sql);
             statement.setInt(1, ID);
             ResultSet rs = statement.executeQuery();
@@ -59,9 +59,16 @@ public class ingredient_model extends database {
                 Admin_product_ingredient AdminProductIngredient = new Admin_product_ingredient();
                 AdminProductIngredient.set_id(rs.getInt("ID"));
                 AdminProductIngredient.set_product_name(rs.getString("ingredient_name"));
-                AdminProductIngredient.set_required_quantity(rs.getString("quantity"));
+                
+                if(rs.getInt("costID") == 1){
+                    AdminProductIngredient.set_required_quantity(rs.getString("quantity"));
+                    AdminProductIngredient.set_cost_type("grams");
+                }else{
+                    AdminProductIngredient.set_required_quantity(String.valueOf(rs.getInt("quantity")));
+                    AdminProductIngredient.set_cost_type("pcs");
+                }
                 dishes_list.add(AdminProductIngredient);
-            }
+        }
             
             return dishes_list;
         } catch (Exception e) {
