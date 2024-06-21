@@ -38,3 +38,78 @@
 .centered-cell {
   -fx-alignment: CENTER;
 }
+
+   /*
+ * Empty Stylesheet file.
+ */
+
+ .root{
+  -fx-background-color: #262626;
+}
+
+.table-view{
+ -fx-background-color: #e8e8e8;
+}
+
+.table-view:focused{
+  -fx-background-color: #e8e8e8;
+}
+
+/* Spaltenköpfe
+  Struktur column-header-background -> column-header */
+
+.table-view .column-header-background{
+  -fx-background-color: linear-gradient(#D36135 0%, #d47753 100%);
+}
+
+.table-view .column-header-background .label{
+  -fx-background-color: transparent;
+  -fx-text-fill: white;
+}
+
+.table-view .column-header {
+  -fx-background-color: transparent;
+}
+
+.table-view .table-cell:selected{
+  -fx-text-fill: rgb(0, 0, 0);
+}
+.table-view .table-cell:selected{
+  -fx-text-fill: rgb(255, 255, 255);
+}
+
+.table-row-cell{
+  -fx-background-color: -fx-table-cell-border-color, #E8E8E8;
+  -fx-background-insets: 0, 0 0 1 0;
+  -fx-padding: 0.0em; /* 0 */
+  -fx-text-fill: rgb(0, 0, 0);
+}
+
+.table-row-cell:odd{
+  -fx-background-color: -fx-table-cell-border-color, #ffffff;
+  -fx-background-insets: 0, 0 0 1 0;
+  -fx-padding: 0.0em; /* 0 */  
+}
+
+.table-row-cell:selected {
+  -fx-background-color: #D36135;
+  -fx-text-fill: white;
+  -fx-background-insets: 0;
+  -fx-background-radius: 1;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+  -fx-background-color: transparent;
+}
+
+
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button, 
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+  -fx-opacity: 0;
+}

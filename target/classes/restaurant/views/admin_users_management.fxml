@@ -14,7 +14,7 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="users_table" layoutX="21.0" layoutY="79.0" prefHeight="764.0" prefWidth="1214.0">
+      <TableView fx:id="users_table" layoutX="21.0" layoutY="79.0" prefHeight="764.0" prefWidth="1214.0" stylesheets="@style.css">
         <columns>
           <TableColumn fx:id="username_col" prefWidth="197.0" text="Username" />
           <TableColumn fx:id="password_col" prefWidth="181.0" text="Password" />

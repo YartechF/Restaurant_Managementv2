@@ -16,12 +16,12 @@
          </font>
       </Label>
       <Line endX="-100.0" endY="811.0" layoutX="729.0" layoutY="89.0" startX="-100.0" stroke="#d36135" />
-      <TableView fx:id="Product_Dishes_table" layoutX="14.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0">
+      <TableView fx:id="Product_Dishes_table" layoutX="14.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0" stylesheets="@style.css">
         <columns>
           <TableColumn fx:id="product_dishes_col" prefWidth="599.0" text="Product Menu" />
         </columns>
       </TableView>
-      <TableView fx:id="product_table" layoutX="644.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0">
+      <TableView fx:id="product_table" layoutX="644.0" layoutY="136.0" prefHeight="727.0" prefWidth="600.0" stylesheets="@style.css">
         <columns>
           <TableColumn fx:id="product_name_col" prefWidth="337.0" text="Product Name" />
           <TableColumn fx:id="required_quantity_col" prefWidth="262.0" text="Required Quantity" />

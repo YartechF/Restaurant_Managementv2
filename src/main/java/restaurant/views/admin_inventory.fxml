@@ -15,7 +15,7 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="inventory_table" layoutX="12.0" layoutY="81.0" prefHeight="755.0" prefWidth="1233.0">
+      <TableView fx:id="inventory_table" layoutX="12.0" layoutY="81.0" prefHeight="755.0" prefWidth="1233.0" stylesheets="@style.css">
         <columns>
           <TableColumn fx:id="productname_col" prefWidth="382.0" text="Product Name" />
           <TableColumn fx:id="desription_col" prefWidth="552.0" text="Description" />
