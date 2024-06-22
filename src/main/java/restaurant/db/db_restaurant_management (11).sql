@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2024 at 02:04 AM
+-- Generation Time: Jun 22, 2024 at 02:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -163,7 +163,13 @@ CREATE TABLE `tbl_invoice` (
 
 INSERT INTO `tbl_invoice` (`ID`, `costumer_name`, `istakeout`, `tableID`, `discount`, `ispaid`, `storeID`, `Date`) VALUES
 (790, '', 0, 1, 30, 1, 1, '2024-06-20 05:21:44'),
-(791, '', 0, 4, 30, 0, 1, '2024-06-20 05:23:48');
+(791, '', 0, 4, 30, 1, 1, '2024-06-20 05:23:48'),
+(792, '', 0, 5, 0, 1, 11, '2024-06-21 09:31:19'),
+(793, '', 0, 5, 0, 1, 11, '2024-06-20 09:32:13'),
+(794, '', 0, 5, 0, 1, 11, '2024-05-20 09:32:45'),
+(795, '', 0, 5, 0, 1, 11, '2024-04-20 09:33:08'),
+(797, '', 0, 7, 0, 1, 1, '2024-06-22 05:34:05'),
+(799, '', 0, 7, 0, 1, 1, '2024-06-22 06:04:10');
 
 -- --------------------------------------------------------
 
@@ -185,7 +191,15 @@ CREATE TABLE `tbl_orders` (
 
 INSERT INTO `tbl_orders` (`ID`, `invoiceID`, `productID`, `quantity`, `Isdone`) VALUES
 (799, 790, 36, 1, 0),
-(801, 791, 36, 1, 0);
+(801, 791, 36, 1, 1),
+(802, 792, 35, 3, 0),
+(803, 793, 35, 1, 0),
+(804, 794, 35, 1, 0),
+(805, 795, 35, 1, 0),
+(806, 795, 35, 1, 0),
+(807, 797, 35, 2, 0),
+(808, 797, 36, 1, 0),
+(809, 799, 36, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -323,12 +337,12 @@ INSERT INTO `tbl_store_ingredient` (`ID`, `ingredientID`, `storeID`, `stock`) VA
 (117, 16, 11, 0),
 (118, 17, 1, 16),
 (119, 17, 11, 0),
-(121, 19, 1, 25),
-(122, 20, 1, 36),
-(123, 19, 11, 25),
-(124, 20, 11, 25),
-(128, 21, 1, 19725),
-(129, 21, 11, 25000);
+(121, 19, 1, 18),
+(122, 20, 1, 34),
+(123, 19, 11, 7),
+(124, 20, 11, 19),
+(128, 21, 1, 19650),
+(129, 21, 11, 24850);
 
 -- --------------------------------------------------------
 
@@ -351,7 +365,7 @@ CREATE TABLE `tbl_table` (
 
 INSERT INTO `tbl_table` (`ID`, `name`, `isActive`, `isAvailable`, `storeID`, `capacity`) VALUES
 (1, 'Table 1', 1, 0, 1, 4),
-(4, 'table 2', 1, 0, 1, 4),
+(4, 'table 2', 1, 1, 1, 4),
 (5, 'table 2', 1, 1, 11, 4),
 (7, 'Table 4', 1, 1, 1, 2);
 
@@ -375,7 +389,7 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`ID`, `username`, `password`, `personID`, `usertypeID`, `storeID`) VALUES
-(10, '', '', 14, 1, 1),
+(10, 'admin', 'admin', 14, 1, 1),
 (11, 'mars', 'mars', 15, 2, 1),
 (12, 'inventory1', 'inventory1', 16, 3, 1),
 (13, 'order1', 'order1', 17, 4, 1),
@@ -563,13 +577,13 @@ ALTER TABLE `tbl_ingredient_cost_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=792;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=803;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
 --
 ALTER TABLE `tbl_orders`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=802;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=810;
 
 --
 -- AUTO_INCREMENT for table `tbl_person`
