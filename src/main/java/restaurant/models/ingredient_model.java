@@ -31,6 +31,20 @@ public class ingredient_model extends database {
         }
     }
 
+    public void update_ingredientname(int ID, String name) {
+        String sql = "UPDATE tbl_ingredient SET name =? WHERE ID =?";
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(sql);
+            pst.setString(1, name);
+            pst.setInt(2, ID);
+            pst.executeUpdate();
+            getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     // create a method retrieve all ingredient
     public ResultSet retrieve_all_ingredient() {
         try {

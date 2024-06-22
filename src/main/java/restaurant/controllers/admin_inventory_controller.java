@@ -128,7 +128,9 @@ public class admin_inventory_controller implements Initializable {
                 Dialog<ButtonType> dialog = new Dialog<>();
                 dialog.setTitle("Product Inventory");
                 dialog.setHeaderText(null);
-
+                // add a Textfield
+                TextField tf = new TextField();
+                tf.setText(rowData.getProductName());
                 // Create update and delete buttons
                 ButtonType updateButton = new ButtonType("Update", ButtonData.OK_DONE);
                 ButtonType deleteButton = new ButtonType("Delete", ButtonData.FINISH);
@@ -137,6 +139,7 @@ public class admin_inventory_controller implements Initializable {
                 // Set the dialog content and buttons
                 dialog.getDialogPane().setContent(new Label("Select an action for the product: " + rowData.getProductName()));
                 dialog.getDialogPane().getButtonTypes().addAll(updateButton, deleteButton,cancel);
+                dialog.getDialogPane().setContent(tf);
 
                 // Show the dialog and handle the result
                 Optional<ButtonType> result = dialog.showAndWait();
@@ -144,6 +147,7 @@ public class admin_inventory_controller implements Initializable {
                     if (result.get() == updateButton) {
                         // Handle update action
                         System.out.println("Update: " + rowData.getProductName());
+                        new ingredient_model().update_ingredientname(rowData.getID(), tf.getText());
                     } else if (result.get() == deleteButton) {
                         // Handle delete action
                         System.out.println("Delete: " + rowData.getProductName());

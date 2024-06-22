@@ -33,7 +33,7 @@
 }
 .selected-row {
   -fx-background-color: #d36135; /* Green color */
-  -fx-text-fill: black;
+  -fx-text-fill: rgb(255, 255, 255);
 }
 .centered-cell {
   -fx-alignment: CENTER;
@@ -59,7 +59,7 @@
   Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-  -fx-background-color: linear-gradient(#D36135 0%, #d47753 100%);
+  -fx-background-color: linear-gradient(#D36135 0%, #D36135 100%);
 }
 
 .table-view .column-header-background .label{

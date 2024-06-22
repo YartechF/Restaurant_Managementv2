@@ -3,6 +3,7 @@ package restaurant.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -24,12 +25,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import restaurant.models.Product_table_cell;
+import restaurant.models.category;
+import restaurant.models.category_model;
 import restaurant.models.product;
 import restaurant.models.product_categories_model;
 import restaurant.models.product_model;
 import restaurant.models.product_multiple_category;
 import restaurant.models.store_model;
 import restaurant.models.store_product_model;
+import restaurant.models.store_table_cell;
 
 public class admin_product_manage_controller implements Initializable {
     private product_model ProductModel;
@@ -171,10 +175,40 @@ public class admin_product_manage_controller implements Initializable {
                         ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
                         dialog.getDialogPane().getButtonTypes().addAll(updateButton, deleteButton,cancel);
 
+                        product_categories_model ProductMultiCategoryModel = new product_categories_model();
+                        store_product_model StoreProductModel = new store_product_model();
+
+                        ObservableList<store_table_cell> stores = StoreProductModel.get_store_products(rowData.getID());
+                        ObservableList<category> categories = ProductMultiCategoryModel.get_product_category_by_productID(rowData.getID());
+
+                        product_multiple_category Product = new product_multiple_category();
+                        Product.setID(rowData.getID());
+                        Product.setName(rowData.getName());
+                        Product.setPrice(rowData.getPrice());
+                        Product.setPicture(rowData.getPicture());
+                        Product.set_categories(categories);
+                        Product.set_stores(stores);
+                        update_product_controller.set_product(Product);
+
+                        
+
+                        
+                        
+
+
+
+
+
                         Optional<ButtonType> result = dialog.showAndWait();
                         if(result.isPresent()){
                             if(result.get() == updateButton){
-                                System.out.println("update");
+                                product_multiple_category pmc = update_product_controller.get_created_product();
+                                new product_model().update_product(pmc.getID(), pmc.getName(), pmc.getPrice(), pmc.getPicture(), null);
+                                ArrayList<String> sqls = update_product_controller.get_sql_commands();
+                                new product_model().update_product_category_and_store(sqls);
+                                
+                                
+
                             }else if (result.get() == deleteButton){
                                 new product_model().admin_delete_product(rowData.getID());
                             }

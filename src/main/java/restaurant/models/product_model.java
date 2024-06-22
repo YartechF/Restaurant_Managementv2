@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -74,16 +75,15 @@ public class product_model extends database implements Initializable {
         }
     }
 
-    public void update_product(int id, String name, double price, int categoryID, String picture, String type) {
+    public void update_product(int id, String name, double price, String picture, String type) {
         try {
-            String sql = "update tbl_product set name=?,price=?,categoryID=?,picture=?,type=? where id=?";
+            String sql = "update tbl_product set name=?,price=?,picture=?,type=? where id=?";
             ps = getConnection().prepareStatement(sql);
             ps.setString(1, name);
             ps.setDouble(2, price);
-            ps.setInt(3, categoryID);
-            ps.setString(4, picture);
-            ps.setString(5, type);
-            ps.setInt(6, id);
+            ps.setString(3, picture);
+            ps.setString(4, type);
+            ps.setInt(5, id);
             ps.executeUpdate();
             ps.close();
             getConnection().close();
@@ -93,6 +93,18 @@ public class product_model extends database implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void update_product_category_and_store(ArrayList<String> sql) throws SQLException{
+        for(String s : sql){
+            try {
+                PreparedStatement pst = getConnection().prepareStatement(s);
+                pst.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }                 
+        }
+        getConnection().close();
     }
 
     public ObservableList<product> get_all_products() {
