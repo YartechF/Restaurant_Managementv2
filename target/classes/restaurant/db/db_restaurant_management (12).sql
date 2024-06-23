@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2024 at 02:48 AM
+-- Generation Time: Jun 23, 2024 at 02:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,8 +39,9 @@ CREATE TABLE `store_product` (
 INSERT INTO `store_product` (`productID`, `storeID`) VALUES
 (35, 1),
 (36, 1),
-(35, 2),
-(35, 11);
+(35, 11),
+(36, 11),
+(43, 11);
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,7 @@ CREATE TABLE `tbl_ingredient` (
 INSERT INTO `tbl_ingredient` (`ID`, `name`, `description`, `ingredient_cost_typeID`, `IsProductIngredient`, `Is_per_pcs`) VALUES
 (19, 'patty', 'for burger', 2, 1, 1),
 (20, 'bun', 'burger', 2, 1, 1),
-(21, 'topping', '', 1, 1, 0);
+(21, 'toppings', '', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -249,7 +250,8 @@ CREATE TABLE `tbl_product` (
 
 INSERT INTO `tbl_product` (`ID`, `name`, `price`, `categoryID`, `picture`, `type`) VALUES
 (35, 'burger', 45, NULL, 'C:\\Users\\Administrator\\Documents\\Restaurant_Managementv2\\src\\main\\java\\restaurant\\images\\burger.png', NULL),
-(36, 'pizza', 56, NULL, 'C:\\Users\\Administrator\\Documents\\Restaurant_Managementv2\\src\\main\\java\\restaurant\\images\\pizza-2.png', NULL);
+(36, 'pizza', 56, NULL, 'C:\\Users\\Administrator\\Documents\\Restaurant_Managementv2\\src\\main\\java\\restaurant\\images\\pizza-2.png', NULL),
+(43, 'Bonefish Grill', 400, NULL, 'C:\\Users\\Administrator\\Desktop\\1382539155471-removebg-preview.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -269,7 +271,9 @@ CREATE TABLE `tbl_product_categories` (
 INSERT INTO `tbl_product_categories` (`productID`, `categoryID`) VALUES
 (35, 14),
 (36, 14),
-(36, 15);
+(36, 15),
+(43, 14),
+(43, 17);
 
 -- --------------------------------------------------------
 
@@ -389,7 +393,7 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`ID`, `username`, `password`, `personID`, `usertypeID`, `storeID`) VALUES
-(10, 'admin', 'admin', 14, 1, 1),
+(10, '', '', 14, 1, 1),
 (11, 'mars', 'mars', 15, 2, 1),
 (12, 'inventory1', 'inventory1', 16, 3, 1),
 (13, 'order1', 'order1', 17, 4, 1),
@@ -577,7 +581,7 @@ ALTER TABLE `tbl_ingredient_cost_type`
 -- AUTO_INCREMENT for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=803;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=805;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
@@ -595,7 +599,7 @@ ALTER TABLE `tbl_person`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `tbl_sales`
